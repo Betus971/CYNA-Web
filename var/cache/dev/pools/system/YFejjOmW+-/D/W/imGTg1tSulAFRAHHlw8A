@@ -1,0 +1,3 @@
+<?php //ffd424c481fd0b1643e48e1230e1b1bf
+
+return [PHP_INT_MAX, 'bundles/apiplatform/init-common-ui.js'];

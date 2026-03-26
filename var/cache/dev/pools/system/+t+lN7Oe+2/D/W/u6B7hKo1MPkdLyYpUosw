@@ -1,0 +1,1238 @@
+<?php //resource_metadata_collection_c18e41bae56cf1ef
+
+return [PHP_INT_MAX, new class() implements \Symfony\Component\Cache\Traits\CachedValueInterface { public function getValue(): mixed { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['ApiPlatform\\Metadata\\ErrorResource'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('ApiPlatform\\Metadata\\ErrorResource')),
+        clone ($p['ApiPlatform\\Metadata\\Parameters'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('ApiPlatform\\Metadata\\Parameters')),
+        clone ($p['ApiPlatform\\Metadata\\Operations'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('ApiPlatform\\Metadata\\Operations')),
+        clone ($p['ApiPlatform\\Metadata\\Error'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('ApiPlatform\\Metadata\\Error')),
+        clone $p['ApiPlatform\\Metadata\\Parameters'],
+        clone ($p['ApiPlatform\\Metadata\\Link'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('ApiPlatform\\Metadata\\Link')),
+        clone $p['ApiPlatform\\Metadata\\Error'],
+        clone $p['ApiPlatform\\Metadata\\Parameters'],
+        clone $p['ApiPlatform\\Metadata\\Link'],
+        clone ($p['Symfony\\Component\\WebLink\\Link'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\WebLink\\Link')),
+        clone $p['ApiPlatform\\Metadata\\Error'],
+        clone $p['ApiPlatform\\Metadata\\Parameters'],
+        clone $p['ApiPlatform\\Metadata\\Link'],
+        clone $p['ApiPlatform\\Metadata\\Error'],
+        clone $p['ApiPlatform\\Metadata\\Parameters'],
+        clone $p['ApiPlatform\\Metadata\\Link'],
+        clone $p['ApiPlatform\\Metadata\\Error'],
+        clone $p['ApiPlatform\\Metadata\\Parameters'],
+        clone $p['ApiPlatform\\Metadata\\Link'],
+        clone $p['ApiPlatform\\Metadata\\Link'],
+    ],
+    null,
+    [
+        'ApiPlatform\\Metadata\\Metadata' => [
+            'parameters' => [
+                $o[1],
+                3 => $o[4],
+                6 => $o[7],
+                10 => $o[11],
+                13 => $o[14],
+                16 => $o[17],
+            ],
+            'provider' => [
+                'api_platform.state.error_provider',
+            ],
+            'policy' => [
+                null,
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'middleware' => [
+                null,
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'map' => [
+                null,
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'rules' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'queryParameterValidationEnabled' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+        ],
+        'ApiPlatform\\Metadata\\ApiResource' => [
+            'shortName' => [
+                'Error',
+            ],
+            'class' => [
+                'ApiPlatform\\State\\ApiResource\\Error',
+            ],
+            'description' => [
+                'A representation of common errors.',
+            ],
+            'urlGenerationStrategy' => [
+                null,
+            ],
+            'deprecationReason' => [
+                null,
+            ],
+            'normalizationContext' => [
+                null,
+            ],
+            'denormalizationContext' => [
+                null,
+            ],
+            'collectDenormalizationErrors' => [
+                null,
+            ],
+            'validationContext' => [
+                null,
+            ],
+            'filters' => [
+                null,
+            ],
+            'order' => [
+                null,
+            ],
+            'fetchPartial' => [
+                null,
+            ],
+            'forceEager' => [
+                null,
+            ],
+            'paginationEnabled' => [
+                null,
+            ],
+            'paginationType' => [
+                null,
+            ],
+            'paginationItemsPerPage' => [
+                null,
+            ],
+            'paginationMaximumItemsPerPage' => [
+                null,
+            ],
+            'paginationPartial' => [
+                null,
+            ],
+            'paginationClientEnabled' => [
+                null,
+            ],
+            'paginationClientItemsPerPage' => [
+                null,
+            ],
+            'paginationClientPartial' => [
+                null,
+            ],
+            'paginationFetchJoinCollection' => [
+                null,
+            ],
+            'paginationUseOutputWalkers' => [
+                null,
+            ],
+            'security' => [
+                null,
+            ],
+            'securityMessage' => [
+                null,
+            ],
+            'securityPostDenormalize' => [
+                null,
+            ],
+            'securityPostDenormalizeMessage' => [
+                null,
+            ],
+            'securityPostValidation' => [
+                null,
+            ],
+            'securityPostValidationMessage' => [
+                null,
+            ],
+            'stateOptions' => [
+                null,
+            ],
+            'rules' => [
+                null,
+            ],
+            'queryParameterValidationEnabled' => [
+                null,
+            ],
+            'strictQueryParameterValidation' => [
+                null,
+            ],
+            'hideHydraOperation' => [
+                null,
+            ],
+            'jsonStream' => [
+                null,
+            ],
+            'extraProperties' => [
+                [],
+            ],
+            'operations' => [
+                $o[2],
+            ],
+            'uriTemplate' => [
+                '/errors/{status}{._format}',
+            ],
+            'types' => [
+                null,
+            ],
+            'formats' => [
+                null,
+            ],
+            'inputFormats' => [
+                null,
+            ],
+            'outputFormats' => [
+                [
+                    'jsonapi' => [
+                        'application/vnd.api+json',
+                    ],
+                    'jsonld' => [
+                        'application/ld+json',
+                    ],
+                    'json' => [
+                        'application/problem+json',
+                        'application/json',
+                    ],
+                    'xml' => [
+                        'application/xml',
+                        'text/xml',
+                    ],
+                ],
+            ],
+            'uriVariables' => [
+                [
+                    'status' => $o[19],
+                ],
+            ],
+            'routePrefix' => [
+                null,
+            ],
+            'defaults' => [
+                null,
+            ],
+            'requirements' => [
+                [
+                    'status' => '\\d+',
+                ],
+            ],
+            'options' => [
+                null,
+            ],
+            'stateless' => [
+                null,
+            ],
+            'sunset' => [
+                null,
+            ],
+            'acceptPatch' => [
+                null,
+            ],
+            'status' => [
+                null,
+            ],
+            'host' => [
+                null,
+            ],
+            'schemes' => [
+                null,
+            ],
+            'condition' => [
+                null,
+            ],
+            'controller' => [
+                null,
+            ],
+            'headers' => [
+                null,
+            ],
+            'cacheHeaders' => [
+                null,
+            ],
+            'hydraContext' => [
+                null,
+            ],
+            'openapi' => [
+                false,
+            ],
+            'paginationViaCursor' => [
+                null,
+            ],
+            'compositeIdentifier' => [
+                null,
+            ],
+            'exceptionToStatus' => [
+                null,
+            ],
+            'links' => [
+                null,
+            ],
+            'graphQlOperations' => [
+                [],
+            ],
+            'mcp' => [
+                null,
+            ],
+        ],
+        'ApiPlatform\\Metadata\\Operations' => [
+            'operations' => [
+                2 => [
+                    [
+                        '_api_errors_problem',
+                        $o[3],
+                    ],
+                    [
+                        '_api_errors_hydra',
+                        $o[6],
+                    ],
+                    [
+                        '_api_errors_jsonapi',
+                        $o[10],
+                    ],
+                    [
+                        '_api_errors_xml',
+                        $o[13],
+                    ],
+                    [
+                        '_api_errors',
+                        $o[16],
+                    ],
+                ],
+            ],
+        ],
+        'ApiPlatform\\Metadata\\Operation' => [
+            'shortName' => [
+                3 => 'Error',
+                6 => 'Error',
+                10 => 'Error',
+                13 => 'Error',
+                16 => 'Error',
+            ],
+            'class' => [
+                3 => 'ApiPlatform\\State\\ApiResource\\Error',
+                6 => 'ApiPlatform\\State\\ApiResource\\Error',
+                10 => 'ApiPlatform\\State\\ApiResource\\Error',
+                13 => 'ApiPlatform\\State\\ApiResource\\Error',
+                16 => 'ApiPlatform\\State\\ApiResource\\Error',
+            ],
+            'description' => [
+                3 => 'A representation of common errors.',
+                6 => 'A representation of common errors.',
+                10 => 'A representation of common errors.',
+                13 => 'A representation of common errors.',
+                16 => 'A representation of common errors.',
+            ],
+            'urlGenerationStrategy' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'deprecationReason' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'normalizationContext' => [
+                3 => [
+                    'openapi_definition_name' => '',
+                    'groups' => [
+                        'jsonproblem',
+                    ],
+                    'skip_null_values' => true,
+                    'ignored_attributes' => [
+                        'trace',
+                        'file',
+                        'line',
+                        'code',
+                        'message',
+                        'traceAsString',
+                        'previous',
+                    ],
+                ],
+                6 => [
+                    'openapi_definition_name' => '',
+                    'groups' => [
+                        'jsonld',
+                    ],
+                    'skip_null_values' => true,
+                    'ignored_attributes' => [
+                        'trace',
+                        'file',
+                        'line',
+                        'code',
+                        'message',
+                        'traceAsString',
+                        'previous',
+                    ],
+                ],
+                10 => [
+                    'openapi_definition_name' => '',
+                    'disable_json_schema_serializer_groups' => false,
+                    'groups' => [
+                        'jsonapi',
+                    ],
+                    'skip_null_values' => true,
+                    'ignored_attributes' => [
+                        'trace',
+                        'file',
+                        'line',
+                        'code',
+                        'message',
+                        'traceAsString',
+                        'previous',
+                    ],
+                ],
+                13 => [
+                    'openapi_definition_name' => '',
+                    'groups' => [
+                        'jsonproblem',
+                    ],
+                    'skip_null_values' => true,
+                    'ignored_attributes' => [
+                        'trace',
+                        'file',
+                        'line',
+                        'code',
+                        'message',
+                        'traceAsString',
+                        'previous',
+                    ],
+                ],
+                16 => null,
+            ],
+            'denormalizationContext' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'collectDenormalizationErrors' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'validationContext' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'filters' => [
+                3 => [],
+                6 => [],
+                10 => [],
+                13 => [],
+                16 => [],
+            ],
+            'order' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'fetchPartial' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'forceEager' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'paginationEnabled' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'paginationType' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'paginationItemsPerPage' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'paginationMaximumItemsPerPage' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'paginationPartial' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'paginationClientEnabled' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'paginationClientItemsPerPage' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'paginationClientPartial' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'paginationFetchJoinCollection' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'paginationUseOutputWalkers' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'security' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'securityMessage' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'securityPostDenormalize' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'securityPostDenormalizeMessage' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'securityPostValidation' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'securityPostValidationMessage' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'provider' => [
+                3 => 'api_platform.state.error_provider',
+                6 => 'api_platform.state.error_provider',
+                10 => 'api_platform.state.error_provider',
+                13 => 'api_platform.state.error_provider',
+                16 => 'api_platform.state.error_provider',
+            ],
+            'stateOptions' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'jsonStream' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'extraProperties' => [
+                3 => [
+                    'user_defined_uri_template' => true,
+                ],
+                6 => [
+                    'user_defined_uri_template' => true,
+                ],
+                10 => [
+                    'user_defined_uri_template' => true,
+                ],
+                13 => [
+                    'user_defined_uri_template' => true,
+                ],
+                16 => [
+                    '_api_disable_swagger_provider' => true,
+                    'user_defined_uri_template' => true,
+                ],
+            ],
+            'read' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'deserialize' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'validate' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'write' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'serialize' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'contentNegotiation' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'priority' => [
+                3 => 0,
+                6 => 1,
+                10 => 2,
+                13 => 3,
+                16 => 4,
+            ],
+            'name' => [
+                3 => '_api_errors_problem',
+                6 => '_api_errors_hydra',
+                10 => '_api_errors_jsonapi',
+                13 => '_api_errors_xml',
+                16 => '_api_errors',
+            ],
+        ],
+        'ApiPlatform\\Metadata\\HttpOperation' => [
+            'strictQueryParameterValidation' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'hideHydraOperation' => [
+                3 => true,
+                6 => null,
+                10 => true,
+                13 => true,
+                16 => true,
+            ],
+            'paginationViaCursor' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'inputFormats' => [
+                3 => [
+                    'jsonld' => [
+                        'application/ld+json',
+                    ],
+                ],
+                6 => [
+                    'jsonld' => [
+                        'application/ld+json',
+                    ],
+                ],
+                10 => [
+                    'jsonld' => [
+                        'application/ld+json',
+                    ],
+                ],
+                13 => [
+                    'jsonld' => [
+                        'application/ld+json',
+                    ],
+                ],
+                16 => [
+                    'jsonld' => [
+                        'application/ld+json',
+                    ],
+                ],
+            ],
+            'outputFormats' => [
+                3 => [
+                    'json' => [
+                        'application/problem+json',
+                        'application/json',
+                    ],
+                ],
+                6 => [
+                    'jsonld' => [
+                        'application/problem+json',
+                        'application/ld+json',
+                    ],
+                ],
+                10 => [
+                    'jsonapi' => [
+                        'application/vnd.api+json',
+                    ],
+                ],
+                13 => [
+                    'xml' => [
+                        'application/xml',
+                        'text/xml',
+                    ],
+                ],
+                16 => [
+                    'html' => [
+                        'text/html',
+                    ],
+                    'jsonapi' => [
+                        'application/vnd.api+json',
+                    ],
+                    'jsonld' => [
+                        'application/ld+json',
+                    ],
+                    'json' => [
+                        'application/problem+json',
+                        'application/json',
+                    ],
+                    'xml' => [
+                        'application/xml',
+                        'text/xml',
+                    ],
+                ],
+            ],
+            'method' => [
+                3 => 'GET',
+                6 => 'GET',
+                10 => 'GET',
+                13 => 'GET',
+                16 => 'GET',
+            ],
+            'uriTemplate' => [
+                3 => '/errors/{status}{._format}',
+                6 => '/errors/{status}{._format}',
+                10 => '/errors/{status}{._format}',
+                13 => '/errors/{status}{._format}',
+                16 => '/errors/{status}{._format}',
+            ],
+            'types' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'uriVariables' => [
+                3 => [
+                    'status' => $o[5],
+                ],
+                6 => [
+                    'status' => $o[8],
+                ],
+                10 => [
+                    'status' => $o[12],
+                ],
+                13 => [
+                    'status' => $o[15],
+                ],
+                16 => [
+                    'status' => $o[18],
+                ],
+            ],
+            'routePrefix' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'routeName' => [
+                3 => '_api_errors',
+                6 => '_api_errors',
+                10 => '_api_errors',
+                13 => '_api_errors',
+                16 => null,
+            ],
+            'defaults' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'requirements' => [
+                3 => [
+                    'status' => '\\d+',
+                ],
+                6 => [
+                    'status' => '\\d+',
+                ],
+                10 => [
+                    'status' => '\\d+',
+                ],
+                13 => [
+                    'status' => '\\d+',
+                ],
+                16 => [
+                    'status' => '\\d+',
+                ],
+            ],
+            'options' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'stateless' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'sunset' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'acceptPatch' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'host' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'schemes' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'condition' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'controller' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => 'api_platform.symfony.main_controller',
+            ],
+            'headers' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'cacheHeaders' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'hydraContext' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'openapi' => [
+                3 => false,
+                6 => false,
+                10 => false,
+                13 => false,
+                16 => false,
+            ],
+            'exceptionToStatus' => [
+                3 => null,
+                6 => null,
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'links' => [
+                3 => null,
+                6 => [
+                    $o[9],
+                ],
+                10 => null,
+                13 => null,
+                16 => null,
+            ],
+            'errors' => [
+                3 => [],
+                6 => [],
+                10 => [],
+                13 => [],
+                16 => null,
+            ],
+        ],
+        'ApiPlatform\\Metadata\\Parameter' => [
+            'key' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+            'schema' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+            'openApi' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+            'provider' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+            'filter' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+            'property' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+            'description' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+            'properties' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+            'required' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+            'priority' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+            'hydra' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+            'constraints' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+            'security' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+            'securityMessage' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+            'extraProperties' => [
+                5 => [],
+                8 => [],
+                12 => [],
+                15 => [],
+                18 => [],
+                [],
+            ],
+            'filterContext' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+            'nativeType' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+            'castToArray' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+            'castToNativeType' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+            'castFn' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+            'default' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+            'filterClass' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+        ],
+        'ApiPlatform\\Metadata\\Link' => [
+            'parameterName' => [
+                5 => 'status',
+                8 => 'status',
+                12 => 'status',
+                15 => 'status',
+                18 => 'status',
+                'status',
+            ],
+            'fromProperty' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+            'toProperty' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+            'fromClass' => [
+                5 => 'ApiPlatform\\State\\ApiResource\\Error',
+                8 => 'ApiPlatform\\State\\ApiResource\\Error',
+                12 => 'ApiPlatform\\State\\ApiResource\\Error',
+                15 => 'ApiPlatform\\State\\ApiResource\\Error',
+                18 => 'ApiPlatform\\State\\ApiResource\\Error',
+                'ApiPlatform\\State\\ApiResource\\Error',
+            ],
+            'toClass' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+            'identifiers' => [
+                5 => [
+                    'status',
+                ],
+                8 => [
+                    'status',
+                ],
+                12 => [
+                    'status',
+                ],
+                15 => [
+                    'status',
+                ],
+                18 => [
+                    'status',
+                ],
+                [
+                    'status',
+                ],
+            ],
+            'compositeIdentifier' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+            'expandedValue' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+            'securityObjectName' => [
+                5 => null,
+                8 => null,
+                12 => null,
+                15 => null,
+                18 => null,
+                null,
+            ],
+        ],
+        'Symfony\\Component\\WebLink\\Link' => [
+            'rel' => [
+                9 => [
+                    'http://www.w3.org/ns/json-ld#error' => 'http://www.w3.org/ns/json-ld#error',
+                ],
+            ],
+            'href' => [
+                9 => 'http://www.w3.org/ns/hydra/error',
+            ],
+        ],
+    ],
+    [
+        $o[0],
+    ],
+    []
+); } }];

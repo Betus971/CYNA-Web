@@ -1,0 +1,886 @@
+<?php
+
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Extension\CoreExtension;
+use Twig\Extension\SandboxExtension;
+use Twig\Markup;
+use Twig\Sandbox\SecurityError;
+use Twig\Sandbox\SecurityNotAllowedTagError;
+use Twig\Sandbox\SecurityNotAllowedFilterError;
+use Twig\Sandbox\SecurityNotAllowedFunctionError;
+use Twig\Source;
+use Twig\Template;
+use Twig\TemplateWrapper;
+
+/* home/index.html.twig */
+class __TwigTemplate_4239ef876aedbfdd3374e84b840e4b54 extends Template
+{
+    private Source $source;
+    /**
+     * @var array<string, Template>
+     */
+    private array $macros = [];
+
+    public function __construct(Environment $env)
+    {
+        parent::__construct($env);
+
+        $this->source = $this->getSourceContext();
+
+        $this->blocks = [
+            'title' => [$this, 'block_title'],
+            'body' => [$this, 'block_body'],
+        ];
+    }
+
+    protected function doGetParent(array $context): bool|string|Template|TemplateWrapper
+    {
+        // line 1
+        return "base.html.twig";
+    }
+
+    protected function doDisplay(array $context, array $blocks = []): iterable
+    {
+        $macros = $this->macros;
+        $__internal_5a27a8ba21ca79b61932376b2fa922d2 = $this->extensions["Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension"];
+        $__internal_5a27a8ba21ca79b61932376b2fa922d2->enter($__internal_5a27a8ba21ca79b61932376b2fa922d2_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "template", "home/index.html.twig"));
+
+        $__internal_6f47bbe9983af81f1e7450e9a3e3768f = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
+        $__internal_6f47bbe9983af81f1e7450e9a3e3768f->enter($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "template", "home/index.html.twig"));
+
+        $this->parent = $this->load("base.html.twig", 1);
+        yield from $this->parent->unwrap()->yield($context, array_merge($this->blocks, $blocks));
+        
+        $__internal_5a27a8ba21ca79b61932376b2fa922d2->leave($__internal_5a27a8ba21ca79b61932376b2fa922d2_prof);
+
+        
+        $__internal_6f47bbe9983af81f1e7450e9a3e3768f->leave($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof);
+
+    }
+
+    // line 3
+    /**
+     * @return iterable<null|scalar|\Stringable>
+     */
+    public function block_title(array $context, array $blocks = []): iterable
+    {
+        $macros = $this->macros;
+        $__internal_5a27a8ba21ca79b61932376b2fa922d2 = $this->extensions["Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension"];
+        $__internal_5a27a8ba21ca79b61932376b2fa922d2->enter($__internal_5a27a8ba21ca79b61932376b2fa922d2_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "title"));
+
+        $__internal_6f47bbe9983af81f1e7450e9a3e3768f = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
+        $__internal_6f47bbe9983af81f1e7450e9a3e3768f->enter($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "title"));
+
+        yield "Accueil • CYNA";
+        
+        $__internal_6f47bbe9983af81f1e7450e9a3e3768f->leave($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof);
+
+        
+        $__internal_5a27a8ba21ca79b61932376b2fa922d2->leave($__internal_5a27a8ba21ca79b61932376b2fa922d2_prof);
+
+        yield from [];
+    }
+
+    // line 5
+    /**
+     * @return iterable<null|scalar|\Stringable>
+     */
+    public function block_body(array $context, array $blocks = []): iterable
+    {
+        $macros = $this->macros;
+        $__internal_5a27a8ba21ca79b61932376b2fa922d2 = $this->extensions["Symfony\\Bundle\\WebProfilerBundle\\Twig\\WebProfilerExtension"];
+        $__internal_5a27a8ba21ca79b61932376b2fa922d2->enter($__internal_5a27a8ba21ca79b61932376b2fa922d2_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "body"));
+
+        $__internal_6f47bbe9983af81f1e7450e9a3e3768f = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
+        $__internal_6f47bbe9983af81f1e7450e9a3e3768f->enter($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "body"));
+
+        // line 6
+        yield "<div class=\"container py-4 py-md-5\">
+
+    ";
+        // line 11
+        yield "    <section class=\"py-3 py-md-4\">
+        <div class=\"row align-items-center g-4\">
+            <div class=\"col-lg-7\">
+                <h1 class=\"display-4 fw-bold mb-3\">
+                    Protégez votre entreprise avec <span style=\"color: rgba(91,192,255,.95)\">CYNA</span>
+                </h1>
+                <p class=\"lead section-sub mb-4\">
+                    Solutions SaaS de cybersécurité : SOC, EDR, XDR et supervision avancée.
+                    Une approche simple, efficace, pensée pour les équipes.
+                </p>
+
+                <div class=\"d-flex flex-wrap gap-2\">
+                    <a href=\"#services\" class=\"btn btn-accent btn-lg rounded-pill px-4\">Découvrir nos services</a>
+                    <a href=\"#categories\" class=\"btn btn-outline-light btn-lg rounded-pill px-4\">Voir les catégories</a>
+                </div>
+
+                <div class=\"d-flex flex-wrap gap-3 mt-4 text-white-50\">
+                    <div class=\"glass px-3 py-2 rounded-pill\">✅ Déploiement rapide</div>
+                    <div class=\"glass px-3 py-2 rounded-pill\">✅ Supervision 24/7</div>
+                    <div class=\"glass px-3 py-2 rounded-pill\">✅ Rapports & alertes</div>
+                </div>
+            </div>
+
+            <div class=\"col-lg-5\">
+                <div class=\"cyna-card p-4\">
+                    <div class=\"d-flex justify-content-between align-items-center mb-3\">
+                        <div class=\"fw-bold\">Aperçu sécurité</div>
+                        <span class=\"badge text-bg-success\">OK</span>
+                    </div>
+
+                    <div class=\"d-flex flex-column gap-3\">
+                        <div class=\"glass rounded-4 p-3\">
+                            <div class=\"d-flex justify-content-between\">
+                                <div class=\"fw-semibold\">Endpoints protégés</div>
+                                <div class=\"text-white-50\">128</div>
+                            </div>
+                            <div class=\"progress mt-2\" role=\"progressbar\">
+                                <div class=\"progress-bar\" style=\"width: 78%\"></div>
+                            </div>
+                        </div>
+
+                        <div class=\"glass rounded-4 p-3\">
+                            <div class=\"d-flex justify-content-between\">
+                                <div class=\"fw-semibold\">Alertes traitées</div>
+                                <div class=\"text-white-50\">24h</div>
+                            </div>
+                            <div class=\"mt-2 text-white-50 small\">
+                                12 alertes • 0 critique • 2 à investiguer
+                            </div>
+                        </div>
+
+                        <div class=\"glass rounded-4 p-3\">
+                            <div class=\"fw-semibold mb-1\">Recommandation</div>
+                            <div class=\"text-white-50 small\">
+                                Activer l’authentification MFA sur tous les comptes administrateurs.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class=\"text-white-50 small mt-2\">* Données fictives pour la maquette (Jour 1).</div>
+            </div>
+        </div>
+    </section>
+
+
+    ";
+        // line 79
+        yield "    <section class=\"pt-4\">
+        <div class=\"d-flex justify-content-between align-items-end mb-3\">
+            <div>
+                <h2 class=\"section-title mb-1\">À la une</h2>
+                <div class=\"section-sub\">3 promotions / mises en avant (maquette).</div>
+            </div>
+            <a href=\"#services\" class=\"text-white-50\">Voir les services</a>
+        </div>
+
+        <div id=\"homeCarousel\" class=\"carousel slide cyna-card overflow-hidden\" data-bs-ride=\"carousel\">
+            <div class=\"carousel-indicators\">
+                <button type=\"button\" data-bs-target=\"#homeCarousel\" data-bs-slide-to=\"0\" class=\"active\"></button>
+                <button type=\"button\" data-bs-target=\"#homeCarousel\" data-bs-slide-to=\"1\"></button>
+                <button type=\"button\" data-bs-target=\"#homeCarousel\" data-bs-slide-to=\"2\"></button>
+            </div>
+
+            <div class=\"carousel-inner\">
+                ";
+        // line 97
+        yield "                <div class=\"carousel-item active\">
+                    <div class=\"p-4 p-md-5\" style=\"min-height: 320px; background:
+                        radial-gradient(700px 300px at 20% 10%, rgba(47,123,255,.25), transparent 60%),
+                        linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02));\">
+                        <div class=\"row align-items-center g-4\">
+                            <div class=\"col-md-7\">
+                                <div class=\"text-white-50 small mb-2\">Offre SOC</div>
+                                <h3 class=\"fw-bold mb-2\">Surveillance & réponse 24/7</h3>
+                                <p class=\"section-sub mb-4\">
+                                    Détection, qualification et traitement des alertes.
+                                    Une équipe SOC prête à intervenir.
+                                </p>
+                                <a class=\"btn btn-accent rounded-pill px-4\" href=\"#services\">Découvrir</a>
+                            </div>
+                            <div class=\"col-md-5\">
+                                <div class=\"glass rounded-4 p-4\">
+                                    <div class=\"fw-semibold mb-1\">Inclus</div>
+                                    <div class=\"text-white-50 small\">Playbooks • Rapports • Alerting</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                ";
+        // line 122
+        yield "                <div class=\"carousel-item\">
+                    <div class=\"p-4 p-md-5\" style=\"min-height: 320px; background:
+                        radial-gradient(700px 300px at 80% 20%, rgba(91,192,255,.20), transparent 60%),
+                        linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02));\">
+                        <div class=\"row align-items-center g-4\">
+                            <div class=\"col-md-7\">
+                                <div class=\"text-white-50 small mb-2\">EDR Pro</div>
+                                <h3 class=\"fw-bold mb-2\">Détection endpoint & remédiation</h3>
+                                <p class=\"section-sub mb-4\">
+                                    Analyse comportementale, isolation machine, actions guidées.
+                                </p>
+                                <a class=\"btn btn-outline-light rounded-pill px-4\" href=\"#tarifs\">Voir tarifs</a>
+                            </div>
+                            <div class=\"col-md-5\">
+                                <div class=\"glass rounded-4 p-4\">
+                                    <div class=\"fw-semibold mb-1\">Bénéfice</div>
+                                    <div class=\"text-white-50 small\">Réduire le temps de réponse</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                ";
+        // line 146
+        yield "                <div class=\"carousel-item\">
+                    <div class=\"p-4 p-md-5\" style=\"min-height: 320px; background:
+                        radial-gradient(700px 300px at 30% 70%, rgba(138,91,255,.18), transparent 60%),
+                        linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02));\">
+                        <div class=\"row align-items-center g-4\">
+                            <div class=\"col-md-7\">
+                                <div class=\"text-white-50 small mb-2\">XDR Suite</div>
+                                <h3 class=\"fw-bold mb-2\">Vision globale & corrélation avancée</h3>
+                                <p class=\"section-sub mb-4\">
+                                    Corrélation multi-sources, priorisation, dashboards.
+                                </p>
+                                <a class=\"btn btn-accent rounded-pill px-4\" href=\"#contact\">Demander une démo</a>
+                            </div>
+                            <div class=\"col-md-5\">
+                                <div class=\"glass rounded-4 p-4\">
+                                    <div class=\"fw-semibold mb-1\">Pour</div>
+                                    <div class=\"text-white-50 small\">Équipes IT & SecOps</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class=\"carousel-control-prev\" type=\"button\" data-bs-target=\"#homeCarousel\" data-bs-slide=\"prev\">
+                <span class=\"carousel-control-prev-icon\"></span>
+                <span class=\"visually-hidden\">Précédent</span>
+            </button>
+            <button class=\"carousel-control-next\" type=\"button\" data-bs-target=\"#homeCarousel\" data-bs-slide=\"next\">
+                <span class=\"carousel-control-next-icon\"></span>
+                <span class=\"visually-hidden\">Suivant</span>
+            </button>
+        </div>
+    </section>
+
+
+    ";
+        // line 185
+        yield "    <section class=\"py-4\">
+        <div class=\"cyna-card p-4 p-md-5\">
+            <h2 class=\"section-title mb-2\">Une cybersécurité simple à déployer</h2>
+            <p class=\"section-sub mb-0\">
+                CYNA propose une approche progressive : vous démarrez avec une vitrine claire,
+                puis vous branchez au fil du projet les fonctionnalités (produits, catégories, panier,
+                back-office). Ce bloc sera administrable plus tard, mais on prépare déjà le rendu.
+            </p>
+        </div>
+    </section>
+
+
+    ";
+        // line 200
+        yield "    <section id=\"categories\" class=\"py-4 py-md-5\">
+        <div class=\"d-flex justify-content-between align-items-end mb-3\">
+            <div>
+                <h2 class=\"section-title mb-1\">Catégories</h2>
+                <div class=\"section-sub\">Explorez nos offres (maquette UI).</div>
+            </div>
+            <a href=\"#\" class=\"text-white-50\">Voir tout</a>
+        </div>
+
+        <div class=\"row g-3\">
+            ";
+        // line 210
+        $context["cats"] = [["name" => "SOC", "desc" => "Surveillance • Incidents", "emoji" => "🛡️"], ["name" => "EDR", "desc" => "Endpoints • Réponse", "emoji" => "🧩"], ["name" => "XDR", "desc" => "Corrélation • SIEM", "emoji" => "🛰️"], ["name" => "Audit", "desc" => "Évaluation • Conformité", "emoji" => "📋"], ["name" => "MFA", "desc" => "Accès • Authentification", "emoji" => "🔐"], ["name" => "Formation", "desc" => "Sensibilisation", "emoji" => "🎓"]];
+        // line 218
+        yield "
+            ";
+        // line 219
+        $context['_parent'] = $context;
+        $context['_seq'] = CoreExtension::ensureTraversable((isset($context["cats"]) || array_key_exists("cats", $context) ? $context["cats"] : (function () { throw new RuntimeError('Variable "cats" does not exist.', 219, $this->source); })()));
+        foreach ($context['_seq'] as $context["_key"] => $context["c"]) {
+            // line 220
+            yield "                <div class=\"col-6 col-md-4 col-lg-2\">
+                    <a href=\"#\" class=\"text-decoration-none\">
+                        <div class=\"cyna-card p-3 h-100\">
+                            <div class=\"d-flex align-items-center gap-2 mb-2\">
+                                <div class=\"glass rounded-3 px-2 py-1\">";
+            // line 224
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["c"], "emoji", [], "any", false, false, false, 224), "html", null, true);
+            yield "</div>
+                                <div class=\"fw-bold text-white\">";
+            // line 225
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["c"], "name", [], "any", false, false, false, 225), "html", null, true);
+            yield "</div>
+                            </div>
+                            <div class=\"text-white-50 small\">";
+            // line 227
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["c"], "desc", [], "any", false, false, false, 227), "html", null, true);
+            yield "</div>
+                        </div>
+                    </a>
+                </div>
+            ";
+        }
+        $_parent = $context['_parent'];
+        unset($context['_seq'], $context['_key'], $context['c'], $context['_parent']);
+        $context = array_intersect_key($context, $_parent) + $_parent;
+        // line 232
+        yield "        </div>
+    </section>
+
+
+    ";
+        // line 239
+        yield "    <section id=\"services\" class=\"py-4 py-md-5\">
+        <div class=\"d-flex justify-content-between align-items-end mb-3\">
+            <div>
+                <h2 class=\"section-title mb-1\">Services</h2>
+                <div class=\"section-sub\">Trois briques pour démarrer vite.</div>
+            </div>
+            <a href=\"#\" class=\"text-white-50\">Voir tout</a>
+        </div>
+
+        <div class=\"row g-3\">
+            <div class=\"col-md-4\">
+                <div class=\"cyna-card p-4 h-100\">
+                    <h3 class=\"h5 fw-bold\">SOC</h3>
+                    <p class=\"section-sub mb-3\">Surveillance continue de votre SI et gestion des incidents.</p>
+                    <ul class=\"text-white-50 small mb-0\">
+                        <li>Veille & alerting</li>
+                        <li>Playbooks d’intervention</li>
+                        <li>Rapports hebdo</li>
+                    </ul>
+                </div>
+            </div>
+            <div class=\"col-md-4\">
+                <div class=\"cyna-card p-4 h-100\">
+                    <h3 class=\"h5 fw-bold\">EDR</h3>
+                    <p class=\"section-sub mb-3\">Détection et réponse sur les endpoints.</p>
+                    <ul class=\"text-white-50 small mb-0\">
+                        <li>Isolation machine</li>
+                        <li>Analyse comportementale</li>
+                        <li>Remédiation guidée</li>
+                    </ul>
+                </div>
+            </div>
+            <div class=\"col-md-4\">
+                <div class=\"cyna-card p-4 h-100\">
+                    <h3 class=\"h5 fw-bold\">XDR</h3>
+                    <p class=\"section-sub mb-3\">Corrélation multi-sources et vision globale.</p>
+                    <ul class=\"text-white-50 small mb-0\">
+                        <li>Corrélation SIEM</li>
+                        <li>Priorisation</li>
+                        <li>Tableaux de bord</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    ";
+        // line 289
+        yield "    <section id=\"tarifs\" class=\"py-4 py-md-5\">
+        <div class=\"d-flex justify-content-between align-items-end mb-3\">
+            <div>
+                <h2 class=\"section-title mb-1\">Tarifs</h2>
+                <div class=\"section-sub\">Maquette simple (on détaillera plus tard).</div>
+            </div>
+        </div>
+
+        <div class=\"row g-3\">
+            <div class=\"col-md-4\">
+                <div class=\"cyna-card p-4 h-100\">
+                    <div class=\"text-white-50 small\">Starter</div>
+                    <div class=\"display-6 fw-bold\">19€</div>
+                    <div class=\"text-white-50 mb-3\">/ mois</div>
+                    <ul class=\"text-white-50 small\">
+                        <li>Pack vitrine</li>
+                        <li>Accès dashboard (démo)</li>
+                        <li>Support standard</li>
+                    </ul>
+                    <a class=\"btn btn-outline-light rounded-pill w-100 mt-2\" href=\"#contact\">Choisir</a>
+                </div>
+            </div>
+
+            <div class=\"col-md-4\">
+                <div class=\"cyna-card p-4 h-100 position-relative\">
+                    <span class=\"badge text-bg-primary position-absolute top-0 end-0 m-3\">Populaire</span>
+                    <div class=\"text-white-50 small\">Pro</div>
+                    <div class=\"display-6 fw-bold\">49€</div>
+                    <div class=\"text-white-50 mb-3\">/ mois</div>
+                    <ul class=\"text-white-50 small\">
+                        <li>SOC + EDR</li>
+                        <li>Rapports</li>
+                        <li>Support prioritaire</li>
+                    </ul>
+                    <a class=\"btn btn-accent rounded-pill w-100 mt-2\" href=\"#contact\">Choisir</a>
+                </div>
+            </div>
+
+            <div class=\"col-md-4\">
+                <div class=\"cyna-card p-4 h-100\">
+                    <div class=\"text-white-50 small\">Entreprise</div>
+                    <div class=\"display-6 fw-bold\">Sur devis</div>
+                    <div class=\"text-white-50 mb-3\">&nbsp;</div>
+                    <ul class=\"text-white-50 small\">
+                        <li>XDR complet</li>
+                        <li>Intégrations</li>
+                        <li>Accompagnement</li>
+                    </ul>
+                    <a class=\"btn btn-outline-light rounded-pill w-100 mt-2\" href=\"#contact\">Contact</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id=\"contact\" class=\"py-4 py-md-5\">
+        <div class=\"cyna-card p-4 p-md-5\">
+            <h2 class=\"section-title mb-2\">Contact</h2>
+            <div class=\"section-sub mb-4\">Laisse un message (formulaire “vitrine” pour le moment).</div>
+
+            <form class=\"row g-3\">
+                <div class=\"col-md-6\">
+                    <label class=\"form-label text-white-50\">Nom</label>
+                    <input class=\"form-control\" placeholder=\"Votre nom\">
+                </div>
+                <div class=\"col-md-6\">
+                    <label class=\"form-label text-white-50\">Email</label>
+                    <input class=\"form-control\" placeholder=\"vous@exemple.com\">
+                </div>
+                <div class=\"col-12\">
+                    <label class=\"form-label text-white-50\">Message</label>
+                    <textarea class=\"form-control\" rows=\"4\" placeholder=\"Expliquez votre besoin...\"></textarea>
+                </div>
+                <div class=\"col-12 d-flex gap-2\">
+                    <button type=\"button\" class=\"btn btn-accent rounded-pill px-4\">Envoyer</button>
+                    <button type=\"reset\" class=\"btn btn-outline-light rounded-pill px-4\">Effacer</button>
+                </div>
+                <div class=\"text-white-50 small mt-2\">* Formulaire non connecté (Jour 1).</div>
+            </form>
+        </div>
+    </section>
+
+</div>
+";
+        
+        $__internal_6f47bbe9983af81f1e7450e9a3e3768f->leave($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof);
+
+        
+        $__internal_5a27a8ba21ca79b61932376b2fa922d2->leave($__internal_5a27a8ba21ca79b61932376b2fa922d2_prof);
+
+        yield from [];
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    public function getTemplateName(): string
+    {
+        return "home/index.html.twig";
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    public function isTraitable(): bool
+    {
+        return false;
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    public function getDebugInfo(): array
+    {
+        return array (  395 => 289,  346 => 239,  340 => 232,  329 => 227,  324 => 225,  320 => 224,  314 => 220,  310 => 219,  307 => 218,  305 => 210,  293 => 200,  279 => 185,  241 => 146,  216 => 122,  190 => 97,  171 => 79,  104 => 11,  100 => 6,  87 => 5,  64 => 3,  41 => 1,);
+    }
+
+    public function getSourceContext(): Source
+    {
+        return new Source("{% extends 'base.html.twig' %}
+
+{% block title %}Accueil • CYNA{% endblock %}
+
+{% block body %}
+<div class=\"container py-4 py-md-5\">
+
+    {# ======================
+       HERO (tu l'avais déjà, on le garde)
+       ====================== #}
+    <section class=\"py-3 py-md-4\">
+        <div class=\"row align-items-center g-4\">
+            <div class=\"col-lg-7\">
+                <h1 class=\"display-4 fw-bold mb-3\">
+                    Protégez votre entreprise avec <span style=\"color: rgba(91,192,255,.95)\">CYNA</span>
+                </h1>
+                <p class=\"lead section-sub mb-4\">
+                    Solutions SaaS de cybersécurité : SOC, EDR, XDR et supervision avancée.
+                    Une approche simple, efficace, pensée pour les équipes.
+                </p>
+
+                <div class=\"d-flex flex-wrap gap-2\">
+                    <a href=\"#services\" class=\"btn btn-accent btn-lg rounded-pill px-4\">Découvrir nos services</a>
+                    <a href=\"#categories\" class=\"btn btn-outline-light btn-lg rounded-pill px-4\">Voir les catégories</a>
+                </div>
+
+                <div class=\"d-flex flex-wrap gap-3 mt-4 text-white-50\">
+                    <div class=\"glass px-3 py-2 rounded-pill\">✅ Déploiement rapide</div>
+                    <div class=\"glass px-3 py-2 rounded-pill\">✅ Supervision 24/7</div>
+                    <div class=\"glass px-3 py-2 rounded-pill\">✅ Rapports & alertes</div>
+                </div>
+            </div>
+
+            <div class=\"col-lg-5\">
+                <div class=\"cyna-card p-4\">
+                    <div class=\"d-flex justify-content-between align-items-center mb-3\">
+                        <div class=\"fw-bold\">Aperçu sécurité</div>
+                        <span class=\"badge text-bg-success\">OK</span>
+                    </div>
+
+                    <div class=\"d-flex flex-column gap-3\">
+                        <div class=\"glass rounded-4 p-3\">
+                            <div class=\"d-flex justify-content-between\">
+                                <div class=\"fw-semibold\">Endpoints protégés</div>
+                                <div class=\"text-white-50\">128</div>
+                            </div>
+                            <div class=\"progress mt-2\" role=\"progressbar\">
+                                <div class=\"progress-bar\" style=\"width: 78%\"></div>
+                            </div>
+                        </div>
+
+                        <div class=\"glass rounded-4 p-3\">
+                            <div class=\"d-flex justify-content-between\">
+                                <div class=\"fw-semibold\">Alertes traitées</div>
+                                <div class=\"text-white-50\">24h</div>
+                            </div>
+                            <div class=\"mt-2 text-white-50 small\">
+                                12 alertes • 0 critique • 2 à investiguer
+                            </div>
+                        </div>
+
+                        <div class=\"glass rounded-4 p-3\">
+                            <div class=\"fw-semibold mb-1\">Recommandation</div>
+                            <div class=\"text-white-50 small\">
+                                Activer l’authentification MFA sur tous les comptes administrateurs.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class=\"text-white-50 small mt-2\">* Données fictives pour la maquette (Jour 1).</div>
+            </div>
+        </div>
+    </section>
+
+
+    {# ======================
+       1) CARROUSEL (3 slides)
+       ====================== #}
+    <section class=\"pt-4\">
+        <div class=\"d-flex justify-content-between align-items-end mb-3\">
+            <div>
+                <h2 class=\"section-title mb-1\">À la une</h2>
+                <div class=\"section-sub\">3 promotions / mises en avant (maquette).</div>
+            </div>
+            <a href=\"#services\" class=\"text-white-50\">Voir les services</a>
+        </div>
+
+        <div id=\"homeCarousel\" class=\"carousel slide cyna-card overflow-hidden\" data-bs-ride=\"carousel\">
+            <div class=\"carousel-indicators\">
+                <button type=\"button\" data-bs-target=\"#homeCarousel\" data-bs-slide-to=\"0\" class=\"active\"></button>
+                <button type=\"button\" data-bs-target=\"#homeCarousel\" data-bs-slide-to=\"1\"></button>
+                <button type=\"button\" data-bs-target=\"#homeCarousel\" data-bs-slide-to=\"2\"></button>
+            </div>
+
+            <div class=\"carousel-inner\">
+                {# Slide 1 #}
+                <div class=\"carousel-item active\">
+                    <div class=\"p-4 p-md-5\" style=\"min-height: 320px; background:
+                        radial-gradient(700px 300px at 20% 10%, rgba(47,123,255,.25), transparent 60%),
+                        linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02));\">
+                        <div class=\"row align-items-center g-4\">
+                            <div class=\"col-md-7\">
+                                <div class=\"text-white-50 small mb-2\">Offre SOC</div>
+                                <h3 class=\"fw-bold mb-2\">Surveillance & réponse 24/7</h3>
+                                <p class=\"section-sub mb-4\">
+                                    Détection, qualification et traitement des alertes.
+                                    Une équipe SOC prête à intervenir.
+                                </p>
+                                <a class=\"btn btn-accent rounded-pill px-4\" href=\"#services\">Découvrir</a>
+                            </div>
+                            <div class=\"col-md-5\">
+                                <div class=\"glass rounded-4 p-4\">
+                                    <div class=\"fw-semibold mb-1\">Inclus</div>
+                                    <div class=\"text-white-50 small\">Playbooks • Rapports • Alerting</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {# Slide 2 #}
+                <div class=\"carousel-item\">
+                    <div class=\"p-4 p-md-5\" style=\"min-height: 320px; background:
+                        radial-gradient(700px 300px at 80% 20%, rgba(91,192,255,.20), transparent 60%),
+                        linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02));\">
+                        <div class=\"row align-items-center g-4\">
+                            <div class=\"col-md-7\">
+                                <div class=\"text-white-50 small mb-2\">EDR Pro</div>
+                                <h3 class=\"fw-bold mb-2\">Détection endpoint & remédiation</h3>
+                                <p class=\"section-sub mb-4\">
+                                    Analyse comportementale, isolation machine, actions guidées.
+                                </p>
+                                <a class=\"btn btn-outline-light rounded-pill px-4\" href=\"#tarifs\">Voir tarifs</a>
+                            </div>
+                            <div class=\"col-md-5\">
+                                <div class=\"glass rounded-4 p-4\">
+                                    <div class=\"fw-semibold mb-1\">Bénéfice</div>
+                                    <div class=\"text-white-50 small\">Réduire le temps de réponse</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {# Slide 3 #}
+                <div class=\"carousel-item\">
+                    <div class=\"p-4 p-md-5\" style=\"min-height: 320px; background:
+                        radial-gradient(700px 300px at 30% 70%, rgba(138,91,255,.18), transparent 60%),
+                        linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.02));\">
+                        <div class=\"row align-items-center g-4\">
+                            <div class=\"col-md-7\">
+                                <div class=\"text-white-50 small mb-2\">XDR Suite</div>
+                                <h3 class=\"fw-bold mb-2\">Vision globale & corrélation avancée</h3>
+                                <p class=\"section-sub mb-4\">
+                                    Corrélation multi-sources, priorisation, dashboards.
+                                </p>
+                                <a class=\"btn btn-accent rounded-pill px-4\" href=\"#contact\">Demander une démo</a>
+                            </div>
+                            <div class=\"col-md-5\">
+                                <div class=\"glass rounded-4 p-4\">
+                                    <div class=\"fw-semibold mb-1\">Pour</div>
+                                    <div class=\"text-white-50 small\">Équipes IT & SecOps</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class=\"carousel-control-prev\" type=\"button\" data-bs-target=\"#homeCarousel\" data-bs-slide=\"prev\">
+                <span class=\"carousel-control-prev-icon\"></span>
+                <span class=\"visually-hidden\">Précédent</span>
+            </button>
+            <button class=\"carousel-control-next\" type=\"button\" data-bs-target=\"#homeCarousel\" data-bs-slide=\"next\">
+                <span class=\"carousel-control-next-icon\"></span>
+                <span class=\"visually-hidden\">Suivant</span>
+            </button>
+        </div>
+    </section>
+
+
+    {# ======================
+       2) TEXTE SOUS CARROUSEL
+       ====================== #}
+    <section class=\"py-4\">
+        <div class=\"cyna-card p-4 p-md-5\">
+            <h2 class=\"section-title mb-2\">Une cybersécurité simple à déployer</h2>
+            <p class=\"section-sub mb-0\">
+                CYNA propose une approche progressive : vous démarrez avec une vitrine claire,
+                puis vous branchez au fil du projet les fonctionnalités (produits, catégories, panier,
+                back-office). Ce bloc sera administrable plus tard, mais on prépare déjà le rendu.
+            </p>
+        </div>
+    </section>
+
+
+    {# ======================
+       3) GRILLE CATÉGORIES
+       ====================== #}
+    <section id=\"categories\" class=\"py-4 py-md-5\">
+        <div class=\"d-flex justify-content-between align-items-end mb-3\">
+            <div>
+                <h2 class=\"section-title mb-1\">Catégories</h2>
+                <div class=\"section-sub\">Explorez nos offres (maquette UI).</div>
+            </div>
+            <a href=\"#\" class=\"text-white-50\">Voir tout</a>
+        </div>
+
+        <div class=\"row g-3\">
+            {% set cats = [
+                {'name':'SOC', 'desc':'Surveillance • Incidents', 'emoji':'🛡️'},
+                {'name':'EDR', 'desc':'Endpoints • Réponse', 'emoji':'🧩'},
+                {'name':'XDR', 'desc':'Corrélation • SIEM', 'emoji':'🛰️'},
+                {'name':'Audit', 'desc':'Évaluation • Conformité', 'emoji':'📋'},
+                {'name':'MFA', 'desc':'Accès • Authentification', 'emoji':'🔐'},
+                {'name':'Formation', 'desc':'Sensibilisation', 'emoji':'🎓'},
+            ] %}
+
+            {% for c in cats %}
+                <div class=\"col-6 col-md-4 col-lg-2\">
+                    <a href=\"#\" class=\"text-decoration-none\">
+                        <div class=\"cyna-card p-3 h-100\">
+                            <div class=\"d-flex align-items-center gap-2 mb-2\">
+                                <div class=\"glass rounded-3 px-2 py-1\">{{ c.emoji }}</div>
+                                <div class=\"fw-bold text-white\">{{ c.name }}</div>
+                            </div>
+                            <div class=\"text-white-50 small\">{{ c.desc }}</div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+
+    {# ======================
+       SERVICES (tu peux garder/adapter)
+       ====================== #}
+    <section id=\"services\" class=\"py-4 py-md-5\">
+        <div class=\"d-flex justify-content-between align-items-end mb-3\">
+            <div>
+                <h2 class=\"section-title mb-1\">Services</h2>
+                <div class=\"section-sub\">Trois briques pour démarrer vite.</div>
+            </div>
+            <a href=\"#\" class=\"text-white-50\">Voir tout</a>
+        </div>
+
+        <div class=\"row g-3\">
+            <div class=\"col-md-4\">
+                <div class=\"cyna-card p-4 h-100\">
+                    <h3 class=\"h5 fw-bold\">SOC</h3>
+                    <p class=\"section-sub mb-3\">Surveillance continue de votre SI et gestion des incidents.</p>
+                    <ul class=\"text-white-50 small mb-0\">
+                        <li>Veille & alerting</li>
+                        <li>Playbooks d’intervention</li>
+                        <li>Rapports hebdo</li>
+                    </ul>
+                </div>
+            </div>
+            <div class=\"col-md-4\">
+                <div class=\"cyna-card p-4 h-100\">
+                    <h3 class=\"h5 fw-bold\">EDR</h3>
+                    <p class=\"section-sub mb-3\">Détection et réponse sur les endpoints.</p>
+                    <ul class=\"text-white-50 small mb-0\">
+                        <li>Isolation machine</li>
+                        <li>Analyse comportementale</li>
+                        <li>Remédiation guidée</li>
+                    </ul>
+                </div>
+            </div>
+            <div class=\"col-md-4\">
+                <div class=\"cyna-card p-4 h-100\">
+                    <h3 class=\"h5 fw-bold\">XDR</h3>
+                    <p class=\"section-sub mb-3\">Corrélation multi-sources et vision globale.</p>
+                    <ul class=\"text-white-50 small mb-0\">
+                        <li>Corrélation SIEM</li>
+                        <li>Priorisation</li>
+                        <li>Tableaux de bord</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    {# ======================
+       TARIFS + CONTACT (tu peux garder tel quel)
+       ====================== #}
+    <section id=\"tarifs\" class=\"py-4 py-md-5\">
+        <div class=\"d-flex justify-content-between align-items-end mb-3\">
+            <div>
+                <h2 class=\"section-title mb-1\">Tarifs</h2>
+                <div class=\"section-sub\">Maquette simple (on détaillera plus tard).</div>
+            </div>
+        </div>
+
+        <div class=\"row g-3\">
+            <div class=\"col-md-4\">
+                <div class=\"cyna-card p-4 h-100\">
+                    <div class=\"text-white-50 small\">Starter</div>
+                    <div class=\"display-6 fw-bold\">19€</div>
+                    <div class=\"text-white-50 mb-3\">/ mois</div>
+                    <ul class=\"text-white-50 small\">
+                        <li>Pack vitrine</li>
+                        <li>Accès dashboard (démo)</li>
+                        <li>Support standard</li>
+                    </ul>
+                    <a class=\"btn btn-outline-light rounded-pill w-100 mt-2\" href=\"#contact\">Choisir</a>
+                </div>
+            </div>
+
+            <div class=\"col-md-4\">
+                <div class=\"cyna-card p-4 h-100 position-relative\">
+                    <span class=\"badge text-bg-primary position-absolute top-0 end-0 m-3\">Populaire</span>
+                    <div class=\"text-white-50 small\">Pro</div>
+                    <div class=\"display-6 fw-bold\">49€</div>
+                    <div class=\"text-white-50 mb-3\">/ mois</div>
+                    <ul class=\"text-white-50 small\">
+                        <li>SOC + EDR</li>
+                        <li>Rapports</li>
+                        <li>Support prioritaire</li>
+                    </ul>
+                    <a class=\"btn btn-accent rounded-pill w-100 mt-2\" href=\"#contact\">Choisir</a>
+                </div>
+            </div>
+
+            <div class=\"col-md-4\">
+                <div class=\"cyna-card p-4 h-100\">
+                    <div class=\"text-white-50 small\">Entreprise</div>
+                    <div class=\"display-6 fw-bold\">Sur devis</div>
+                    <div class=\"text-white-50 mb-3\">&nbsp;</div>
+                    <ul class=\"text-white-50 small\">
+                        <li>XDR complet</li>
+                        <li>Intégrations</li>
+                        <li>Accompagnement</li>
+                    </ul>
+                    <a class=\"btn btn-outline-light rounded-pill w-100 mt-2\" href=\"#contact\">Contact</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id=\"contact\" class=\"py-4 py-md-5\">
+        <div class=\"cyna-card p-4 p-md-5\">
+            <h2 class=\"section-title mb-2\">Contact</h2>
+            <div class=\"section-sub mb-4\">Laisse un message (formulaire “vitrine” pour le moment).</div>
+
+            <form class=\"row g-3\">
+                <div class=\"col-md-6\">
+                    <label class=\"form-label text-white-50\">Nom</label>
+                    <input class=\"form-control\" placeholder=\"Votre nom\">
+                </div>
+                <div class=\"col-md-6\">
+                    <label class=\"form-label text-white-50\">Email</label>
+                    <input class=\"form-control\" placeholder=\"vous@exemple.com\">
+                </div>
+                <div class=\"col-12\">
+                    <label class=\"form-label text-white-50\">Message</label>
+                    <textarea class=\"form-control\" rows=\"4\" placeholder=\"Expliquez votre besoin...\"></textarea>
+                </div>
+                <div class=\"col-12 d-flex gap-2\">
+                    <button type=\"button\" class=\"btn btn-accent rounded-pill px-4\">Envoyer</button>
+                    <button type=\"reset\" class=\"btn btn-outline-light rounded-pill px-4\">Effacer</button>
+                </div>
+                <div class=\"text-white-50 small mt-2\">* Formulaire non connecté (Jour 1).</div>
+            </form>
+        </div>
+    </section>
+
+</div>
+{% endblock %}
+", "home/index.html.twig", "C:\\Users\\internet\\PhpstormProjects\\CYNA-Web\\templates\\home\\index.html.twig");
+    }
+}

@@ -1,0 +1,3 @@
+<?php //8cac106c23c3993b2c826489f6f08572
+
+return [PHP_INT_MAX, 'bundles/apiplatform/style.css'];

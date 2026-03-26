@@ -3,7 +3,10 @@
 namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\AddressRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AddressRepository::class)]
 #[ApiResource]
@@ -21,28 +24,45 @@ class Address
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['order:read'])]
     private ?string $adresse1 = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $adresse2 = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['order:read'])]
     private ?string $city = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['order:read'])]
     private ?string $region = null;
 
     #[ORM\Column(length: 20)]
+    #[Groups(['order:read'])]
     private ?string $zipCode = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['order:read'])]
     private ?string $country = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['order:read'])]
     private ?string $mobilephone = null;
 
     #[ORM\ManyToOne(inversedBy: 'addresses')]
     private ?User $user = null;
+
+    /**
+     * @var Collection<int, Order>
+     */
+    #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'billingAddress')]
+    private Collection $orders;
+
+    public function __construct()
+    {
+        $this->orders = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -165,6 +185,36 @@ class Address
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Order>
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Order $order): static
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders->add($order);
+            $order->setBillingAddress($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): static
+    {
+        if ($this->orders->removeElement($order)) {
+            // set the owning side to null (unless already changed)
+            if ($order->getBillingAddress() === $this) {
+                $order->setBillingAddress(null);
+            }
+        }
 
         return $this;
     }

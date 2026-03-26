@@ -4,38 +4,50 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\SaasServiceRepository;
+use Symfony\Component\Serializer\Annotation\Groups; // <--- L'import
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SaasServiceRepository::class)]
-#[ApiResource]
+#[ApiResource (
+    normalizationContext: ['groups' => ['saas_service:read']],
+    denormalizationContext: ['groups' => ['saas_service:write']]
+)]
 class SaasService
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['saas_service:read', 'category:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['saas_service:read', 'saas_service:write', 'category:read', 'order:read'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['saas_service:read', 'saas_service:write', 'category:read'])]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['saas_service:read', 'saas_service:write', 'category:read'])]
     private ?string $technicalSpecs = null;
 
     #[ORM\Column]
+    #[Groups(['saas_service:read', 'saas_service:write', 'category:read', 'order:read'])]
     private ?float $price = null;
 
     #[ORM\Column]
+    #[Groups(['saas_service:read', 'saas_service:write', 'category:read'])]
     private ?bool $isAvailable = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['saas_service:read', 'saas_service:write', 'category:read'])]
     private ?int $priority = null;
 
     #[ORM\ManyToOne(inversedBy: 'saasServices')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['saas_service:read', 'saas_service:write'])]
     private ?Category $category = null;
 
     public function getId(): ?int

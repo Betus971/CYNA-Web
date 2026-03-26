@@ -4,20 +4,26 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\CategoryRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
-#[ApiResource] // <--- 2. Et ajoute ceci juste au-dessus de "class Category"
+#[ApiResource (
+    normalizationContext: ['groups' => ['category:read']],
+    denormalizationContext: ['groups' => ['category:write']]
+)] // <--- 2. Et ajoute ceci juste au-dessus de "class Category"
 class Category
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['category:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['category:read', 'category:write'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -30,6 +36,7 @@ class Category
      * @var Collection<int, SaasService>
      */
     #[ORM\OneToMany(targetEntity: SaasService::class, mappedBy: 'category')]
+    #[Groups(['category:read'])]
     private Collection $saasServices;
 
     public function __construct()

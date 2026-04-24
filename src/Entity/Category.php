@@ -2,34 +2,53 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use App\Repository\CategoryRepository;
-use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
-#[ApiResource (
+#[ApiResource(
     normalizationContext: ['groups' => ['category:read']],
-    denormalizationContext: ['groups' => ['category:write']]
-)] // <--- 2. Et ajoute ceci juste au-dessus de "class Category"
+    denormalizationContext: ['groups' => ['category:write']],
+    operations: [
+        new GetCollection(),
+        new Get(),
+        new Post(security: "is_granted('ROLE_ADMIN')"),
+        new Patch(security: "is_granted('ROLE_ADMIN')"),
+        new Delete(security: "is_granted('ROLE_ADMIN')"),
+    ]
+)]
+#[ApiFilter(OrderFilter::class, properties: ['displayOrder', 'name'])]
 class Category
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['category:read'])]
+    #[Groups(['category:read', 'saas_service:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['category:read', 'category:write'])]
+    #[Assert\NotBlank]
+    #[Groups(['category:read', 'category:write', 'saas_service:read'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['category:read', 'category:write'])]
     private ?string $image = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['category:read', 'category:write'])]
     private ?int $displayOrder = null;
 
     /**
@@ -106,7 +125,6 @@ class Category
     public function removeSaasService(SaasService $saasService): static
     {
         if ($this->saasServices->removeElement($saasService)) {
-            // set the owning side to null (unless already changed)
             if ($saasService->getCategory() === $this) {
                 $saasService->setCategory(null);
             }

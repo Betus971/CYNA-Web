@@ -1,56 +1,86 @@
 <?php
 
 namespace App\Entity;
+
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Repository\AddressRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AddressRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['address:read']],
+    denormalizationContext: ['groups' => ['address:write']],
+    operations: [
+        new GetCollection(security: "is_granted('ROLE_ADMIN')"),
+        new Get(security: "is_granted('ROLE_ADMIN') or object.getUser() == user"),
+        new Post(security: "is_granted('ROLE_USER')"),
+        new Patch(security: "is_granted('ROLE_ADMIN') or object.getUser() == user"),
+        new Delete(security: "is_granted('ROLE_ADMIN') or object.getUser() == user"),
+    ]
+)]
 class Address
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['address:read', 'order:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $fisrtname = null;
+    #[Assert\NotBlank]
+    #[Groups(['address:read', 'address:write', 'order:read'])]
+    private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Groups(['address:read', 'address:write', 'order:read'])]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['order:read'])]
+    #[Assert\NotBlank]
+    #[Groups(['address:read', 'address:write', 'order:read'])]
     private ?string $adresse1 = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['address:read', 'address:write', 'order:read'])]
     private ?string $adresse2 = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['order:read'])]
+    #[Assert\NotBlank]
+    #[Groups(['address:read', 'address:write', 'order:read'])]
     private ?string $city = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['order:read'])]
+    #[Assert\NotBlank]
+    #[Groups(['address:read', 'address:write', 'order:read'])]
     private ?string $region = null;
 
     #[ORM\Column(length: 20)]
-    #[Groups(['order:read'])]
+    #[Assert\NotBlank]
+    #[Groups(['address:read', 'address:write', 'order:read'])]
     private ?string $zipCode = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['order:read'])]
+    #[Assert\NotBlank]
+    #[Groups(['address:read', 'address:write', 'order:read'])]
     private ?string $country = null;
 
     #[ORM\Column(length: 50)]
-    #[Groups(['order:read'])]
+    #[Assert\NotBlank]
+    #[Groups(['address:read', 'address:write', 'order:read'])]
     private ?string $mobilephone = null;
 
     #[ORM\ManyToOne(inversedBy: 'addresses')]
+    #[Groups(['address:read', 'address:write'])]
     private ?User $user = null;
 
     /**
@@ -69,14 +99,14 @@ class Address
         return $this->id;
     }
 
-    public function getFisrtname(): ?string
+    public function getFirstname(): ?string
     {
-        return $this->fisrtname;
+        return $this->firstname;
     }
 
-    public function setFisrtname(string $fisrtname): static
+    public function setFirstname(string $firstname): static
     {
-        $this->fisrtname = $fisrtname;
+        $this->firstname = $firstname;
 
         return $this;
     }
@@ -210,7 +240,6 @@ class Address
     public function removeOrder(Order $order): static
     {
         if ($this->orders->removeElement($order)) {
-            // set the owning side to null (unless already changed)
             if ($order->getBillingAddress() === $this) {
                 $order->setBillingAddress(null);
             }

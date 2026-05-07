@@ -46,6 +46,8 @@ security:
         - { path: ^/api/password/forgot,        roles: PUBLIC_ACCESS }
         - { path: ^/api/password/reset,         roles: PUBLIC_ACCESS }
         - { path: ^/api/contact,                methods: [POST],   roles: PUBLIC_ACCESS }
+        - { path: ^/api/contact_messages,       methods: [POST],   roles: PUBLIC_ACCESS }
+        - { path: ^/api/chatbot,                methods: [POST],   roles: PUBLIC_ACCESS }
 
         # Catalogue / home : lecture libre
         - { path: ^/api/categories,             methods: [GET],    roles: PUBLIC_ACCESS }

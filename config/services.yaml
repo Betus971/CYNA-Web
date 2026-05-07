@@ -9,6 +9,7 @@
 parameters:
     app.frontend_url: '%env(string:FRONTEND_URL)%'
     app.mail_from:    '%env(string:MAIL_FROM)%'
+    app.gemini_default_model: 'gemini-3.1-flash-lite-preview'
 
 services:
     # default configuration for services in *this* file
@@ -26,6 +27,11 @@ services:
     App\Doctrine\CurrentUserOrderExtension:
         tags:
             - { name: api_platform.doctrine.orm.query_extension.collection }
+
+    App\Service\Chatbot\GeminiChatbotClient:
+        arguments:
+            $apiKey: '%env(string:GEMINI_API_KEY)%'
+            $model: '%env(default:app.gemini_default_model:GEMINI_MODEL)%'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

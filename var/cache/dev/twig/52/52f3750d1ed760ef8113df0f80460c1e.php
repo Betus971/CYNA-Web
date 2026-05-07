@@ -990,6 +990,6 @@ class __TwigTemplate_2d85726ef78f84efafc260198caa26b3 extends Template
         </tbody>
     </table>
 {% endmacro %}
-", "@WebProfiler/Collector/translation.html.twig", "C:\\Users\\leona\\PhpstormProjects\\CYNA-Web\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Collector\\translation.html.twig");
+", "@WebProfiler/Collector/translation.html.twig", "C:\\Users\\julia\\Documents\\GitHub\\CYNA\\CYNA-Web\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Collector\\translation.html.twig");
     }
 }

@@ -17,7 +17,7 @@ class MonologConfig implements \Symfony\Component\Config\Builder\ConfigBuilderIn
     private $handlers;
     private $_usedProperties = [];
     private $_hasDeprecatedCalls = false;
-
+    
     /**
      * @default true
      * @param ParamConfigurator|mixed $value
@@ -29,10 +29,10 @@ class MonologConfig implements \Symfony\Component\Config\Builder\ConfigBuilderIn
         $this->_hasDeprecatedCalls = true;
         $this->_usedProperties['useMicroseconds'] = true;
         $this->useMicroseconds = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed> $value
      *
@@ -44,10 +44,10 @@ class MonologConfig implements \Symfony\Component\Config\Builder\ConfigBuilderIn
         $this->_hasDeprecatedCalls = true;
         $this->_usedProperties['channels'] = true;
         $this->channels = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @example {"type":"stream","path":"\/var\/log\/symfony.log","level":"ERROR","bubble":"false","formatter":"my_formatter"}
      * @example {"type":"fingers_crossed","action_level":"WARNING","buffer_size":30,"handler":"custom"}
@@ -63,15 +63,15 @@ class MonologConfig implements \Symfony\Component\Config\Builder\ConfigBuilderIn
         } elseif (1 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "handler()" has already been initialized. You cannot pass values the second time you call handler().');
         }
-
+    
         return $this->handlers[$name];
     }
-
+    
     public function getExtensionAlias(): string
     {
         return 'monolog';
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('use_microseconds', $config)) {
@@ -79,24 +79,24 @@ class MonologConfig implements \Symfony\Component\Config\Builder\ConfigBuilderIn
             $this->useMicroseconds = $config['use_microseconds'];
             unset($config['use_microseconds']);
         }
-
+    
         if (array_key_exists('channels', $config)) {
             $this->_usedProperties['channels'] = true;
             $this->channels = $config['channels'];
             unset($config['channels']);
         }
-
+    
         if (array_key_exists('handlers', $config)) {
             $this->_usedProperties['handlers'] = true;
             $this->handlers = array_map(fn ($v) => new \Symfony\Config\Monolog\HandlerConfig($v), $config['handlers']);
             unset($config['handlers']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -112,7 +112,7 @@ class MonologConfig implements \Symfony\Component\Config\Builder\ConfigBuilderIn
         if ($this->_hasDeprecatedCalls) {
             trigger_deprecation('symfony/config', '7.4', 'Calling any fluent method on "%s" is deprecated; pass the configuration to the constructor instead.', $this::class);
         }
-
+    
         return $output;
     }
 

@@ -16,7 +16,7 @@ class CommonmarkConfig
     private $useUnderscore;
     private $unorderedListMarkers;
     private $_usedProperties = [];
-
+    
     /**
      * @default true
      * @param ParamConfigurator|bool $value
@@ -26,10 +26,10 @@ class CommonmarkConfig
     {
         $this->_usedProperties['enableEm'] = true;
         $this->enableEm = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default true
      * @param ParamConfigurator|bool $value
@@ -39,10 +39,10 @@ class CommonmarkConfig
     {
         $this->_usedProperties['enableStrong'] = true;
         $this->enableStrong = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default true
      * @param ParamConfigurator|bool $value
@@ -52,10 +52,10 @@ class CommonmarkConfig
     {
         $this->_usedProperties['useAsterisk'] = true;
         $this->useAsterisk = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default true
      * @param ParamConfigurator|bool $value
@@ -65,10 +65,10 @@ class CommonmarkConfig
     {
         $this->_usedProperties['useUnderscore'] = true;
         $this->useUnderscore = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed> $value
      *
@@ -78,10 +78,10 @@ class CommonmarkConfig
     {
         $this->_usedProperties['unorderedListMarkers'] = true;
         $this->unorderedListMarkers = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enable_em', $config)) {
@@ -89,36 +89,36 @@ class CommonmarkConfig
             $this->enableEm = $config['enable_em'];
             unset($config['enable_em']);
         }
-
+    
         if (array_key_exists('enable_strong', $config)) {
             $this->_usedProperties['enableStrong'] = true;
             $this->enableStrong = $config['enable_strong'];
             unset($config['enable_strong']);
         }
-
+    
         if (array_key_exists('use_asterisk', $config)) {
             $this->_usedProperties['useAsterisk'] = true;
             $this->useAsterisk = $config['use_asterisk'];
             unset($config['use_asterisk']);
         }
-
+    
         if (array_key_exists('use_underscore', $config)) {
             $this->_usedProperties['useUnderscore'] = true;
             $this->useUnderscore = $config['use_underscore'];
             unset($config['use_underscore']);
         }
-
+    
         if (array_key_exists('unordered_list_markers', $config)) {
             $this->_usedProperties['unorderedListMarkers'] = true;
             $this->unorderedListMarkers = $config['unordered_list_markers'];
             unset($config['unordered_list_markers']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -137,7 +137,7 @@ class CommonmarkConfig
         if (isset($this->_usedProperties['unorderedListMarkers'])) {
             $output['unordered_list_markers'] = $this->unorderedListMarkers;
         }
-
+    
         return $output;
     }
 

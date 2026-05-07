@@ -14,7 +14,7 @@ class ProviderConfig
     private $domains;
     private $locales;
     private $_usedProperties = [];
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -24,10 +24,10 @@ class ProviderConfig
     {
         $this->_usedProperties['dsn'] = true;
         $this->dsn = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed> $value
      *
@@ -37,10 +37,10 @@ class ProviderConfig
     {
         $this->_usedProperties['domains'] = true;
         $this->domains = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed> $value
      *
@@ -50,10 +50,10 @@ class ProviderConfig
     {
         $this->_usedProperties['locales'] = true;
         $this->locales = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('dsn', $config)) {
@@ -61,24 +61,24 @@ class ProviderConfig
             $this->dsn = $config['dsn'];
             unset($config['dsn']);
         }
-
+    
         if (array_key_exists('domains', $config)) {
             $this->_usedProperties['domains'] = true;
             $this->domains = $config['domains'];
             unset($config['domains']);
         }
-
+    
         if (array_key_exists('locales', $config)) {
             $this->_usedProperties['locales'] = true;
             $this->locales = $config['locales'];
             unset($config['locales']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -91,7 +91,7 @@ class ProviderConfig
         if (isset($this->_usedProperties['locales'])) {
             $output['locales'] = $this->locales;
         }
-
+    
         return $output;
     }
 

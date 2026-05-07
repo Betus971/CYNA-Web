@@ -16,7 +16,7 @@ class WebhookConfig
     private $messageBus;
     private $routing;
     private $_usedProperties = [];
-
+    
     /**
      * @default false
      * @param ParamConfigurator|bool $value
@@ -26,10 +26,10 @@ class WebhookConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The message bus to use.
      * @default 'messenger.default_bus'
@@ -40,10 +40,10 @@ class WebhookConfig
     {
         $this->_usedProperties['messageBus'] = true;
         $this->messageBus = $value;
-
+    
         return $this;
     }
-
+    
     public function routing(string $type, array $value = []): \Symfony\Config\Framework\Webhook\RoutingConfig
     {
         if (!isset($this->routing[$type])) {
@@ -52,10 +52,10 @@ class WebhookConfig
         } elseif (1 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "routing()" has already been initialized. You cannot pass values the second time you call routing().');
         }
-
+    
         return $this->routing[$type];
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -63,24 +63,24 @@ class WebhookConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('message_bus', $config)) {
             $this->_usedProperties['messageBus'] = true;
             $this->messageBus = $config['message_bus'];
             unset($config['message_bus']);
         }
-
+    
         if (array_key_exists('routing', $config)) {
             $this->_usedProperties['routing'] = true;
             $this->routing = array_map(fn ($v) => new \Symfony\Config\Framework\Webhook\RoutingConfig($v), $config['routing']);
             unset($config['routing']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -93,7 +93,7 @@ class WebhookConfig
         if (isset($this->_usedProperties['routing'])) {
             $output['routing'] = array_map(fn ($v) => $v->toArray(), $this->routing);
         }
-
+    
         return $output;
     }
 

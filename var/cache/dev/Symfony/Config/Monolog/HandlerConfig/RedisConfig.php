@@ -17,7 +17,7 @@ class RedisConfig
     private $database;
     private $keyName;
     private $_usedProperties = [];
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -27,10 +27,10 @@ class RedisConfig
     {
         $this->_usedProperties['id'] = true;
         $this->id = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -40,10 +40,10 @@ class RedisConfig
     {
         $this->_usedProperties['host'] = true;
         $this->host = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -53,10 +53,10 @@ class RedisConfig
     {
         $this->_usedProperties['password'] = true;
         $this->password = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 6379
      * @param ParamConfigurator|mixed $value
@@ -66,10 +66,10 @@ class RedisConfig
     {
         $this->_usedProperties['port'] = true;
         $this->port = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 0
      * @param ParamConfigurator|mixed $value
@@ -79,10 +79,10 @@ class RedisConfig
     {
         $this->_usedProperties['database'] = true;
         $this->database = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 'monolog_redis'
      * @param ParamConfigurator|mixed $value
@@ -92,10 +92,10 @@ class RedisConfig
     {
         $this->_usedProperties['keyName'] = true;
         $this->keyName = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('id', $config)) {
@@ -103,42 +103,42 @@ class RedisConfig
             $this->id = $config['id'];
             unset($config['id']);
         }
-
+    
         if (array_key_exists('host', $config)) {
             $this->_usedProperties['host'] = true;
             $this->host = $config['host'];
             unset($config['host']);
         }
-
+    
         if (array_key_exists('password', $config)) {
             $this->_usedProperties['password'] = true;
             $this->password = $config['password'];
             unset($config['password']);
         }
-
+    
         if (array_key_exists('port', $config)) {
             $this->_usedProperties['port'] = true;
             $this->port = $config['port'];
             unset($config['port']);
         }
-
+    
         if (array_key_exists('database', $config)) {
             $this->_usedProperties['database'] = true;
             $this->database = $config['database'];
             unset($config['database']);
         }
-
+    
         if (array_key_exists('key_name', $config)) {
             $this->_usedProperties['keyName'] = true;
             $this->keyName = $config['key_name'];
             unset($config['key_name']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -160,7 +160,7 @@ class RedisConfig
         if (isset($this->_usedProperties['keyName'])) {
             $output['key_name'] = $this->keyName;
         }
-
+    
         return $output;
     }
 

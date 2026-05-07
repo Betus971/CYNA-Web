@@ -13,7 +13,7 @@ class SplitCookieConfig
     private $enabled;
     private $cookies;
     private $_usedProperties = [];
-
+    
     /**
      * @default false
      * @param ParamConfigurator|bool $value
@@ -23,10 +23,10 @@ class SplitCookieConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed> $value
      *
@@ -36,10 +36,10 @@ class SplitCookieConfig
     {
         $this->_usedProperties['cookies'] = true;
         $this->cookies = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -47,18 +47,18 @@ class SplitCookieConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('cookies', $config)) {
             $this->_usedProperties['cookies'] = true;
             $this->cookies = $config['cookies'];
             unset($config['cookies']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -68,7 +68,7 @@ class SplitCookieConfig
         if (isset($this->_usedProperties['cookies'])) {
             $output['cookies'] = $this->cookies;
         }
-
+    
         return $output;
     }
 

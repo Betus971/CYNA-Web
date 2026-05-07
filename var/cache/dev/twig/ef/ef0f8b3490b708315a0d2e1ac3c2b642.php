@@ -463,6 +463,6 @@ class __TwigTemplate_17e88b2a81da636e12f0c58d0318b20d extends Template
         </div>
     </div>
 {% endblock %}
-", "@WebProfiler/Profiler/layout.html.twig", "C:\\Users\\leona\\PhpstormProjects\\CYNA-Web\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Profiler\\layout.html.twig");
+", "@WebProfiler/Profiler/layout.html.twig", "C:\\Users\\julia\\Documents\\GitHub\\CYNA\\CYNA-Web\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Profiler\\layout.html.twig");
     }
 }

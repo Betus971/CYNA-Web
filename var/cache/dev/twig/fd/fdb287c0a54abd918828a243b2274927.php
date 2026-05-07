@@ -240,6 +240,6 @@ class __TwigTemplate_29c9095116a40d5f6bf75dbfcc51843c extends Template
         {% block body %}{% endblock %}
     </body>
 </html>
-", "base.html.twig", "C:\\Users\\leona\\PhpstormProjects\\CYNA-Web\\templates\\base.html.twig");
+", "base.html.twig", "C:\\Users\\julia\\Documents\\GitHub\\CYNA\\CYNA-Web\\templates\\base.html.twig");
     }
 }

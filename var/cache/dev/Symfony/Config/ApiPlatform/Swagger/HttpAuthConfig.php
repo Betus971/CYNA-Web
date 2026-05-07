@@ -13,7 +13,7 @@ class HttpAuthConfig
     private $scheme;
     private $bearerFormat;
     private $_usedProperties = [];
-
+    
     /**
      * The OpenAPI HTTP auth scheme, for example "bearer"
      * @default null
@@ -24,10 +24,10 @@ class HttpAuthConfig
     {
         $this->_usedProperties['scheme'] = true;
         $this->scheme = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The OpenAPI HTTP bearer format
      * @default null
@@ -38,10 +38,10 @@ class HttpAuthConfig
     {
         $this->_usedProperties['bearerFormat'] = true;
         $this->bearerFormat = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('scheme', $config)) {
@@ -49,18 +49,18 @@ class HttpAuthConfig
             $this->scheme = $config['scheme'];
             unset($config['scheme']);
         }
-
+    
         if (array_key_exists('bearerFormat', $config)) {
             $this->_usedProperties['bearerFormat'] = true;
             $this->bearerFormat = $config['bearerFormat'];
             unset($config['bearerFormat']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -70,7 +70,7 @@ class HttpAuthConfig
         if (isset($this->_usedProperties['bearerFormat'])) {
             $output['bearerFormat'] = $this->bearerFormat;
         }
-
+    
         return $output;
     }
 

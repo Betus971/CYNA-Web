@@ -305,6 +305,6 @@ class __TwigTemplate_0da85cacfeb82a2d4ff3d97924046479 extends Template
         });
     </script>
 {% endblock %}
-", "@WebProfiler/Profiler/open.html.twig", "C:\\Users\\leona\\PhpstormProjects\\CYNA-Web\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Profiler\\open.html.twig");
+", "@WebProfiler/Profiler/open.html.twig", "C:\\Users\\julia\\Documents\\GitHub\\CYNA\\CYNA-Web\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Profiler\\open.html.twig");
     }
 }

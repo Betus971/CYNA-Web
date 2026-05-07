@@ -15,7 +15,7 @@ class EagerLoadingConfig
     private $maxJoins;
     private $forceEager;
     private $_usedProperties = [];
-
+    
     /**
      * @default true
      * @param ParamConfigurator|bool $value
@@ -25,10 +25,10 @@ class EagerLoadingConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Fetch only partial data according to serialization groups. If enabled, Doctrine ORM entities will not work as expected if any of the other fields are used.
      * @default false
@@ -39,10 +39,10 @@ class EagerLoadingConfig
     {
         $this->_usedProperties['fetchPartial'] = true;
         $this->fetchPartial = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Max number of joined relations before EagerLoading throws a RuntimeException
      * @default 30
@@ -53,10 +53,10 @@ class EagerLoadingConfig
     {
         $this->_usedProperties['maxJoins'] = true;
         $this->maxJoins = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Force join on every relation. If disabled, it will only join relations having the EAGER fetch mode.
      * @default true
@@ -67,10 +67,10 @@ class EagerLoadingConfig
     {
         $this->_usedProperties['forceEager'] = true;
         $this->forceEager = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -78,30 +78,30 @@ class EagerLoadingConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('fetch_partial', $config)) {
             $this->_usedProperties['fetchPartial'] = true;
             $this->fetchPartial = $config['fetch_partial'];
             unset($config['fetch_partial']);
         }
-
+    
         if (array_key_exists('max_joins', $config)) {
             $this->_usedProperties['maxJoins'] = true;
             $this->maxJoins = $config['max_joins'];
             unset($config['max_joins']);
         }
-
+    
         if (array_key_exists('force_eager', $config)) {
             $this->_usedProperties['forceEager'] = true;
             $this->forceEager = $config['force_eager'];
             unset($config['force_eager']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -117,7 +117,7 @@ class EagerLoadingConfig
         if (isset($this->_usedProperties['forceEager'])) {
             $output['force_eager'] = $this->forceEager;
         }
-
+    
         return $output;
     }
 

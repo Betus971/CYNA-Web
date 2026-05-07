@@ -14,7 +14,7 @@ class ProcessPsr3MessagesConfig
     private $dateFormat;
     private $removeUsedContextFields;
     private $_usedProperties = [];
-
+    
     /**
      * @default null
      * @param ParamConfigurator|bool $value
@@ -24,10 +24,10 @@ class ProcessPsr3MessagesConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -37,10 +37,10 @@ class ProcessPsr3MessagesConfig
     {
         $this->_usedProperties['dateFormat'] = true;
         $this->dateFormat = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|bool $value
@@ -50,10 +50,10 @@ class ProcessPsr3MessagesConfig
     {
         $this->_usedProperties['removeUsedContextFields'] = true;
         $this->removeUsedContextFields = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -61,24 +61,24 @@ class ProcessPsr3MessagesConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('date_format', $config)) {
             $this->_usedProperties['dateFormat'] = true;
             $this->dateFormat = $config['date_format'];
             unset($config['date_format']);
         }
-
+    
         if (array_key_exists('remove_used_context_fields', $config)) {
             $this->_usedProperties['removeUsedContextFields'] = true;
             $this->removeUsedContextFields = $config['remove_used_context_fields'];
             unset($config['remove_used_context_fields']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -91,7 +91,7 @@ class ProcessPsr3MessagesConfig
         if (isset($this->_usedProperties['removeUsedContextFields'])) {
             $output['remove_used_context_fields'] = $this->removeUsedContextFields;
         }
-
+    
         return $output;
     }
 

@@ -14,7 +14,7 @@ class StimulusConfig implements \Symfony\Component\Config\Builder\ConfigBuilderI
     private $controllersJson;
     private $_usedProperties = [];
     private $_hasDeprecatedCalls = false;
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed> $value
      *
@@ -26,10 +26,10 @@ class StimulusConfig implements \Symfony\Component\Config\Builder\ConfigBuilderI
         $this->_hasDeprecatedCalls = true;
         $this->_usedProperties['controllerPaths'] = true;
         $this->controllerPaths = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default '%kernel.project_dir%/assets/controllers.json'
      * @param ParamConfigurator|mixed $value
@@ -41,15 +41,15 @@ class StimulusConfig implements \Symfony\Component\Config\Builder\ConfigBuilderI
         $this->_hasDeprecatedCalls = true;
         $this->_usedProperties['controllersJson'] = true;
         $this->controllersJson = $value;
-
+    
         return $this;
     }
-
+    
     public function getExtensionAlias(): string
     {
         return 'stimulus';
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('controller_paths', $config)) {
@@ -57,18 +57,18 @@ class StimulusConfig implements \Symfony\Component\Config\Builder\ConfigBuilderI
             $this->controllerPaths = $config['controller_paths'];
             unset($config['controller_paths']);
         }
-
+    
         if (array_key_exists('controllers_json', $config)) {
             $this->_usedProperties['controllersJson'] = true;
             $this->controllersJson = $config['controllers_json'];
             unset($config['controllers_json']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -81,7 +81,7 @@ class StimulusConfig implements \Symfony\Component\Config\Builder\ConfigBuilderI
         if ($this->_hasDeprecatedCalls) {
             trigger_deprecation('symfony/config', '7.4', 'Calling any fluent method on "%s" is deprecated; pass the configuration to the constructor instead.', $this::class);
         }
-
+    
         return $output;
     }
 

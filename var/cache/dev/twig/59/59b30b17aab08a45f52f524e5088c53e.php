@@ -422,6 +422,6 @@ class __TwigTemplate_73582a0ad2ea956e36214954856653ff extends Template
 
     </div>
 {%- endif %}
-", "@WebProfiler/Profiler/_request_summary.html.twig", "C:\\Users\\leona\\PhpstormProjects\\CYNA-Web\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Profiler\\_request_summary.html.twig");
+", "@WebProfiler/Profiler/_request_summary.html.twig", "C:\\Users\\julia\\Documents\\GitHub\\CYNA\\CYNA-Web\\vendor\\symfony\\web-profiler-bundle\\Resources\\views\\Profiler\\_request_summary.html.twig");
     }
 }

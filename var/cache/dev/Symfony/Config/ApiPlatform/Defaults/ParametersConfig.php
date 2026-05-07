@@ -33,7 +33,7 @@ class ParametersConfig
     private $filterClass;
     private $_usedProperties = [];
     private $_extraKeys;
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -44,10 +44,10 @@ class ParametersConfig
     {
         $this->_usedProperties['key'] = true;
         $this->key = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -58,10 +58,10 @@ class ParametersConfig
     {
         $this->_usedProperties['schema'] = true;
         $this->schema = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -72,10 +72,10 @@ class ParametersConfig
     {
         $this->_usedProperties['openApi'] = true;
         $this->openApi = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -86,10 +86,10 @@ class ParametersConfig
     {
         $this->_usedProperties['provider'] = true;
         $this->provider = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -100,10 +100,10 @@ class ParametersConfig
     {
         $this->_usedProperties['filter'] = true;
         $this->filter = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -114,10 +114,10 @@ class ParametersConfig
     {
         $this->_usedProperties['property'] = true;
         $this->property = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -128,10 +128,10 @@ class ParametersConfig
     {
         $this->_usedProperties['description'] = true;
         $this->description = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -142,10 +142,10 @@ class ParametersConfig
     {
         $this->_usedProperties['properties'] = true;
         $this->properties = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -156,10 +156,10 @@ class ParametersConfig
     {
         $this->_usedProperties['required'] = true;
         $this->required = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -170,10 +170,10 @@ class ParametersConfig
     {
         $this->_usedProperties['priority'] = true;
         $this->priority = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -184,10 +184,10 @@ class ParametersConfig
     {
         $this->_usedProperties['hydra'] = true;
         $this->hydra = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -198,10 +198,10 @@ class ParametersConfig
     {
         $this->_usedProperties['constraints'] = true;
         $this->constraints = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -212,10 +212,10 @@ class ParametersConfig
     {
         $this->_usedProperties['security'] = true;
         $this->security = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -226,10 +226,10 @@ class ParametersConfig
     {
         $this->_usedProperties['securityMessage'] = true;
         $this->securityMessage = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -240,10 +240,10 @@ class ParametersConfig
     {
         $this->_usedProperties['extraProperties'] = true;
         $this->extraProperties = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -254,10 +254,10 @@ class ParametersConfig
     {
         $this->_usedProperties['filterContext'] = true;
         $this->filterContext = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -268,10 +268,10 @@ class ParametersConfig
     {
         $this->_usedProperties['nativeType'] = true;
         $this->nativeType = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -282,10 +282,10 @@ class ParametersConfig
     {
         $this->_usedProperties['castToArray'] = true;
         $this->castToArray = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -296,10 +296,10 @@ class ParametersConfig
     {
         $this->_usedProperties['castToNativeType'] = true;
         $this->castToNativeType = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -310,10 +310,10 @@ class ParametersConfig
     {
         $this->_usedProperties['castFn'] = true;
         $this->castFn = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -324,10 +324,10 @@ class ParametersConfig
     {
         $this->_usedProperties['default'] = true;
         $this->default = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -338,10 +338,10 @@ class ParametersConfig
     {
         $this->_usedProperties['filterClass'] = true;
         $this->filterClass = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('key', $config)) {
@@ -349,137 +349,137 @@ class ParametersConfig
             $this->key = $config['key'];
             unset($config['key']);
         }
-
+    
         if (array_key_exists('schema', $config)) {
             $this->_usedProperties['schema'] = true;
             $this->schema = $config['schema'];
             unset($config['schema']);
         }
-
+    
         if (array_key_exists('open_api', $config)) {
             $this->_usedProperties['openApi'] = true;
             $this->openApi = $config['open_api'];
             unset($config['open_api']);
         }
-
+    
         if (array_key_exists('provider', $config)) {
             $this->_usedProperties['provider'] = true;
             $this->provider = $config['provider'];
             unset($config['provider']);
         }
-
+    
         if (array_key_exists('filter', $config)) {
             $this->_usedProperties['filter'] = true;
             $this->filter = $config['filter'];
             unset($config['filter']);
         }
-
+    
         if (array_key_exists('property', $config)) {
             $this->_usedProperties['property'] = true;
             $this->property = $config['property'];
             unset($config['property']);
         }
-
+    
         if (array_key_exists('description', $config)) {
             $this->_usedProperties['description'] = true;
             $this->description = $config['description'];
             unset($config['description']);
         }
-
+    
         if (array_key_exists('properties', $config)) {
             $this->_usedProperties['properties'] = true;
             $this->properties = $config['properties'];
             unset($config['properties']);
         }
-
+    
         if (array_key_exists('required', $config)) {
             $this->_usedProperties['required'] = true;
             $this->required = $config['required'];
             unset($config['required']);
         }
-
+    
         if (array_key_exists('priority', $config)) {
             $this->_usedProperties['priority'] = true;
             $this->priority = $config['priority'];
             unset($config['priority']);
         }
-
+    
         if (array_key_exists('hydra', $config)) {
             $this->_usedProperties['hydra'] = true;
             $this->hydra = $config['hydra'];
             unset($config['hydra']);
         }
-
+    
         if (array_key_exists('constraints', $config)) {
             $this->_usedProperties['constraints'] = true;
             $this->constraints = $config['constraints'];
             unset($config['constraints']);
         }
-
+    
         if (array_key_exists('security', $config)) {
             $this->_usedProperties['security'] = true;
             $this->security = $config['security'];
             unset($config['security']);
         }
-
+    
         if (array_key_exists('security_message', $config)) {
             $this->_usedProperties['securityMessage'] = true;
             $this->securityMessage = $config['security_message'];
             unset($config['security_message']);
         }
-
+    
         if (array_key_exists('extra_properties', $config)) {
             $this->_usedProperties['extraProperties'] = true;
             $this->extraProperties = $config['extra_properties'];
             unset($config['extra_properties']);
         }
-
+    
         if (array_key_exists('filter_context', $config)) {
             $this->_usedProperties['filterContext'] = true;
             $this->filterContext = $config['filter_context'];
             unset($config['filter_context']);
         }
-
+    
         if (array_key_exists('native_type', $config)) {
             $this->_usedProperties['nativeType'] = true;
             $this->nativeType = $config['native_type'];
             unset($config['native_type']);
         }
-
+    
         if (array_key_exists('cast_to_array', $config)) {
             $this->_usedProperties['castToArray'] = true;
             $this->castToArray = $config['cast_to_array'];
             unset($config['cast_to_array']);
         }
-
+    
         if (array_key_exists('cast_to_native_type', $config)) {
             $this->_usedProperties['castToNativeType'] = true;
             $this->castToNativeType = $config['cast_to_native_type'];
             unset($config['cast_to_native_type']);
         }
-
+    
         if (array_key_exists('cast_fn', $config)) {
             $this->_usedProperties['castFn'] = true;
             $this->castFn = $config['cast_fn'];
             unset($config['cast_fn']);
         }
-
+    
         if (array_key_exists('default', $config)) {
             $this->_usedProperties['default'] = true;
             $this->default = $config['default'];
             unset($config['default']);
         }
-
+    
         if (array_key_exists('filter_class', $config)) {
             $this->_usedProperties['filterClass'] = true;
             $this->filterClass = $config['filter_class'];
             unset($config['filter_class']);
         }
-
+    
         $this->_extraKeys = $config;
-
+    
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -549,10 +549,10 @@ class ParametersConfig
         if (isset($this->_usedProperties['filterClass'])) {
             $output['filter_class'] = $this->filterClass;
         }
-
+    
         return $output + $this->_extraKeys;
     }
-
+    
     /**
      * @param ParamConfigurator|mixed $value
      *
@@ -561,7 +561,7 @@ class ParametersConfig
     public function set(string $key, mixed $value): static
     {
         $this->_extraKeys[$key] = $value;
-
+    
         return $this;
     }
 

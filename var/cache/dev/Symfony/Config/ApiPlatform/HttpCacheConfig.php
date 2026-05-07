@@ -15,7 +15,7 @@ class HttpCacheConfig
     private $public;
     private $invalidation;
     private $_usedProperties = [];
-
+    
     /**
      * To make all responses public by default.
      * @default null
@@ -26,10 +26,10 @@ class HttpCacheConfig
     {
         $this->_usedProperties['public'] = true;
         $this->public = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @template TValue of array|bool
      * @param TValue $value
@@ -43,20 +43,20 @@ class HttpCacheConfig
         if (!\is_array($value)) {
             $this->_usedProperties['invalidation'] = true;
             $this->invalidation = $value;
-
+    
             return $this;
         }
-
+    
         if (!$this->invalidation instanceof \Symfony\Config\ApiPlatform\HttpCache\InvalidationConfig) {
             $this->_usedProperties['invalidation'] = true;
             $this->invalidation = new \Symfony\Config\ApiPlatform\HttpCache\InvalidationConfig($value);
         } elseif (0 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "invalidation()" has already been initialized. You cannot pass values the second time you call invalidation().');
         }
-
+    
         return $this->invalidation;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('public', $config)) {
@@ -64,18 +64,18 @@ class HttpCacheConfig
             $this->public = $config['public'];
             unset($config['public']);
         }
-
+    
         if (array_key_exists('invalidation', $config)) {
             $this->_usedProperties['invalidation'] = true;
             $this->invalidation = \is_array($config['invalidation']) ? new \Symfony\Config\ApiPlatform\HttpCache\InvalidationConfig($config['invalidation']) : $config['invalidation'];
             unset($config['invalidation']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -85,7 +85,7 @@ class HttpCacheConfig
         if (isset($this->_usedProperties['invalidation'])) {
             $output['invalidation'] = $this->invalidation instanceof \Symfony\Config\ApiPlatform\HttpCache\InvalidationConfig ? $this->invalidation->toArray() : $this->invalidation;
         }
-
+    
         return $output;
     }
 

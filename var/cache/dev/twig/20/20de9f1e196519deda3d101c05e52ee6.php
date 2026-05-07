@@ -300,6 +300,6 @@ class __TwigTemplate_85747c9d99fc35d96efa9c6c02cb35c0 extends Template
 
 </body>
 </html>
-", "@ApiPlatform/Graphiql/index.html.twig", "C:\\Users\\leona\\PhpstormProjects\\CYNA-Web\\vendor\\api-platform\\symfony\\Bundle\\Resources\\views\\Graphiql\\index.html.twig");
+", "@ApiPlatform/Graphiql/index.html.twig", "C:\\Users\\julia\\Documents\\GitHub\\CYNA\\CYNA-Web\\vendor\\api-platform\\symfony\\Bundle\\Resources\\views\\Graphiql\\index.html.twig");
     }
 }

@@ -13,7 +13,7 @@ class JwtConfig
     private $provider;
     private $authenticator;
     private $_usedProperties = [];
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -23,10 +23,10 @@ class JwtConfig
     {
         $this->_usedProperties['provider'] = true;
         $this->provider = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 'lexik_jwt_authentication.security.jwt_authenticator'
      * @param ParamConfigurator|mixed $value
@@ -36,10 +36,10 @@ class JwtConfig
     {
         $this->_usedProperties['authenticator'] = true;
         $this->authenticator = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('provider', $config)) {
@@ -47,18 +47,18 @@ class JwtConfig
             $this->provider = $config['provider'];
             unset($config['provider']);
         }
-
+    
         if (array_key_exists('authenticator', $config)) {
             $this->_usedProperties['authenticator'] = true;
             $this->authenticator = $config['authenticator'];
             unset($config['authenticator']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -68,7 +68,7 @@ class JwtConfig
         if (isset($this->_usedProperties['authenticator'])) {
             $output['authenticator'] = $this->authenticator;
         }
-
+    
         return $output;
     }
 

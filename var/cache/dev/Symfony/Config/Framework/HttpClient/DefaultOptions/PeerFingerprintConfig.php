@@ -14,7 +14,7 @@ class PeerFingerprintConfig
     private $pinsha256;
     private $md5;
     private $_usedProperties = [];
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -25,10 +25,10 @@ class PeerFingerprintConfig
     {
         $this->_usedProperties['sha1'] = true;
         $this->sha1 = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -39,10 +39,10 @@ class PeerFingerprintConfig
     {
         $this->_usedProperties['pinsha256'] = true;
         $this->pinsha256 = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -53,10 +53,10 @@ class PeerFingerprintConfig
     {
         $this->_usedProperties['md5'] = true;
         $this->md5 = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('sha1', $config)) {
@@ -64,24 +64,24 @@ class PeerFingerprintConfig
             $this->sha1 = $config['sha1'];
             unset($config['sha1']);
         }
-
+    
         if (array_key_exists('pin-sha256', $config)) {
             $this->_usedProperties['pinsha256'] = true;
             $this->pinsha256 = $config['pin-sha256'];
             unset($config['pin-sha256']);
         }
-
+    
         if (array_key_exists('md5', $config)) {
             $this->_usedProperties['md5'] = true;
             $this->md5 = $config['md5'];
             unset($config['md5']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -94,7 +94,7 @@ class PeerFingerprintConfig
         if (isset($this->_usedProperties['md5'])) {
             $output['md5'] = $this->md5;
         }
-
+    
         return $output;
     }
 

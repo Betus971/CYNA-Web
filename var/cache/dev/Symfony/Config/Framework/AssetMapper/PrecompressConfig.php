@@ -14,7 +14,7 @@ class PrecompressConfig
     private $formats;
     private $extensions;
     private $_usedProperties = [];
-
+    
     /**
      * @default false
      * @param ParamConfigurator|bool $value
@@ -24,10 +24,10 @@ class PrecompressConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed> $value
      *
@@ -37,10 +37,10 @@ class PrecompressConfig
     {
         $this->_usedProperties['formats'] = true;
         $this->formats = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed> $value
      *
@@ -50,10 +50,10 @@ class PrecompressConfig
     {
         $this->_usedProperties['extensions'] = true;
         $this->extensions = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -61,24 +61,24 @@ class PrecompressConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('formats', $config)) {
             $this->_usedProperties['formats'] = true;
             $this->formats = $config['formats'];
             unset($config['formats']);
         }
-
+    
         if (array_key_exists('extensions', $config)) {
             $this->_usedProperties['extensions'] = true;
             $this->extensions = $config['extensions'];
             unset($config['extensions']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -91,7 +91,7 @@ class PrecompressConfig
         if (isset($this->_usedProperties['extensions'])) {
             $output['extensions'] = $this->extensions;
         }
-
+    
         return $output;
     }
 

@@ -13,7 +13,7 @@ class RequestConfig
     private $enabled;
     private $formats;
     private $_usedProperties = [];
-
+    
     /**
      * @default false
      * @param ParamConfigurator|bool $value
@@ -23,10 +23,10 @@ class RequestConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @return $this
      */
@@ -34,10 +34,10 @@ class RequestConfig
     {
         $this->_usedProperties['formats'] = true;
         $this->formats[$name] = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -45,18 +45,18 @@ class RequestConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('formats', $config)) {
             $this->_usedProperties['formats'] = true;
             $this->formats = $config['formats'];
             unset($config['formats']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -66,7 +66,7 @@ class RequestConfig
         if (isset($this->_usedProperties['formats'])) {
             $output['formats'] = $this->formats;
         }
-
+    
         return $output;
     }
 

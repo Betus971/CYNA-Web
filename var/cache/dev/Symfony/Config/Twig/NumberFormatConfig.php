@@ -14,7 +14,7 @@ class NumberFormatConfig
     private $decimalPoint;
     private $thousandsSeparator;
     private $_usedProperties = [];
-
+    
     /**
      * @default 0
      * @param ParamConfigurator|int $value
@@ -24,10 +24,10 @@ class NumberFormatConfig
     {
         $this->_usedProperties['decimals'] = true;
         $this->decimals = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default '.'
      * @param ParamConfigurator|mixed $value
@@ -37,10 +37,10 @@ class NumberFormatConfig
     {
         $this->_usedProperties['decimalPoint'] = true;
         $this->decimalPoint = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default ','
      * @param ParamConfigurator|mixed $value
@@ -50,10 +50,10 @@ class NumberFormatConfig
     {
         $this->_usedProperties['thousandsSeparator'] = true;
         $this->thousandsSeparator = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('decimals', $config)) {
@@ -61,24 +61,24 @@ class NumberFormatConfig
             $this->decimals = $config['decimals'];
             unset($config['decimals']);
         }
-
+    
         if (array_key_exists('decimal_point', $config)) {
             $this->_usedProperties['decimalPoint'] = true;
             $this->decimalPoint = $config['decimal_point'];
             unset($config['decimal_point']);
         }
-
+    
         if (array_key_exists('thousands_separator', $config)) {
             $this->_usedProperties['thousandsSeparator'] = true;
             $this->thousandsSeparator = $config['thousands_separator'];
             unset($config['thousands_separator']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -91,7 +91,7 @@ class NumberFormatConfig
         if (isset($this->_usedProperties['thousandsSeparator'])) {
             $output['thousands_separator'] = $this->thousandsSeparator;
         }
-
+    
         return $output;
     }
 

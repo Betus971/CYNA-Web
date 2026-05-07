@@ -20,7 +20,7 @@ class RouterConfig
     private $strictRequirements;
     private $utf8;
     private $_usedProperties = [];
-
+    
     /**
      * @default false
      * @param ParamConfigurator|bool $value
@@ -30,10 +30,10 @@ class RouterConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -43,10 +43,10 @@ class RouterConfig
     {
         $this->_usedProperties['resource'] = true;
         $this->resource = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -56,10 +56,10 @@ class RouterConfig
     {
         $this->_usedProperties['type'] = true;
         $this->type = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default '%kernel.build_dir%'
      * @param ParamConfigurator|mixed $value
@@ -70,10 +70,10 @@ class RouterConfig
     {
         $this->_usedProperties['cacheDir'] = true;
         $this->cacheDir = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The default URI used to generate URLs in a non-HTTP context.
      * @default null
@@ -84,10 +84,10 @@ class RouterConfig
     {
         $this->_usedProperties['defaultUri'] = true;
         $this->defaultUri = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 80
      * @param ParamConfigurator|mixed $value
@@ -97,10 +97,10 @@ class RouterConfig
     {
         $this->_usedProperties['httpPort'] = true;
         $this->httpPort = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 443
      * @param ParamConfigurator|mixed $value
@@ -110,10 +110,10 @@ class RouterConfig
     {
         $this->_usedProperties['httpsPort'] = true;
         $this->httpsPort = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * set to true to throw an exception when a parameter does not match the requirements
      * set to false to disable exceptions when a parameter does not match the requirements (and return null instead)
@@ -127,10 +127,10 @@ class RouterConfig
     {
         $this->_usedProperties['strictRequirements'] = true;
         $this->strictRequirements = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default true
      * @param ParamConfigurator|bool $value
@@ -140,10 +140,10 @@ class RouterConfig
     {
         $this->_usedProperties['utf8'] = true;
         $this->utf8 = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -151,60 +151,60 @@ class RouterConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('resource', $config)) {
             $this->_usedProperties['resource'] = true;
             $this->resource = $config['resource'];
             unset($config['resource']);
         }
-
+    
         if (array_key_exists('type', $config)) {
             $this->_usedProperties['type'] = true;
             $this->type = $config['type'];
             unset($config['type']);
         }
-
+    
         if (array_key_exists('cache_dir', $config)) {
             $this->_usedProperties['cacheDir'] = true;
             $this->cacheDir = $config['cache_dir'];
             unset($config['cache_dir']);
         }
-
+    
         if (array_key_exists('default_uri', $config)) {
             $this->_usedProperties['defaultUri'] = true;
             $this->defaultUri = $config['default_uri'];
             unset($config['default_uri']);
         }
-
+    
         if (array_key_exists('http_port', $config)) {
             $this->_usedProperties['httpPort'] = true;
             $this->httpPort = $config['http_port'];
             unset($config['http_port']);
         }
-
+    
         if (array_key_exists('https_port', $config)) {
             $this->_usedProperties['httpsPort'] = true;
             $this->httpsPort = $config['https_port'];
             unset($config['https_port']);
         }
-
+    
         if (array_key_exists('strict_requirements', $config)) {
             $this->_usedProperties['strictRequirements'] = true;
             $this->strictRequirements = $config['strict_requirements'];
             unset($config['strict_requirements']);
         }
-
+    
         if (array_key_exists('utf8', $config)) {
             $this->_usedProperties['utf8'] = true;
             $this->utf8 = $config['utf8'];
             unset($config['utf8']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -235,7 +235,7 @@ class RouterConfig
         if (isset($this->_usedProperties['utf8'])) {
             $output['utf8'] = $this->utf8;
         }
-
+    
         return $output;
     }
 

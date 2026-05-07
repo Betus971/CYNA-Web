@@ -12,7 +12,7 @@ class JsonapiConfig
 {
     private $useIriAsId;
     private $_usedProperties = [];
-
+    
     /**
      * Set to false to use entity identifiers instead of IRIs as the "id" field in JSON:API responses.
      * @default true
@@ -23,10 +23,10 @@ class JsonapiConfig
     {
         $this->_usedProperties['useIriAsId'] = true;
         $this->useIriAsId = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('use_iri_as_id', $config)) {
@@ -34,19 +34,19 @@ class JsonapiConfig
             $this->useIriAsId = $config['use_iri_as_id'];
             unset($config['use_iri_as_id']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
         if (isset($this->_usedProperties['useIriAsId'])) {
             $output['use_iri_as_id'] = $this->useIriAsId;
         }
-
+    
         return $output;
     }
 

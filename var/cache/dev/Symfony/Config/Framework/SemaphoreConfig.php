@@ -13,7 +13,7 @@ class SemaphoreConfig
     private $enabled;
     private $resources;
     private $_usedProperties = [];
-
+    
     /**
      * @default false
      * @param ParamConfigurator|bool $value
@@ -23,10 +23,10 @@ class SemaphoreConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @return $this
      */
@@ -34,10 +34,10 @@ class SemaphoreConfig
     {
         $this->_usedProperties['resources'] = true;
         $this->resources[$name] = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -45,18 +45,18 @@ class SemaphoreConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('resources', $config)) {
             $this->_usedProperties['resources'] = true;
             $this->resources = $config['resources'];
             unset($config['resources']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -66,7 +66,7 @@ class SemaphoreConfig
         if (isset($this->_usedProperties['resources'])) {
             $output['resources'] = $this->resources;
         }
-
+    
         return $output;
     }
 

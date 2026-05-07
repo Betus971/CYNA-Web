@@ -20,7 +20,7 @@ class AccessTokenConfig
     private $tokenExtractors;
     private $tokenHandler;
     private $_usedProperties = [];
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -30,10 +30,10 @@ class AccessTokenConfig
     {
         $this->_usedProperties['provider'] = true;
         $this->provider = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default true
      * @param ParamConfigurator|bool $value
@@ -43,10 +43,10 @@ class AccessTokenConfig
     {
         $this->_usedProperties['rememberMe'] = true;
         $this->rememberMe = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -56,10 +56,10 @@ class AccessTokenConfig
     {
         $this->_usedProperties['successHandler'] = true;
         $this->successHandler = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -69,10 +69,10 @@ class AccessTokenConfig
     {
         $this->_usedProperties['failureHandler'] = true;
         $this->failureHandler = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -82,10 +82,10 @@ class AccessTokenConfig
     {
         $this->_usedProperties['realm'] = true;
         $this->realm = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed>|string $value
      *
@@ -95,10 +95,10 @@ class AccessTokenConfig
     {
         $this->_usedProperties['tokenExtractors'] = true;
         $this->tokenExtractors = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @template TValue of string|array
      * @param TValue $value
@@ -111,20 +111,20 @@ class AccessTokenConfig
         if (!\is_array($value)) {
             $this->_usedProperties['tokenHandler'] = true;
             $this->tokenHandler = $value;
-
+    
             return $this;
         }
-
+    
         if (!$this->tokenHandler instanceof \Symfony\Config\Security\FirewallConfig\AccessToken\TokenHandlerConfig) {
             $this->_usedProperties['tokenHandler'] = true;
             $this->tokenHandler = new \Symfony\Config\Security\FirewallConfig\AccessToken\TokenHandlerConfig($value);
         } elseif (0 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "tokenHandler()" has already been initialized. You cannot pass values the second time you call tokenHandler().');
         }
-
+    
         return $this->tokenHandler;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('provider', $config)) {
@@ -132,48 +132,48 @@ class AccessTokenConfig
             $this->provider = $config['provider'];
             unset($config['provider']);
         }
-
+    
         if (array_key_exists('remember_me', $config)) {
             $this->_usedProperties['rememberMe'] = true;
             $this->rememberMe = $config['remember_me'];
             unset($config['remember_me']);
         }
-
+    
         if (array_key_exists('success_handler', $config)) {
             $this->_usedProperties['successHandler'] = true;
             $this->successHandler = $config['success_handler'];
             unset($config['success_handler']);
         }
-
+    
         if (array_key_exists('failure_handler', $config)) {
             $this->_usedProperties['failureHandler'] = true;
             $this->failureHandler = $config['failure_handler'];
             unset($config['failure_handler']);
         }
-
+    
         if (array_key_exists('realm', $config)) {
             $this->_usedProperties['realm'] = true;
             $this->realm = $config['realm'];
             unset($config['realm']);
         }
-
+    
         if (array_key_exists('token_extractors', $config)) {
             $this->_usedProperties['tokenExtractors'] = true;
             $this->tokenExtractors = $config['token_extractors'];
             unset($config['token_extractors']);
         }
-
+    
         if (array_key_exists('token_handler', $config)) {
             $this->_usedProperties['tokenHandler'] = true;
             $this->tokenHandler = \is_array($config['token_handler']) ? new \Symfony\Config\Security\FirewallConfig\AccessToken\TokenHandlerConfig($config['token_handler']) : $config['token_handler'];
             unset($config['token_handler']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -198,7 +198,7 @@ class AccessTokenConfig
         if (isset($this->_usedProperties['tokenHandler'])) {
             $output['token_handler'] = $this->tokenHandler instanceof \Symfony\Config\Security\FirewallConfig\AccessToken\TokenHandlerConfig ? $this->tokenHandler->toArray() : $this->tokenHandler;
         }
-
+    
         return $output;
     }
 

@@ -14,7 +14,7 @@ class FilterConfig
     private $enabled;
     private $parameters;
     private $_usedProperties = [];
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -24,10 +24,10 @@ class FilterConfig
     {
         $this->_usedProperties['class'] = true;
         $this->class = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default false
      * @param ParamConfigurator|bool $value
@@ -37,10 +37,10 @@ class FilterConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @return $this
      */
@@ -48,10 +48,10 @@ class FilterConfig
     {
         $this->_usedProperties['parameters'] = true;
         $this->parameters[$name] = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('class', $config)) {
@@ -59,24 +59,24 @@ class FilterConfig
             $this->class = $config['class'];
             unset($config['class']);
         }
-
+    
         if (array_key_exists('enabled', $config)) {
             $this->_usedProperties['enabled'] = true;
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('parameters', $config)) {
             $this->_usedProperties['parameters'] = true;
             $this->parameters = $config['parameters'];
             unset($config['parameters']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -89,7 +89,7 @@ class FilterConfig
         if (isset($this->_usedProperties['parameters'])) {
             $output['parameters'] = $this->parameters;
         }
-
+    
         return $output;
     }
 

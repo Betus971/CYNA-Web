@@ -17,7 +17,7 @@ class MappingConfig
     private $prefix;
     private $isBundle;
     private $_usedProperties = [];
-
+    
     /**
      * @default true
      * @param ParamConfigurator|mixed $value
@@ -27,10 +27,10 @@ class MappingConfig
     {
         $this->_usedProperties['mapping'] = true;
         $this->mapping = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -40,10 +40,10 @@ class MappingConfig
     {
         $this->_usedProperties['type'] = true;
         $this->type = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -53,10 +53,10 @@ class MappingConfig
     {
         $this->_usedProperties['dir'] = true;
         $this->dir = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -66,10 +66,10 @@ class MappingConfig
     {
         $this->_usedProperties['alias'] = true;
         $this->alias = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -79,10 +79,10 @@ class MappingConfig
     {
         $this->_usedProperties['prefix'] = true;
         $this->prefix = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|bool $value
@@ -92,10 +92,10 @@ class MappingConfig
     {
         $this->_usedProperties['isBundle'] = true;
         $this->isBundle = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('mapping', $config)) {
@@ -103,42 +103,42 @@ class MappingConfig
             $this->mapping = $config['mapping'];
             unset($config['mapping']);
         }
-
+    
         if (array_key_exists('type', $config)) {
             $this->_usedProperties['type'] = true;
             $this->type = $config['type'];
             unset($config['type']);
         }
-
+    
         if (array_key_exists('dir', $config)) {
             $this->_usedProperties['dir'] = true;
             $this->dir = $config['dir'];
             unset($config['dir']);
         }
-
+    
         if (array_key_exists('alias', $config)) {
             $this->_usedProperties['alias'] = true;
             $this->alias = $config['alias'];
             unset($config['alias']);
         }
-
+    
         if (array_key_exists('prefix', $config)) {
             $this->_usedProperties['prefix'] = true;
             $this->prefix = $config['prefix'];
             unset($config['prefix']);
         }
-
+    
         if (array_key_exists('is_bundle', $config)) {
             $this->_usedProperties['isBundle'] = true;
             $this->isBundle = $config['is_bundle'];
             unset($config['is_bundle']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -160,7 +160,7 @@ class MappingConfig
         if (isset($this->_usedProperties['isBundle'])) {
             $output['is_bundle'] = $this->isBundle;
         }
-
+    
         return $output;
     }
 

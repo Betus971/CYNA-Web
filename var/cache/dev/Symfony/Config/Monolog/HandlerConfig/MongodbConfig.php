@@ -17,7 +17,7 @@ class MongodbConfig
     private $database;
     private $collection;
     private $_usedProperties = [];
-
+    
     /**
      * ID of a MongoDB\Client service
      * @example doctrine_mongodb.odm.logs_connection
@@ -29,10 +29,10 @@ class MongodbConfig
     {
         $this->_usedProperties['id'] = true;
         $this->id = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -42,10 +42,10 @@ class MongodbConfig
     {
         $this->_usedProperties['uri'] = true;
         $this->uri = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -55,10 +55,10 @@ class MongodbConfig
     {
         $this->_usedProperties['username'] = true;
         $this->username = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -68,10 +68,10 @@ class MongodbConfig
     {
         $this->_usedProperties['password'] = true;
         $this->password = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 'monolog'
      * @param ParamConfigurator|mixed $value
@@ -81,10 +81,10 @@ class MongodbConfig
     {
         $this->_usedProperties['database'] = true;
         $this->database = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 'logs'
      * @param ParamConfigurator|mixed $value
@@ -94,10 +94,10 @@ class MongodbConfig
     {
         $this->_usedProperties['collection'] = true;
         $this->collection = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('id', $config)) {
@@ -105,42 +105,42 @@ class MongodbConfig
             $this->id = $config['id'];
             unset($config['id']);
         }
-
+    
         if (array_key_exists('uri', $config)) {
             $this->_usedProperties['uri'] = true;
             $this->uri = $config['uri'];
             unset($config['uri']);
         }
-
+    
         if (array_key_exists('username', $config)) {
             $this->_usedProperties['username'] = true;
             $this->username = $config['username'];
             unset($config['username']);
         }
-
+    
         if (array_key_exists('password', $config)) {
             $this->_usedProperties['password'] = true;
             $this->password = $config['password'];
             unset($config['password']);
         }
-
+    
         if (array_key_exists('database', $config)) {
             $this->_usedProperties['database'] = true;
             $this->database = $config['database'];
             unset($config['database']);
         }
-
+    
         if (array_key_exists('collection', $config)) {
             $this->_usedProperties['collection'] = true;
             $this->collection = $config['collection'];
             unset($config['collection']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -162,7 +162,7 @@ class MongodbConfig
         if (isset($this->_usedProperties['collection'])) {
             $output['collection'] = $this->collection;
         }
-
+    
         return $output;
     }
 

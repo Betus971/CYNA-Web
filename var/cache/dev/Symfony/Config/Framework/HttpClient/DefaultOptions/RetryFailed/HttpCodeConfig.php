@@ -13,7 +13,7 @@ class HttpCodeConfig
     private $code;
     private $methods;
     private $_usedProperties = [];
-
+    
     /**
      * @default null
      * @param ParamConfigurator|int $value
@@ -23,10 +23,10 @@ class HttpCodeConfig
     {
         $this->_usedProperties['code'] = true;
         $this->code = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed>|string $value
      *
@@ -36,10 +36,10 @@ class HttpCodeConfig
     {
         $this->_usedProperties['methods'] = true;
         $this->methods = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('code', $config)) {
@@ -47,18 +47,18 @@ class HttpCodeConfig
             $this->code = $config['code'];
             unset($config['code']);
         }
-
+    
         if (array_key_exists('methods', $config)) {
             $this->_usedProperties['methods'] = true;
             $this->methods = $config['methods'];
             unset($config['methods']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -68,7 +68,7 @@ class HttpCodeConfig
         if (isset($this->_usedProperties['methods'])) {
             $output['methods'] = $this->methods;
         }
-
+    
         return $output;
     }
 

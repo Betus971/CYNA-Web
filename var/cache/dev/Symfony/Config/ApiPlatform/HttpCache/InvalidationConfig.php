@@ -21,7 +21,7 @@ class InvalidationConfig
     private $purger;
     private $xkey;
     private $_usedProperties = [];
-
+    
     /**
      * @default false
      * @param ParamConfigurator|bool $value
@@ -31,10 +31,10 @@ class InvalidationConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed> $value
      *
@@ -44,10 +44,10 @@ class InvalidationConfig
     {
         $this->_usedProperties['varnishUrls'] = true;
         $this->varnishUrls = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed> $value
      *
@@ -57,10 +57,10 @@ class InvalidationConfig
     {
         $this->_usedProperties['urls'] = true;
         $this->urls = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed> $value
      *
@@ -70,10 +70,10 @@ class InvalidationConfig
     {
         $this->_usedProperties['scopedClients'] = true;
         $this->scopedClients = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Max header length supported by the cache server.
      * @default 7500
@@ -84,10 +84,10 @@ class InvalidationConfig
     {
         $this->_usedProperties['maxHeaderLength'] = true;
         $this->maxHeaderLength = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * To pass options to the client charged with the request.
      * @default array (
@@ -101,10 +101,10 @@ class InvalidationConfig
     {
         $this->_usedProperties['requestOptions'] = true;
         $this->requestOptions = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Specify a purger to use (available values: "api_platform.http_cache.purger.varnish.ban", "api_platform.http_cache.purger.varnish.xkey", "api_platform.http_cache.purger.souin").
      * @default 'api_platform.http_cache.purger.varnish'
@@ -115,10 +115,10 @@ class InvalidationConfig
     {
         $this->_usedProperties['purger'] = true;
         $this->purger = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default {"glue":" "}
      * @deprecated Since api-platform/core 3.0: The "xkey" configuration is deprecated, use your own purger to customize surrogate keys or the appropriate parameters.
@@ -131,10 +131,10 @@ class InvalidationConfig
         } elseif (0 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "xkey()" has already been initialized. You cannot pass values the second time you call xkey().');
         }
-
+    
         return $this->xkey;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -142,54 +142,54 @@ class InvalidationConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('varnish_urls', $config)) {
             $this->_usedProperties['varnishUrls'] = true;
             $this->varnishUrls = $config['varnish_urls'];
             unset($config['varnish_urls']);
         }
-
+    
         if (array_key_exists('urls', $config)) {
             $this->_usedProperties['urls'] = true;
             $this->urls = $config['urls'];
             unset($config['urls']);
         }
-
+    
         if (array_key_exists('scoped_clients', $config)) {
             $this->_usedProperties['scopedClients'] = true;
             $this->scopedClients = $config['scoped_clients'];
             unset($config['scoped_clients']);
         }
-
+    
         if (array_key_exists('max_header_length', $config)) {
             $this->_usedProperties['maxHeaderLength'] = true;
             $this->maxHeaderLength = $config['max_header_length'];
             unset($config['max_header_length']);
         }
-
+    
         if (array_key_exists('request_options', $config)) {
             $this->_usedProperties['requestOptions'] = true;
             $this->requestOptions = $config['request_options'];
             unset($config['request_options']);
         }
-
+    
         if (array_key_exists('purger', $config)) {
             $this->_usedProperties['purger'] = true;
             $this->purger = $config['purger'];
             unset($config['purger']);
         }
-
+    
         if (array_key_exists('xkey', $config)) {
             $this->_usedProperties['xkey'] = true;
             $this->xkey = new \Symfony\Config\ApiPlatform\HttpCache\Invalidation\XkeyConfig($config['xkey']);
             unset($config['xkey']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -217,7 +217,7 @@ class InvalidationConfig
         if (isset($this->_usedProperties['xkey'])) {
             $output['xkey'] = $this->xkey->toArray();
         }
-
+    
         return $output;
     }
 

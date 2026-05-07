@@ -607,6 +607,6 @@ class __TwigTemplate_d222f178ece217bb0fcf996b5c63130f extends Template
 
 </body>
 </html>
-", "@ApiPlatform/SwaggerUi/index.html.twig", "C:\\Users\\leona\\PhpstormProjects\\CYNA-Web\\vendor\\api-platform\\symfony\\Bundle\\Resources\\views\\SwaggerUi\\index.html.twig");
+", "@ApiPlatform/SwaggerUi/index.html.twig", "C:\\Users\\julia\\Documents\\GitHub\\CYNA\\CYNA-Web\\vendor\\api-platform\\symfony\\Bundle\\Resources\\views\\SwaggerUi\\index.html.twig");
     }
 }

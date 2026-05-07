@@ -16,7 +16,7 @@ class ElasticsearchConfig
     private $sslVerification;
     private $client;
     private $_usedProperties = [];
-
+    
     /**
      * @default false
      * @param ParamConfigurator|bool $value
@@ -26,10 +26,10 @@ class ElasticsearchConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed>|mixed $value
      *
@@ -39,10 +39,10 @@ class ElasticsearchConfig
     {
         $this->_usedProperties['hosts'] = true;
         $this->hosts = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Path to the SSL CA bundle file for Elasticsearch SSL verification.
      * @default null
@@ -53,10 +53,10 @@ class ElasticsearchConfig
     {
         $this->_usedProperties['sslCaBundle'] = true;
         $this->sslCaBundle = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Enable or disable SSL verification for Elasticsearch connections.
      * @default true
@@ -67,10 +67,10 @@ class ElasticsearchConfig
     {
         $this->_usedProperties['sslVerification'] = true;
         $this->sslVerification = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The search engine client to use: "elasticsearch" or "opensearch".
      * @default 'elasticsearch'
@@ -81,10 +81,10 @@ class ElasticsearchConfig
     {
         $this->_usedProperties['client'] = true;
         $this->client = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -92,36 +92,36 @@ class ElasticsearchConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('hosts', $config)) {
             $this->_usedProperties['hosts'] = true;
             $this->hosts = $config['hosts'];
             unset($config['hosts']);
         }
-
+    
         if (array_key_exists('ssl_ca_bundle', $config)) {
             $this->_usedProperties['sslCaBundle'] = true;
             $this->sslCaBundle = $config['ssl_ca_bundle'];
             unset($config['ssl_ca_bundle']);
         }
-
+    
         if (array_key_exists('ssl_verification', $config)) {
             $this->_usedProperties['sslVerification'] = true;
             $this->sslVerification = $config['ssl_verification'];
             unset($config['ssl_verification']);
         }
-
+    
         if (array_key_exists('client', $config)) {
             $this->_usedProperties['client'] = true;
             $this->client = $config['client'];
             unset($config['client']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -140,7 +140,7 @@ class ElasticsearchConfig
         if (isset($this->_usedProperties['client'])) {
             $output['client'] = $this->client;
         }
-
+    
         return $output;
     }
 

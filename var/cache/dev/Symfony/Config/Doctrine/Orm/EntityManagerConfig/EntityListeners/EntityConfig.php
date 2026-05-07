@@ -13,7 +13,7 @@ class EntityConfig
 {
     private $listeners;
     private $_usedProperties = [];
-
+    
     public function listener(string $class, array $value = []): \Symfony\Config\Doctrine\Orm\EntityManagerConfig\EntityListeners\EntityConfig\ListenerConfig
     {
         if (!isset($this->listeners[$class])) {
@@ -22,10 +22,10 @@ class EntityConfig
         } elseif (1 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "listener()" has already been initialized. You cannot pass values the second time you call listener().');
         }
-
+    
         return $this->listeners[$class];
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('listeners', $config)) {
@@ -33,19 +33,19 @@ class EntityConfig
             $this->listeners = array_map(fn ($v) => new \Symfony\Config\Doctrine\Orm\EntityManagerConfig\EntityListeners\EntityConfig\ListenerConfig($v), $config['listeners']);
             unset($config['listeners']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
         if (isset($this->_usedProperties['listeners'])) {
             $output['listeners'] = array_map(fn ($v) => $v->toArray(), $this->listeners);
         }
-
+    
         return $output;
     }
 

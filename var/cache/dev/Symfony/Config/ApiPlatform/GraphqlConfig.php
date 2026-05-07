@@ -25,7 +25,7 @@ class GraphqlConfig
     private $nestingSeparator;
     private $collection;
     private $_usedProperties = [];
-
+    
     /**
      * @default false
      * @param ParamConfigurator|bool $value
@@ -35,10 +35,10 @@ class GraphqlConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 'graphiql'
      * @param ParamConfigurator|mixed $value
@@ -48,10 +48,10 @@ class GraphqlConfig
     {
         $this->_usedProperties['defaultIde'] = true;
         $this->defaultIde = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @template TValue of array|bool
      * @param TValue $value
@@ -64,20 +64,20 @@ class GraphqlConfig
         if (!\is_array($value)) {
             $this->_usedProperties['graphiql'] = true;
             $this->graphiql = $value;
-
+    
             return $this;
         }
-
+    
         if (!$this->graphiql instanceof \Symfony\Config\ApiPlatform\Graphql\GraphiqlConfig) {
             $this->_usedProperties['graphiql'] = true;
             $this->graphiql = new \Symfony\Config\ApiPlatform\Graphql\GraphiqlConfig($value);
         } elseif (0 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "graphiql()" has already been initialized. You cannot pass values the second time you call graphiql().');
         }
-
+    
         return $this->graphiql;
     }
-
+    
     /**
      * @template TValue of array|bool
      * @param TValue $value
@@ -90,20 +90,20 @@ class GraphqlConfig
         if (!\is_array($value)) {
             $this->_usedProperties['introspection'] = true;
             $this->introspection = $value;
-
+    
             return $this;
         }
-
+    
         if (!$this->introspection instanceof \Symfony\Config\ApiPlatform\Graphql\IntrospectionConfig) {
             $this->_usedProperties['introspection'] = true;
             $this->introspection = new \Symfony\Config\ApiPlatform\Graphql\IntrospectionConfig($value);
         } elseif (0 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "introspection()" has already been initialized. You cannot pass values the second time you call introspection().');
         }
-
+    
         return $this->introspection;
     }
-
+    
     /**
      * @default 20
      * @param ParamConfigurator|int $value
@@ -113,10 +113,10 @@ class GraphqlConfig
     {
         $this->_usedProperties['maxQueryDepth'] = true;
         $this->maxQueryDepth = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @template TValue of array|bool
      * @param TValue $value
@@ -130,20 +130,20 @@ class GraphqlConfig
         if (!\is_array($value)) {
             $this->_usedProperties['graphqlPlayground'] = true;
             $this->graphqlPlayground = $value;
-
+    
             return $this;
         }
-
+    
         if (!$this->graphqlPlayground instanceof \Symfony\Config\ApiPlatform\Graphql\GraphqlPlaygroundConfig) {
             $this->_usedProperties['graphqlPlayground'] = true;
             $this->graphqlPlayground = new \Symfony\Config\ApiPlatform\Graphql\GraphqlPlaygroundConfig($value);
         } elseif (0 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "graphqlPlayground()" has already been initialized. You cannot pass values the second time you call graphqlPlayground().');
         }
-
+    
         return $this->graphqlPlayground;
     }
-
+    
     /**
      * @default 500
      * @param ParamConfigurator|int $value
@@ -153,10 +153,10 @@ class GraphqlConfig
     {
         $this->_usedProperties['maxQueryComplexity'] = true;
         $this->maxQueryComplexity = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The separator to use to filter nested fields.
      * @default '_'
@@ -167,10 +167,10 @@ class GraphqlConfig
     {
         $this->_usedProperties['nestingSeparator'] = true;
         $this->nestingSeparator = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default {"pagination":{"enabled":true}}
      */
@@ -182,10 +182,10 @@ class GraphqlConfig
         } elseif (0 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "collection()" has already been initialized. You cannot pass values the second time you call collection().');
         }
-
+    
         return $this->collection;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -193,60 +193,60 @@ class GraphqlConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('default_ide', $config)) {
             $this->_usedProperties['defaultIde'] = true;
             $this->defaultIde = $config['default_ide'];
             unset($config['default_ide']);
         }
-
+    
         if (array_key_exists('graphiql', $config)) {
             $this->_usedProperties['graphiql'] = true;
             $this->graphiql = \is_array($config['graphiql']) ? new \Symfony\Config\ApiPlatform\Graphql\GraphiqlConfig($config['graphiql']) : $config['graphiql'];
             unset($config['graphiql']);
         }
-
+    
         if (array_key_exists('introspection', $config)) {
             $this->_usedProperties['introspection'] = true;
             $this->introspection = \is_array($config['introspection']) ? new \Symfony\Config\ApiPlatform\Graphql\IntrospectionConfig($config['introspection']) : $config['introspection'];
             unset($config['introspection']);
         }
-
+    
         if (array_key_exists('max_query_depth', $config)) {
             $this->_usedProperties['maxQueryDepth'] = true;
             $this->maxQueryDepth = $config['max_query_depth'];
             unset($config['max_query_depth']);
         }
-
+    
         if (array_key_exists('graphql_playground', $config)) {
             $this->_usedProperties['graphqlPlayground'] = true;
             $this->graphqlPlayground = \is_array($config['graphql_playground']) ? new \Symfony\Config\ApiPlatform\Graphql\GraphqlPlaygroundConfig($config['graphql_playground']) : $config['graphql_playground'];
             unset($config['graphql_playground']);
         }
-
+    
         if (array_key_exists('max_query_complexity', $config)) {
             $this->_usedProperties['maxQueryComplexity'] = true;
             $this->maxQueryComplexity = $config['max_query_complexity'];
             unset($config['max_query_complexity']);
         }
-
+    
         if (array_key_exists('nesting_separator', $config)) {
             $this->_usedProperties['nestingSeparator'] = true;
             $this->nestingSeparator = $config['nesting_separator'];
             unset($config['nesting_separator']);
         }
-
+    
         if (array_key_exists('collection', $config)) {
             $this->_usedProperties['collection'] = true;
             $this->collection = new \Symfony\Config\ApiPlatform\Graphql\CollectionConfig($config['collection']);
             unset($config['collection']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -277,7 +277,7 @@ class GraphqlConfig
         if (isset($this->_usedProperties['collection'])) {
             $output['collection'] = $this->collection->toArray();
         }
-
+    
         return $output;
     }
 

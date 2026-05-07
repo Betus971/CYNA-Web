@@ -13,7 +13,7 @@ class CookieConfig
     private $enabled;
     private $name;
     private $_usedProperties = [];
-
+    
     /**
      * @default false
      * @param ParamConfigurator|bool $value
@@ -23,10 +23,10 @@ class CookieConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 'BEARER'
      * @param ParamConfigurator|mixed $value
@@ -36,10 +36,10 @@ class CookieConfig
     {
         $this->_usedProperties['name'] = true;
         $this->name = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -47,18 +47,18 @@ class CookieConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('name', $config)) {
             $this->_usedProperties['name'] = true;
             $this->name = $config['name'];
             unset($config['name']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -68,7 +68,7 @@ class CookieConfig
         if (isset($this->_usedProperties['name'])) {
             $output['name'] = $this->name;
         }
-
+    
         return $output;
     }
 

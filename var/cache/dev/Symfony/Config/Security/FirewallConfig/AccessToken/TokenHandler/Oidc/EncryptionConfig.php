@@ -15,7 +15,7 @@ class EncryptionConfig
     private $algorithms;
     private $keyset;
     private $_usedProperties = [];
-
+    
     /**
      * @default false
      * @param ParamConfigurator|bool $value
@@ -25,10 +25,10 @@ class EncryptionConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * When enabled, the token shall be encrypted.
      * @default false
@@ -39,10 +39,10 @@ class EncryptionConfig
     {
         $this->_usedProperties['enforce'] = true;
         $this->enforce = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed> $value
      *
@@ -52,10 +52,10 @@ class EncryptionConfig
     {
         $this->_usedProperties['algorithms'] = true;
         $this->algorithms = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * JSON-encoded JWKSet used to decrypt the token (must contain a list of valid private keys).
      * @default null
@@ -66,10 +66,10 @@ class EncryptionConfig
     {
         $this->_usedProperties['keyset'] = true;
         $this->keyset = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -77,30 +77,30 @@ class EncryptionConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('enforce', $config)) {
             $this->_usedProperties['enforce'] = true;
             $this->enforce = $config['enforce'];
             unset($config['enforce']);
         }
-
+    
         if (array_key_exists('algorithms', $config)) {
             $this->_usedProperties['algorithms'] = true;
             $this->algorithms = $config['algorithms'];
             unset($config['algorithms']);
         }
-
+    
         if (array_key_exists('keyset', $config)) {
             $this->_usedProperties['keyset'] = true;
             $this->keyset = $config['keyset'];
             unset($config['keyset']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -116,7 +116,7 @@ class EncryptionConfig
         if (isset($this->_usedProperties['keyset'])) {
             $output['keyset'] = $this->keyset;
         }
-
+    
         return $output;
     }
 

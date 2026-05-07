@@ -15,7 +15,7 @@ class HtmlSanitizerConfig
     private $enabled;
     private $sanitizers;
     private $_usedProperties = [];
-
+    
     /**
      * @default false
      * @param ParamConfigurator|bool $value
@@ -25,10 +25,10 @@ class HtmlSanitizerConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     public function sanitizer(string $name, array $value = []): \Symfony\Config\Framework\HtmlSanitizer\SanitizerConfig
     {
         if (!isset($this->sanitizers[$name])) {
@@ -37,10 +37,10 @@ class HtmlSanitizerConfig
         } elseif (1 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "sanitizer()" has already been initialized. You cannot pass values the second time you call sanitizer().');
         }
-
+    
         return $this->sanitizers[$name];
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -48,18 +48,18 @@ class HtmlSanitizerConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('sanitizers', $config)) {
             $this->_usedProperties['sanitizers'] = true;
             $this->sanitizers = array_map(fn ($v) => new \Symfony\Config\Framework\HtmlSanitizer\SanitizerConfig($v), $config['sanitizers']);
             unset($config['sanitizers']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -69,7 +69,7 @@ class HtmlSanitizerConfig
         if (isset($this->_usedProperties['sanitizers'])) {
             $output['sanitizers'] = array_map(fn ($v) => $v->toArray(), $this->sanitizers);
         }
-
+    
         return $output;
     }
 

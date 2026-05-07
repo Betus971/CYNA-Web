@@ -29,7 +29,7 @@ class SecurityConfig implements \Symfony\Component\Config\Builder\ConfigBuilderI
     private $roleHierarchy;
     private $_usedProperties = [];
     private $_hasDeprecatedCalls = false;
-
+    
     /**
      * @example /foo/error403
      * @default null
@@ -42,10 +42,10 @@ class SecurityConfig implements \Symfony\Component\Config\Builder\ConfigBuilderI
         $this->_hasDeprecatedCalls = true;
         $this->_usedProperties['accessDeniedUrl'] = true;
         $this->accessDeniedUrl = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 'migrate'
      * @param ParamConfigurator|'none'|'migrate'|'invalidate' $value
@@ -57,10 +57,10 @@ class SecurityConfig implements \Symfony\Component\Config\Builder\ConfigBuilderI
         $this->_hasDeprecatedCalls = true;
         $this->_usedProperties['sessionFixationStrategy'] = true;
         $this->sessionFixationStrategy = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|bool $value
@@ -73,10 +73,10 @@ class SecurityConfig implements \Symfony\Component\Config\Builder\ConfigBuilderI
         $this->_hasDeprecatedCalls = true;
         $this->_usedProperties['hideUserNotFound'] = true;
         $this->hideUserNotFound = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default \Symfony\Component\Security\Http\Authentication\ExposeSecurityLevel::None
      * @param ParamConfigurator|\Symfony\Component\Security\Http\Authentication\ExposeSecurityLevel::None|\Symfony\Component\Security\Http\Authentication\ExposeSecurityLevel::AccountStatus|\Symfony\Component\Security\Http\Authentication\ExposeSecurityLevel::All $value
@@ -88,10 +88,10 @@ class SecurityConfig implements \Symfony\Component\Config\Builder\ConfigBuilderI
         $this->_hasDeprecatedCalls = true;
         $this->_usedProperties['exposeSecurityErrors'] = true;
         $this->exposeSecurityErrors = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default true
      * @param ParamConfigurator|bool $value
@@ -103,10 +103,10 @@ class SecurityConfig implements \Symfony\Component\Config\Builder\ConfigBuilderI
         $this->_hasDeprecatedCalls = true;
         $this->_usedProperties['eraseCredentials'] = true;
         $this->eraseCredentials = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default {"allow_if_all_abstain":false,"allow_if_equal_granted_denied":true}
      * @deprecated since Symfony 7.4
@@ -120,10 +120,10 @@ class SecurityConfig implements \Symfony\Component\Config\Builder\ConfigBuilderI
         } elseif (0 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "accessDecisionManager()" has already been initialized. You cannot pass values the second time you call accessDecisionManager().');
         }
-
+    
         return $this->accessDecisionManager;
     }
-
+    
     /**
      * @template TValue of string|array
      * @param TValue $value
@@ -139,20 +139,20 @@ class SecurityConfig implements \Symfony\Component\Config\Builder\ConfigBuilderI
         if (!\is_array($value)) {
             $this->_usedProperties['passwordHashers'] = true;
             $this->passwordHashers[$class] = $value;
-
+    
             return $this;
         }
-
+    
         if (!isset($this->passwordHashers[$class]) || !$this->passwordHashers[$class] instanceof \Symfony\Config\Security\PasswordHasherConfig) {
             $this->_usedProperties['passwordHashers'] = true;
             $this->passwordHashers[$class] = new \Symfony\Config\Security\PasswordHasherConfig($value);
         } elseif (1 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "passwordHasher()" has already been initialized. You cannot pass values the second time you call passwordHasher().');
         }
-
+    
         return $this->passwordHashers[$class];
     }
-
+    
     /**
      * @example {"memory":{"users":{"foo":{"password":"foo","roles":"ROLE_USER"},"bar":{"password":"bar","roles":"[ROLE_USER, ROLE_ADMIN]"}}}}
      * @example {"entity":{"class":"SecurityBundle:User","property":"username"}}
@@ -167,10 +167,10 @@ class SecurityConfig implements \Symfony\Component\Config\Builder\ConfigBuilderI
         } elseif (1 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "provider()" has already been initialized. You cannot pass values the second time you call provider().');
         }
-
+    
         return $this->providers[$name];
     }
-
+    
     /**
      * @deprecated since Symfony 7.4
      */
@@ -183,10 +183,10 @@ class SecurityConfig implements \Symfony\Component\Config\Builder\ConfigBuilderI
         } elseif (1 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "firewall()" has already been initialized. You cannot pass values the second time you call firewall().');
         }
-
+    
         return $this->firewalls[$name];
     }
-
+    
     /**
      * @deprecated since Symfony 7.4
      */
@@ -194,10 +194,10 @@ class SecurityConfig implements \Symfony\Component\Config\Builder\ConfigBuilderI
     {
         $this->_hasDeprecatedCalls = true;
         $this->_usedProperties['accessControl'] = true;
-
+    
         return $this->accessControl[] = new \Symfony\Config\Security\AccessControlConfig($value);
     }
-
+    
     /**
      * @return $this
      * @deprecated since Symfony 7.4
@@ -207,15 +207,15 @@ class SecurityConfig implements \Symfony\Component\Config\Builder\ConfigBuilderI
         $this->_hasDeprecatedCalls = true;
         $this->_usedProperties['roleHierarchy'] = true;
         $this->roleHierarchy[$id] = $value;
-
+    
         return $this;
     }
-
+    
     public function getExtensionAlias(): string
     {
         return 'security';
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('access_denied_url', $config)) {
@@ -223,72 +223,72 @@ class SecurityConfig implements \Symfony\Component\Config\Builder\ConfigBuilderI
             $this->accessDeniedUrl = $config['access_denied_url'];
             unset($config['access_denied_url']);
         }
-
+    
         if (array_key_exists('session_fixation_strategy', $config)) {
             $this->_usedProperties['sessionFixationStrategy'] = true;
             $this->sessionFixationStrategy = $config['session_fixation_strategy'];
             unset($config['session_fixation_strategy']);
         }
-
+    
         if (array_key_exists('hide_user_not_found', $config)) {
             $this->_usedProperties['hideUserNotFound'] = true;
             $this->hideUserNotFound = $config['hide_user_not_found'];
             unset($config['hide_user_not_found']);
         }
-
+    
         if (array_key_exists('expose_security_errors', $config)) {
             $this->_usedProperties['exposeSecurityErrors'] = true;
             $this->exposeSecurityErrors = $config['expose_security_errors'];
             unset($config['expose_security_errors']);
         }
-
+    
         if (array_key_exists('erase_credentials', $config)) {
             $this->_usedProperties['eraseCredentials'] = true;
             $this->eraseCredentials = $config['erase_credentials'];
             unset($config['erase_credentials']);
         }
-
+    
         if (array_key_exists('access_decision_manager', $config)) {
             $this->_usedProperties['accessDecisionManager'] = true;
             $this->accessDecisionManager = new \Symfony\Config\Security\AccessDecisionManagerConfig($config['access_decision_manager']);
             unset($config['access_decision_manager']);
         }
-
+    
         if (array_key_exists('password_hashers', $config)) {
             $this->_usedProperties['passwordHashers'] = true;
             $this->passwordHashers = array_map(fn ($v) => \is_array($v) ? new \Symfony\Config\Security\PasswordHasherConfig($v) : $v, $config['password_hashers']);
             unset($config['password_hashers']);
         }
-
+    
         if (array_key_exists('providers', $config)) {
             $this->_usedProperties['providers'] = true;
             $this->providers = array_map(fn ($v) => new \Symfony\Config\Security\ProviderConfig($v), $config['providers']);
             unset($config['providers']);
         }
-
+    
         if (array_key_exists('firewalls', $config)) {
             $this->_usedProperties['firewalls'] = true;
             $this->firewalls = array_map(fn ($v) => new \Symfony\Config\Security\FirewallConfig($v), $config['firewalls']);
             unset($config['firewalls']);
         }
-
+    
         if (array_key_exists('access_control', $config)) {
             $this->_usedProperties['accessControl'] = true;
             $this->accessControl = array_map(fn ($v) => new \Symfony\Config\Security\AccessControlConfig($v), $config['access_control']);
             unset($config['access_control']);
         }
-
+    
         if (array_key_exists('role_hierarchy', $config)) {
             $this->_usedProperties['roleHierarchy'] = true;
             $this->roleHierarchy = $config['role_hierarchy'];
             unset($config['role_hierarchy']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -328,7 +328,7 @@ class SecurityConfig implements \Symfony\Component\Config\Builder\ConfigBuilderI
         if ($this->_hasDeprecatedCalls) {
             trigger_deprecation('symfony/config', '7.4', 'Calling any fluent method on "%s" is deprecated; pass the configuration to the constructor instead.', $this::class);
         }
-
+    
         return $output;
     }
 

@@ -13,7 +13,7 @@ class CollectionConfig
 {
     private $pagination;
     private $_usedProperties = [];
-
+    
     /**
      * @template TValue of array|bool
      * @param TValue $value
@@ -26,20 +26,20 @@ class CollectionConfig
         if (!\is_array($value)) {
             $this->_usedProperties['pagination'] = true;
             $this->pagination = $value;
-
+    
             return $this;
         }
-
+    
         if (!$this->pagination instanceof \Symfony\Config\ApiPlatform\Graphql\Collection\PaginationConfig) {
             $this->_usedProperties['pagination'] = true;
             $this->pagination = new \Symfony\Config\ApiPlatform\Graphql\Collection\PaginationConfig($value);
         } elseif (0 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "pagination()" has already been initialized. You cannot pass values the second time you call pagination().');
         }
-
+    
         return $this->pagination;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('pagination', $config)) {
@@ -47,19 +47,19 @@ class CollectionConfig
             $this->pagination = \is_array($config['pagination']) ? new \Symfony\Config\ApiPlatform\Graphql\Collection\PaginationConfig($config['pagination']) : $config['pagination'];
             unset($config['pagination']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
         if (isset($this->_usedProperties['pagination'])) {
             $output['pagination'] = $this->pagination instanceof \Symfony\Config\ApiPlatform\Graphql\Collection\PaginationConfig ? $this->pagination->toArray() : $this->pagination;
         }
-
+    
         return $output;
     }
 

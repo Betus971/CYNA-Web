@@ -13,7 +13,7 @@ class EventConfig
     private $type;
     private $method;
     private $_usedProperties = [];
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -23,10 +23,10 @@ class EventConfig
     {
         $this->_usedProperties['type'] = true;
         $this->type = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -36,10 +36,10 @@ class EventConfig
     {
         $this->_usedProperties['method'] = true;
         $this->method = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('type', $config)) {
@@ -47,18 +47,18 @@ class EventConfig
             $this->type = $config['type'];
             unset($config['type']);
         }
-
+    
         if (array_key_exists('method', $config)) {
             $this->_usedProperties['method'] = true;
             $this->method = $config['method'];
             unset($config['method']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -68,7 +68,7 @@ class EventConfig
         if (isset($this->_usedProperties['method'])) {
             $output['method'] = $this->method;
         }
-
+    
         return $output;
     }
 

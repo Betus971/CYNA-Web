@@ -15,7 +15,7 @@ class CsrfProtectionConfig
     private $checkHeader;
     private $cookieName;
     private $_usedProperties = [];
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -25,10 +25,10 @@ class CsrfProtectionConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed> $value
      *
@@ -38,10 +38,10 @@ class CsrfProtectionConfig
     {
         $this->_usedProperties['statelessTokenIds'] = true;
         $this->statelessTokenIds = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Whether to check the CSRF token in a header in addition to a cookie when using stateless protection.
      * @default false
@@ -52,10 +52,10 @@ class CsrfProtectionConfig
     {
         $this->_usedProperties['checkHeader'] = true;
         $this->checkHeader = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The name of the cookie to use when using stateless protection.
      * @default 'csrf-token'
@@ -66,10 +66,10 @@ class CsrfProtectionConfig
     {
         $this->_usedProperties['cookieName'] = true;
         $this->cookieName = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -77,30 +77,30 @@ class CsrfProtectionConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('stateless_token_ids', $config)) {
             $this->_usedProperties['statelessTokenIds'] = true;
             $this->statelessTokenIds = $config['stateless_token_ids'];
             unset($config['stateless_token_ids']);
         }
-
+    
         if (array_key_exists('check_header', $config)) {
             $this->_usedProperties['checkHeader'] = true;
             $this->checkHeader = $config['check_header'];
             unset($config['check_header']);
         }
-
+    
         if (array_key_exists('cookie_name', $config)) {
             $this->_usedProperties['cookieName'] = true;
             $this->cookieName = $config['cookie_name'];
             unset($config['cookie_name']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -116,7 +116,7 @@ class CsrfProtectionConfig
         if (isset($this->_usedProperties['cookieName'])) {
             $output['cookie_name'] = $this->cookieName;
         }
-
+    
         return $output;
     }
 

@@ -29,7 +29,7 @@ class RememberMeConfig
     private $alwaysRememberMe;
     private $rememberMeParameter;
     private $_usedProperties = [];
-
+    
     /**
      * @default '%kernel.secret%'
      * @param ParamConfigurator|mixed $value
@@ -39,10 +39,10 @@ class RememberMeConfig
     {
         $this->_usedProperties['secret'] = true;
         $this->secret = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -52,10 +52,10 @@ class RememberMeConfig
     {
         $this->_usedProperties['service'] = true;
         $this->service = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed>|string $value
      *
@@ -65,10 +65,10 @@ class RememberMeConfig
     {
         $this->_usedProperties['userProviders'] = true;
         $this->userProviders = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default true
      * @param ParamConfigurator|bool $value
@@ -78,10 +78,10 @@ class RememberMeConfig
     {
         $this->_usedProperties['catchExceptions'] = true;
         $this->catchExceptions = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed> $value
      *
@@ -91,10 +91,10 @@ class RememberMeConfig
     {
         $this->_usedProperties['signatureProperties'] = true;
         $this->signatureProperties = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @template TValue of string|array
      * @param TValue $value
@@ -106,20 +106,20 @@ class RememberMeConfig
         if (!\is_array($value)) {
             $this->_usedProperties['tokenProvider'] = true;
             $this->tokenProvider = $value;
-
+    
             return $this;
         }
-
+    
         if (!$this->tokenProvider instanceof \Symfony\Config\Security\FirewallConfig\RememberMe\TokenProviderConfig) {
             $this->_usedProperties['tokenProvider'] = true;
             $this->tokenProvider = new \Symfony\Config\Security\FirewallConfig\RememberMe\TokenProviderConfig($value);
         } elseif (0 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "tokenProvider()" has already been initialized. You cannot pass values the second time you call tokenProvider().');
         }
-
+    
         return $this->tokenProvider;
     }
-
+    
     /**
      * The service ID of a custom rememberme token verifier.
      * @default null
@@ -130,10 +130,10 @@ class RememberMeConfig
     {
         $this->_usedProperties['tokenVerifier'] = true;
         $this->tokenVerifier = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 'REMEMBERME'
      * @param ParamConfigurator|mixed $value
@@ -143,10 +143,10 @@ class RememberMeConfig
     {
         $this->_usedProperties['name'] = true;
         $this->name = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 31536000
      * @param ParamConfigurator|int $value
@@ -156,10 +156,10 @@ class RememberMeConfig
     {
         $this->_usedProperties['lifetime'] = true;
         $this->lifetime = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default '/'
      * @param ParamConfigurator|mixed $value
@@ -169,10 +169,10 @@ class RememberMeConfig
     {
         $this->_usedProperties['path'] = true;
         $this->path = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -182,10 +182,10 @@ class RememberMeConfig
     {
         $this->_usedProperties['domain'] = true;
         $this->domain = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default false
      * @param ParamConfigurator|true|false|'auto' $value
@@ -195,10 +195,10 @@ class RememberMeConfig
     {
         $this->_usedProperties['secure'] = true;
         $this->secure = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default true
      * @param ParamConfigurator|bool $value
@@ -208,10 +208,10 @@ class RememberMeConfig
     {
         $this->_usedProperties['httponly'] = true;
         $this->httponly = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|NULL|'lax'|'strict'|'none' $value
@@ -221,10 +221,10 @@ class RememberMeConfig
     {
         $this->_usedProperties['samesite'] = true;
         $this->samesite = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default false
      * @param ParamConfigurator|bool $value
@@ -234,10 +234,10 @@ class RememberMeConfig
     {
         $this->_usedProperties['alwaysRememberMe'] = true;
         $this->alwaysRememberMe = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default '_remember_me'
      * @param ParamConfigurator|mixed $value
@@ -247,10 +247,10 @@ class RememberMeConfig
     {
         $this->_usedProperties['rememberMeParameter'] = true;
         $this->rememberMeParameter = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('secret', $config)) {
@@ -258,102 +258,102 @@ class RememberMeConfig
             $this->secret = $config['secret'];
             unset($config['secret']);
         }
-
+    
         if (array_key_exists('service', $config)) {
             $this->_usedProperties['service'] = true;
             $this->service = $config['service'];
             unset($config['service']);
         }
-
+    
         if (array_key_exists('user_providers', $config)) {
             $this->_usedProperties['userProviders'] = true;
             $this->userProviders = $config['user_providers'];
             unset($config['user_providers']);
         }
-
+    
         if (array_key_exists('catch_exceptions', $config)) {
             $this->_usedProperties['catchExceptions'] = true;
             $this->catchExceptions = $config['catch_exceptions'];
             unset($config['catch_exceptions']);
         }
-
+    
         if (array_key_exists('signature_properties', $config)) {
             $this->_usedProperties['signatureProperties'] = true;
             $this->signatureProperties = $config['signature_properties'];
             unset($config['signature_properties']);
         }
-
+    
         if (array_key_exists('token_provider', $config)) {
             $this->_usedProperties['tokenProvider'] = true;
             $this->tokenProvider = \is_array($config['token_provider']) ? new \Symfony\Config\Security\FirewallConfig\RememberMe\TokenProviderConfig($config['token_provider']) : $config['token_provider'];
             unset($config['token_provider']);
         }
-
+    
         if (array_key_exists('token_verifier', $config)) {
             $this->_usedProperties['tokenVerifier'] = true;
             $this->tokenVerifier = $config['token_verifier'];
             unset($config['token_verifier']);
         }
-
+    
         if (array_key_exists('name', $config)) {
             $this->_usedProperties['name'] = true;
             $this->name = $config['name'];
             unset($config['name']);
         }
-
+    
         if (array_key_exists('lifetime', $config)) {
             $this->_usedProperties['lifetime'] = true;
             $this->lifetime = $config['lifetime'];
             unset($config['lifetime']);
         }
-
+    
         if (array_key_exists('path', $config)) {
             $this->_usedProperties['path'] = true;
             $this->path = $config['path'];
             unset($config['path']);
         }
-
+    
         if (array_key_exists('domain', $config)) {
             $this->_usedProperties['domain'] = true;
             $this->domain = $config['domain'];
             unset($config['domain']);
         }
-
+    
         if (array_key_exists('secure', $config)) {
             $this->_usedProperties['secure'] = true;
             $this->secure = $config['secure'];
             unset($config['secure']);
         }
-
+    
         if (array_key_exists('httponly', $config)) {
             $this->_usedProperties['httponly'] = true;
             $this->httponly = $config['httponly'];
             unset($config['httponly']);
         }
-
+    
         if (array_key_exists('samesite', $config)) {
             $this->_usedProperties['samesite'] = true;
             $this->samesite = $config['samesite'];
             unset($config['samesite']);
         }
-
+    
         if (array_key_exists('always_remember_me', $config)) {
             $this->_usedProperties['alwaysRememberMe'] = true;
             $this->alwaysRememberMe = $config['always_remember_me'];
             unset($config['always_remember_me']);
         }
-
+    
         if (array_key_exists('remember_me_parameter', $config)) {
             $this->_usedProperties['rememberMeParameter'] = true;
             $this->rememberMeParameter = $config['remember_me_parameter'];
             unset($config['remember_me_parameter']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -405,7 +405,7 @@ class RememberMeConfig
         if (isset($this->_usedProperties['rememberMeParameter'])) {
             $output['remember_me_parameter'] = $this->rememberMeParameter;
         }
-
+    
         return $output;
     }
 

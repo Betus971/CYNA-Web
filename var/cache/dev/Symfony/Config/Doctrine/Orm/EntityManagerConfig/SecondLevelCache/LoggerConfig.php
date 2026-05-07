@@ -13,7 +13,7 @@ class LoggerConfig
     private $name;
     private $service;
     private $_usedProperties = [];
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -23,10 +23,10 @@ class LoggerConfig
     {
         $this->_usedProperties['name'] = true;
         $this->name = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -36,10 +36,10 @@ class LoggerConfig
     {
         $this->_usedProperties['service'] = true;
         $this->service = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('name', $config)) {
@@ -47,18 +47,18 @@ class LoggerConfig
             $this->name = $config['name'];
             unset($config['name']);
         }
-
+    
         if (array_key_exists('service', $config)) {
             $this->_usedProperties['service'] = true;
             $this->service = $config['service'];
             unset($config['service']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -68,7 +68,7 @@ class LoggerConfig
         if (isset($this->_usedProperties['service'])) {
             $output['service'] = $this->service;
         }
-
+    
         return $output;
     }
 

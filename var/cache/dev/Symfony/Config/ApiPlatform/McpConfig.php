@@ -13,7 +13,7 @@ class McpConfig
     private $enabled;
     private $format;
     private $_usedProperties = [];
-
+    
     /**
      * @default true
      * @param ParamConfigurator|bool $value
@@ -23,10 +23,10 @@ class McpConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The serialization format used for MCP tool input/output. Must be a format registered in api_platform.formats (e.g. "jsonld", "json", "jsonapi").
      * @default 'jsonld'
@@ -37,10 +37,10 @@ class McpConfig
     {
         $this->_usedProperties['format'] = true;
         $this->format = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -48,18 +48,18 @@ class McpConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('format', $config)) {
             $this->_usedProperties['format'] = true;
             $this->format = $config['format'];
             unset($config['format']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -69,7 +69,7 @@ class McpConfig
         if (isset($this->_usedProperties['format'])) {
             $output['format'] = $this->format;
         }
-
+    
         return $output;
     }
 

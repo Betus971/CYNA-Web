@@ -14,7 +14,7 @@ class SlugNormalizerConfig
     private $maxLength;
     private $unique;
     private $_usedProperties = [];
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -25,10 +25,10 @@ class SlugNormalizerConfig
     {
         $this->_usedProperties['instance'] = true;
         $this->instance = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 255
      * @param ParamConfigurator|int $value
@@ -38,10 +38,10 @@ class SlugNormalizerConfig
     {
         $this->_usedProperties['maxLength'] = true;
         $this->maxLength = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -52,10 +52,10 @@ class SlugNormalizerConfig
     {
         $this->_usedProperties['unique'] = true;
         $this->unique = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('instance', $config)) {
@@ -63,24 +63,24 @@ class SlugNormalizerConfig
             $this->instance = $config['instance'];
             unset($config['instance']);
         }
-
+    
         if (array_key_exists('max_length', $config)) {
             $this->_usedProperties['maxLength'] = true;
             $this->maxLength = $config['max_length'];
             unset($config['max_length']);
         }
-
+    
         if (array_key_exists('unique', $config)) {
             $this->_usedProperties['unique'] = true;
             $this->unique = $config['unique'];
             unset($config['unique']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -93,7 +93,7 @@ class SlugNormalizerConfig
         if (isset($this->_usedProperties['unique'])) {
             $output['unique'] = $this->unique;
         }
-
+    
         return $output;
     }
 

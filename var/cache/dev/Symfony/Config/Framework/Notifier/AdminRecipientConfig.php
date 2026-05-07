@@ -13,7 +13,7 @@ class AdminRecipientConfig
     private $email;
     private $phone;
     private $_usedProperties = [];
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -23,10 +23,10 @@ class AdminRecipientConfig
     {
         $this->_usedProperties['email'] = true;
         $this->email = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @param ParamConfigurator|mixed $value
      * @return $this
@@ -35,10 +35,10 @@ class AdminRecipientConfig
     {
         $this->_usedProperties['phone'] = true;
         $this->phone = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('email', $config)) {
@@ -46,18 +46,18 @@ class AdminRecipientConfig
             $this->email = $config['email'];
             unset($config['email']);
         }
-
+    
         if (array_key_exists('phone', $config)) {
             $this->_usedProperties['phone'] = true;
             $this->phone = $config['phone'];
             unset($config['phone']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -67,7 +67,7 @@ class AdminRecipientConfig
         if (isset($this->_usedProperties['phone'])) {
             $output['phone'] = $this->phone;
         }
-
+    
         return $output;
     }
 

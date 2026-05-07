@@ -15,7 +15,7 @@ class ApiPlatformConfig
     private $usernamePath;
     private $passwordPath;
     private $_usedProperties = [];
-
+    
     /**
      * @default false
      * @param ParamConfigurator|bool $value
@@ -25,10 +25,10 @@ class ApiPlatformConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The login check path to add in OpenAPI.
      * @default null
@@ -39,10 +39,10 @@ class ApiPlatformConfig
     {
         $this->_usedProperties['checkPath'] = true;
         $this->checkPath = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The path to the username in the JSON body.
      * @default null
@@ -53,10 +53,10 @@ class ApiPlatformConfig
     {
         $this->_usedProperties['usernamePath'] = true;
         $this->usernamePath = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The path to the password in the JSON body.
      * @default null
@@ -67,10 +67,10 @@ class ApiPlatformConfig
     {
         $this->_usedProperties['passwordPath'] = true;
         $this->passwordPath = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -78,30 +78,30 @@ class ApiPlatformConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('check_path', $config)) {
             $this->_usedProperties['checkPath'] = true;
             $this->checkPath = $config['check_path'];
             unset($config['check_path']);
         }
-
+    
         if (array_key_exists('username_path', $config)) {
             $this->_usedProperties['usernamePath'] = true;
             $this->usernamePath = $config['username_path'];
             unset($config['username_path']);
         }
-
+    
         if (array_key_exists('password_path', $config)) {
             $this->_usedProperties['passwordPath'] = true;
             $this->passwordPath = $config['password_path'];
             unset($config['password_path']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -117,7 +117,7 @@ class ApiPlatformConfig
         if (isset($this->_usedProperties['passwordPath'])) {
             $output['password_path'] = $this->passwordPath;
         }
-
+    
         return $output;
     }
 

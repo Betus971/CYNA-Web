@@ -15,7 +15,7 @@ class EncryptionConfig
     private $contentEncryptionAlgorithm;
     private $key;
     private $_usedProperties = [];
-
+    
     /**
      * @default false
      * @param ParamConfigurator|bool $value
@@ -25,10 +25,10 @@ class EncryptionConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The key encryption algorithm is used to encrypt the token.
      * @default null
@@ -39,10 +39,10 @@ class EncryptionConfig
     {
         $this->_usedProperties['keyEncryptionAlgorithm'] = true;
         $this->keyEncryptionAlgorithm = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The key encryption algorithm is used to encrypt the token.
      * @default null
@@ -53,10 +53,10 @@ class EncryptionConfig
     {
         $this->_usedProperties['contentEncryptionAlgorithm'] = true;
         $this->contentEncryptionAlgorithm = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The encryption key. It shall be JWK encoded.
      * @default null
@@ -67,10 +67,10 @@ class EncryptionConfig
     {
         $this->_usedProperties['key'] = true;
         $this->key = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -78,30 +78,30 @@ class EncryptionConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('key_encryption_algorithm', $config)) {
             $this->_usedProperties['keyEncryptionAlgorithm'] = true;
             $this->keyEncryptionAlgorithm = $config['key_encryption_algorithm'];
             unset($config['key_encryption_algorithm']);
         }
-
+    
         if (array_key_exists('content_encryption_algorithm', $config)) {
             $this->_usedProperties['contentEncryptionAlgorithm'] = true;
             $this->contentEncryptionAlgorithm = $config['content_encryption_algorithm'];
             unset($config['content_encryption_algorithm']);
         }
-
+    
         if (array_key_exists('key', $config)) {
             $this->_usedProperties['key'] = true;
             $this->key = $config['key'];
             unset($config['key']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -117,7 +117,7 @@ class EncryptionConfig
         if (isset($this->_usedProperties['key'])) {
             $output['key'] = $this->key;
         }
-
+    
         return $output;
     }
 

@@ -18,7 +18,7 @@ class PackageConfig
     private $basePath;
     private $baseUrls;
     private $_usedProperties = [];
-
+    
     /**
      * Throw an exception if an entry is missing from the manifest.json.
      * @default false
@@ -29,10 +29,10 @@ class PackageConfig
     {
         $this->_usedProperties['strictMode'] = true;
         $this->strictMode = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -42,10 +42,10 @@ class PackageConfig
     {
         $this->_usedProperties['versionStrategy'] = true;
         $this->versionStrategy = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -55,10 +55,10 @@ class PackageConfig
     {
         $this->_usedProperties['version'] = true;
         $this->version = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -68,10 +68,10 @@ class PackageConfig
     {
         $this->_usedProperties['versionFormat'] = true;
         $this->versionFormat = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -81,10 +81,10 @@ class PackageConfig
     {
         $this->_usedProperties['jsonManifestPath'] = true;
         $this->jsonManifestPath = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @param ParamConfigurator|mixed $value
      * @return $this
@@ -93,10 +93,10 @@ class PackageConfig
     {
         $this->_usedProperties['basePath'] = true;
         $this->basePath = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed>|string $value
      *
@@ -106,10 +106,10 @@ class PackageConfig
     {
         $this->_usedProperties['baseUrls'] = true;
         $this->baseUrls = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('strict_mode', $config)) {
@@ -117,48 +117,48 @@ class PackageConfig
             $this->strictMode = $config['strict_mode'];
             unset($config['strict_mode']);
         }
-
+    
         if (array_key_exists('version_strategy', $config)) {
             $this->_usedProperties['versionStrategy'] = true;
             $this->versionStrategy = $config['version_strategy'];
             unset($config['version_strategy']);
         }
-
+    
         if (array_key_exists('version', $config)) {
             $this->_usedProperties['version'] = true;
             $this->version = $config['version'];
             unset($config['version']);
         }
-
+    
         if (array_key_exists('version_format', $config)) {
             $this->_usedProperties['versionFormat'] = true;
             $this->versionFormat = $config['version_format'];
             unset($config['version_format']);
         }
-
+    
         if (array_key_exists('json_manifest_path', $config)) {
             $this->_usedProperties['jsonManifestPath'] = true;
             $this->jsonManifestPath = $config['json_manifest_path'];
             unset($config['json_manifest_path']);
         }
-
+    
         if (array_key_exists('base_path', $config)) {
             $this->_usedProperties['basePath'] = true;
             $this->basePath = $config['base_path'];
             unset($config['base_path']);
         }
-
+    
         if (array_key_exists('base_urls', $config)) {
             $this->_usedProperties['baseUrls'] = true;
             $this->baseUrls = $config['base_urls'];
             unset($config['base_urls']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -183,7 +183,7 @@ class PackageConfig
         if (isset($this->_usedProperties['baseUrls'])) {
             $output['base_urls'] = $this->baseUrls;
         }
-
+    
         return $output;
     }
 

@@ -13,7 +13,7 @@ class MappingConfig
     private $imports;
     private $paths;
     private $_usedProperties = [];
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed> $value
      *
@@ -23,10 +23,10 @@ class MappingConfig
     {
         $this->_usedProperties['imports'] = true;
         $this->imports = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed> $value
      *
@@ -36,10 +36,10 @@ class MappingConfig
     {
         $this->_usedProperties['paths'] = true;
         $this->paths = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('imports', $config)) {
@@ -47,18 +47,18 @@ class MappingConfig
             $this->imports = $config['imports'];
             unset($config['imports']);
         }
-
+    
         if (array_key_exists('paths', $config)) {
             $this->_usedProperties['paths'] = true;
             $this->paths = $config['paths'];
             unset($config['paths']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -68,7 +68,7 @@ class MappingConfig
         if (isset($this->_usedProperties['paths'])) {
             $output['paths'] = $this->paths;
         }
-
+    
         return $output;
     }
 

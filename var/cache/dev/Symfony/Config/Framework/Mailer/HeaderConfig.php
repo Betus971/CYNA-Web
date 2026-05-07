@@ -12,7 +12,7 @@ class HeaderConfig
 {
     private $value;
     private $_usedProperties = [];
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -23,10 +23,10 @@ class HeaderConfig
     {
         $this->_usedProperties['value'] = true;
         $this->value = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('value', $config)) {
@@ -34,19 +34,19 @@ class HeaderConfig
             $this->value = $config['value'];
             unset($config['value']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
         if (isset($this->_usedProperties['value'])) {
             $output['value'] = $this->value;
         }
-
+    
         return $output;
     }
 

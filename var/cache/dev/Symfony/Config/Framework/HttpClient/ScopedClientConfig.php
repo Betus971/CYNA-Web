@@ -44,7 +44,7 @@ class ScopedClientConfig
     private $caching;
     private $retryFailed;
     private $_usedProperties = [];
-
+    
     /**
      * The regular expression that the request URL must match before adding the other options. When none is provided, the base URI is used instead.
      * @default null
@@ -55,10 +55,10 @@ class ScopedClientConfig
     {
         $this->_usedProperties['scope'] = true;
         $this->scope = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The URI to resolve relative URLs, following rules in RFC 3985, section 2.
      * @default null
@@ -69,10 +69,10 @@ class ScopedClientConfig
     {
         $this->_usedProperties['baseUri'] = true;
         $this->baseUri = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * An HTTP Basic authentication "username:password".
      * @default null
@@ -83,10 +83,10 @@ class ScopedClientConfig
     {
         $this->_usedProperties['authBasic'] = true;
         $this->authBasic = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * A token enabling HTTP Bearer authorization.
      * @default null
@@ -97,10 +97,10 @@ class ScopedClientConfig
     {
         $this->_usedProperties['authBearer'] = true;
         $this->authBearer = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * A "username:password" pair to use Microsoft NTLM authentication (requires the cURL extension).
      * @default null
@@ -111,10 +111,10 @@ class ScopedClientConfig
     {
         $this->_usedProperties['authNtlm'] = true;
         $this->authNtlm = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @return $this
      */
@@ -122,10 +122,10 @@ class ScopedClientConfig
     {
         $this->_usedProperties['query'] = true;
         $this->query[$key] = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @return $this
      */
@@ -133,10 +133,10 @@ class ScopedClientConfig
     {
         $this->_usedProperties['headers'] = true;
         $this->headers[$name] = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The maximum number of redirects to follow.
      * @default null
@@ -147,10 +147,10 @@ class ScopedClientConfig
     {
         $this->_usedProperties['maxRedirects'] = true;
         $this->maxRedirects = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The default HTTP version, typically 1.1 or 2.0, leave to null for the best version.
      * @default null
@@ -161,10 +161,10 @@ class ScopedClientConfig
     {
         $this->_usedProperties['httpVersion'] = true;
         $this->httpVersion = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @return $this
      */
@@ -172,10 +172,10 @@ class ScopedClientConfig
     {
         $this->_usedProperties['resolve'] = true;
         $this->resolve[$host] = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The URL of the proxy to pass requests through or null for automatic detection.
      * @default null
@@ -186,10 +186,10 @@ class ScopedClientConfig
     {
         $this->_usedProperties['proxy'] = true;
         $this->proxy = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * A comma separated list of hosts that do not require a proxy to be reached.
      * @default null
@@ -200,10 +200,10 @@ class ScopedClientConfig
     {
         $this->_usedProperties['noProxy'] = true;
         $this->noProxy = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The idle timeout, defaults to the "default_socket_timeout" ini parameter.
      * @default null
@@ -214,10 +214,10 @@ class ScopedClientConfig
     {
         $this->_usedProperties['timeout'] = true;
         $this->timeout = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The maximum execution time for the request+response as a whole.
      * @default null
@@ -228,10 +228,10 @@ class ScopedClientConfig
     {
         $this->_usedProperties['maxDuration'] = true;
         $this->maxDuration = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * A network interface name, IP address, a host name or a UNIX socket to bind to.
      * @default null
@@ -242,10 +242,10 @@ class ScopedClientConfig
     {
         $this->_usedProperties['bindto'] = true;
         $this->bindto = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Indicates if the peer should be verified in a TLS context.
      * @default null
@@ -256,10 +256,10 @@ class ScopedClientConfig
     {
         $this->_usedProperties['verifyPeer'] = true;
         $this->verifyPeer = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Indicates if the host should exist as a certificate common name.
      * @default null
@@ -270,10 +270,10 @@ class ScopedClientConfig
     {
         $this->_usedProperties['verifyHost'] = true;
         $this->verifyHost = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * A certificate authority file.
      * @default null
@@ -284,10 +284,10 @@ class ScopedClientConfig
     {
         $this->_usedProperties['cafile'] = true;
         $this->cafile = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * A directory that contains multiple certificate authority files.
      * @default null
@@ -298,10 +298,10 @@ class ScopedClientConfig
     {
         $this->_usedProperties['capath'] = true;
         $this->capath = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * A PEM formatted certificate file.
      * @default null
@@ -312,10 +312,10 @@ class ScopedClientConfig
     {
         $this->_usedProperties['localCert'] = true;
         $this->localCert = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * A private key file.
      * @default null
@@ -326,10 +326,10 @@ class ScopedClientConfig
     {
         $this->_usedProperties['localPk'] = true;
         $this->localPk = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The passphrase used to encrypt the "local_pk" file.
      * @default null
@@ -340,10 +340,10 @@ class ScopedClientConfig
     {
         $this->_usedProperties['passphrase'] = true;
         $this->passphrase = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * A list of TLS ciphers separated by colons, commas or spaces (e.g. "RC3-SHA:TLS13-AES-128-GCM-SHA256"...).
      * @default null
@@ -354,10 +354,10 @@ class ScopedClientConfig
     {
         $this->_usedProperties['ciphers'] = true;
         $this->ciphers = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Associative array: hashing algorithm => hash(es).
      */
@@ -369,10 +369,10 @@ class ScopedClientConfig
         } elseif (0 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "peerFingerprint()" has already been initialized. You cannot pass values the second time you call peerFingerprint().');
         }
-
+    
         return $this->peerFingerprint;
     }
-
+    
     /**
      * The minimum version of TLS to accept; must be one of STREAM_CRYPTO_METHOD_TLSv*_CLIENT constants.
      * @default null
@@ -383,10 +383,10 @@ class ScopedClientConfig
     {
         $this->_usedProperties['cryptoMethod'] = true;
         $this->cryptoMethod = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @return $this
      */
@@ -394,10 +394,10 @@ class ScopedClientConfig
     {
         $this->_usedProperties['extra'] = true;
         $this->extra[$name] = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Rate limiter name to use for throttling requests.
      * @default null
@@ -408,10 +408,10 @@ class ScopedClientConfig
     {
         $this->_usedProperties['rateLimiter'] = true;
         $this->rateLimiter = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @template TValue of array|bool
      * @param TValue $value
@@ -425,20 +425,20 @@ class ScopedClientConfig
         if (!\is_array($value)) {
             $this->_usedProperties['caching'] = true;
             $this->caching = $value;
-
+    
             return $this;
         }
-
+    
         if (!$this->caching instanceof \Symfony\Config\Framework\HttpClient\ScopedClientConfig\CachingConfig) {
             $this->_usedProperties['caching'] = true;
             $this->caching = new \Symfony\Config\Framework\HttpClient\ScopedClientConfig\CachingConfig($value);
         } elseif (0 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "caching()" has already been initialized. You cannot pass values the second time you call caching().');
         }
-
+    
         return $this->caching;
     }
-
+    
     /**
      * @template TValue of array|bool
      * @param TValue $value
@@ -451,20 +451,20 @@ class ScopedClientConfig
         if (!\is_array($value)) {
             $this->_usedProperties['retryFailed'] = true;
             $this->retryFailed = $value;
-
+    
             return $this;
         }
-
+    
         if (!$this->retryFailed instanceof \Symfony\Config\Framework\HttpClient\ScopedClientConfig\RetryFailedConfig) {
             $this->_usedProperties['retryFailed'] = true;
             $this->retryFailed = new \Symfony\Config\Framework\HttpClient\ScopedClientConfig\RetryFailedConfig($value);
         } elseif (0 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "retryFailed()" has already been initialized. You cannot pass values the second time you call retryFailed().');
         }
-
+    
         return $this->retryFailed;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('scope', $config)) {
@@ -472,180 +472,180 @@ class ScopedClientConfig
             $this->scope = $config['scope'];
             unset($config['scope']);
         }
-
+    
         if (array_key_exists('base_uri', $config)) {
             $this->_usedProperties['baseUri'] = true;
             $this->baseUri = $config['base_uri'];
             unset($config['base_uri']);
         }
-
+    
         if (array_key_exists('auth_basic', $config)) {
             $this->_usedProperties['authBasic'] = true;
             $this->authBasic = $config['auth_basic'];
             unset($config['auth_basic']);
         }
-
+    
         if (array_key_exists('auth_bearer', $config)) {
             $this->_usedProperties['authBearer'] = true;
             $this->authBearer = $config['auth_bearer'];
             unset($config['auth_bearer']);
         }
-
+    
         if (array_key_exists('auth_ntlm', $config)) {
             $this->_usedProperties['authNtlm'] = true;
             $this->authNtlm = $config['auth_ntlm'];
             unset($config['auth_ntlm']);
         }
-
+    
         if (array_key_exists('query', $config)) {
             $this->_usedProperties['query'] = true;
             $this->query = $config['query'];
             unset($config['query']);
         }
-
+    
         if (array_key_exists('headers', $config)) {
             $this->_usedProperties['headers'] = true;
             $this->headers = $config['headers'];
             unset($config['headers']);
         }
-
+    
         if (array_key_exists('max_redirects', $config)) {
             $this->_usedProperties['maxRedirects'] = true;
             $this->maxRedirects = $config['max_redirects'];
             unset($config['max_redirects']);
         }
-
+    
         if (array_key_exists('http_version', $config)) {
             $this->_usedProperties['httpVersion'] = true;
             $this->httpVersion = $config['http_version'];
             unset($config['http_version']);
         }
-
+    
         if (array_key_exists('resolve', $config)) {
             $this->_usedProperties['resolve'] = true;
             $this->resolve = $config['resolve'];
             unset($config['resolve']);
         }
-
+    
         if (array_key_exists('proxy', $config)) {
             $this->_usedProperties['proxy'] = true;
             $this->proxy = $config['proxy'];
             unset($config['proxy']);
         }
-
+    
         if (array_key_exists('no_proxy', $config)) {
             $this->_usedProperties['noProxy'] = true;
             $this->noProxy = $config['no_proxy'];
             unset($config['no_proxy']);
         }
-
+    
         if (array_key_exists('timeout', $config)) {
             $this->_usedProperties['timeout'] = true;
             $this->timeout = $config['timeout'];
             unset($config['timeout']);
         }
-
+    
         if (array_key_exists('max_duration', $config)) {
             $this->_usedProperties['maxDuration'] = true;
             $this->maxDuration = $config['max_duration'];
             unset($config['max_duration']);
         }
-
+    
         if (array_key_exists('bindto', $config)) {
             $this->_usedProperties['bindto'] = true;
             $this->bindto = $config['bindto'];
             unset($config['bindto']);
         }
-
+    
         if (array_key_exists('verify_peer', $config)) {
             $this->_usedProperties['verifyPeer'] = true;
             $this->verifyPeer = $config['verify_peer'];
             unset($config['verify_peer']);
         }
-
+    
         if (array_key_exists('verify_host', $config)) {
             $this->_usedProperties['verifyHost'] = true;
             $this->verifyHost = $config['verify_host'];
             unset($config['verify_host']);
         }
-
+    
         if (array_key_exists('cafile', $config)) {
             $this->_usedProperties['cafile'] = true;
             $this->cafile = $config['cafile'];
             unset($config['cafile']);
         }
-
+    
         if (array_key_exists('capath', $config)) {
             $this->_usedProperties['capath'] = true;
             $this->capath = $config['capath'];
             unset($config['capath']);
         }
-
+    
         if (array_key_exists('local_cert', $config)) {
             $this->_usedProperties['localCert'] = true;
             $this->localCert = $config['local_cert'];
             unset($config['local_cert']);
         }
-
+    
         if (array_key_exists('local_pk', $config)) {
             $this->_usedProperties['localPk'] = true;
             $this->localPk = $config['local_pk'];
             unset($config['local_pk']);
         }
-
+    
         if (array_key_exists('passphrase', $config)) {
             $this->_usedProperties['passphrase'] = true;
             $this->passphrase = $config['passphrase'];
             unset($config['passphrase']);
         }
-
+    
         if (array_key_exists('ciphers', $config)) {
             $this->_usedProperties['ciphers'] = true;
             $this->ciphers = $config['ciphers'];
             unset($config['ciphers']);
         }
-
+    
         if (array_key_exists('peer_fingerprint', $config)) {
             $this->_usedProperties['peerFingerprint'] = true;
             $this->peerFingerprint = new \Symfony\Config\Framework\HttpClient\ScopedClientConfig\PeerFingerprintConfig($config['peer_fingerprint']);
             unset($config['peer_fingerprint']);
         }
-
+    
         if (array_key_exists('crypto_method', $config)) {
             $this->_usedProperties['cryptoMethod'] = true;
             $this->cryptoMethod = $config['crypto_method'];
             unset($config['crypto_method']);
         }
-
+    
         if (array_key_exists('extra', $config)) {
             $this->_usedProperties['extra'] = true;
             $this->extra = $config['extra'];
             unset($config['extra']);
         }
-
+    
         if (array_key_exists('rate_limiter', $config)) {
             $this->_usedProperties['rateLimiter'] = true;
             $this->rateLimiter = $config['rate_limiter'];
             unset($config['rate_limiter']);
         }
-
+    
         if (array_key_exists('caching', $config)) {
             $this->_usedProperties['caching'] = true;
             $this->caching = \is_array($config['caching']) ? new \Symfony\Config\Framework\HttpClient\ScopedClientConfig\CachingConfig($config['caching']) : $config['caching'];
             unset($config['caching']);
         }
-
+    
         if (array_key_exists('retry_failed', $config)) {
             $this->_usedProperties['retryFailed'] = true;
             $this->retryFailed = \is_array($config['retry_failed']) ? new \Symfony\Config\Framework\HttpClient\ScopedClientConfig\RetryFailedConfig($config['retry_failed']) : $config['retry_failed'];
             unset($config['retry_failed']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -736,7 +736,7 @@ class ScopedClientConfig
         if (isset($this->_usedProperties['retryFailed'])) {
             $output['retry_failed'] = $this->retryFailed instanceof \Symfony\Config\Framework\HttpClient\ScopedClientConfig\RetryFailedConfig ? $this->retryFailed->toArray() : $this->retryFailed;
         }
-
+    
         return $output;
     }
 

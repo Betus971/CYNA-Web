@@ -13,7 +13,7 @@ class ToConfig
     private $place;
     private $weight;
     private $_usedProperties = [];
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -23,10 +23,10 @@ class ToConfig
     {
         $this->_usedProperties['place'] = true;
         $this->place = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 1
      * @param ParamConfigurator|int $value
@@ -36,10 +36,10 @@ class ToConfig
     {
         $this->_usedProperties['weight'] = true;
         $this->weight = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('place', $config)) {
@@ -47,18 +47,18 @@ class ToConfig
             $this->place = $config['place'];
             unset($config['place']);
         }
-
+    
         if (array_key_exists('weight', $config)) {
             $this->_usedProperties['weight'] = true;
             $this->weight = $config['weight'];
             unset($config['weight']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -68,7 +68,7 @@ class ToConfig
         if (isset($this->_usedProperties['weight'])) {
             $output['weight'] = $this->weight;
         }
-
+    
         return $output;
     }
 

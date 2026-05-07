@@ -15,7 +15,7 @@ class X509Config
     private $credentials;
     private $userIdentifier;
     private $_usedProperties = [];
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -25,10 +25,10 @@ class X509Config
     {
         $this->_usedProperties['provider'] = true;
         $this->provider = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 'SSL_CLIENT_S_DN_Email'
      * @param ParamConfigurator|mixed $value
@@ -38,10 +38,10 @@ class X509Config
     {
         $this->_usedProperties['user'] = true;
         $this->user = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 'SSL_CLIENT_S_DN'
      * @param ParamConfigurator|mixed $value
@@ -51,10 +51,10 @@ class X509Config
     {
         $this->_usedProperties['credentials'] = true;
         $this->credentials = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 'emailAddress'
      * @param ParamConfigurator|mixed $value
@@ -64,10 +64,10 @@ class X509Config
     {
         $this->_usedProperties['userIdentifier'] = true;
         $this->userIdentifier = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('provider', $config)) {
@@ -75,30 +75,30 @@ class X509Config
             $this->provider = $config['provider'];
             unset($config['provider']);
         }
-
+    
         if (array_key_exists('user', $config)) {
             $this->_usedProperties['user'] = true;
             $this->user = $config['user'];
             unset($config['user']);
         }
-
+    
         if (array_key_exists('credentials', $config)) {
             $this->_usedProperties['credentials'] = true;
             $this->credentials = $config['credentials'];
             unset($config['credentials']);
         }
-
+    
         if (array_key_exists('user_identifier', $config)) {
             $this->_usedProperties['userIdentifier'] = true;
             $this->userIdentifier = $config['user_identifier'];
             unset($config['user_identifier']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -114,7 +114,7 @@ class X509Config
         if (isset($this->_usedProperties['userIdentifier'])) {
             $output['user_identifier'] = $this->userIdentifier;
         }
-
+    
         return $output;
     }
 

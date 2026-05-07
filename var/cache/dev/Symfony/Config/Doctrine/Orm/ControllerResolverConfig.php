@@ -14,7 +14,7 @@ class ControllerResolverConfig
     private $autoMapping;
     private $evictCache;
     private $_usedProperties = [];
-
+    
     /**
      * @default true
      * @param ParamConfigurator|bool $value
@@ -24,10 +24,10 @@ class ControllerResolverConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Set to false to disable using route placeholders as lookup criteria when the primary key doesn't match the argument name
      * @default null
@@ -38,10 +38,10 @@ class ControllerResolverConfig
     {
         $this->_usedProperties['autoMapping'] = true;
         $this->autoMapping = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Set to true to fetch the entity from the database instead of using the cache, if any
      * @default false
@@ -52,10 +52,10 @@ class ControllerResolverConfig
     {
         $this->_usedProperties['evictCache'] = true;
         $this->evictCache = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -63,24 +63,24 @@ class ControllerResolverConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('auto_mapping', $config)) {
             $this->_usedProperties['autoMapping'] = true;
             $this->autoMapping = $config['auto_mapping'];
             unset($config['auto_mapping']);
         }
-
+    
         if (array_key_exists('evict_cache', $config)) {
             $this->_usedProperties['evictCache'] = true;
             $this->evictCache = $config['evict_cache'];
             unset($config['evict_cache']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -93,7 +93,7 @@ class ControllerResolverConfig
         if (isset($this->_usedProperties['evictCache'])) {
             $output['evict_cache'] = $this->evictCache;
         }
-
+    
         return $output;
     }
 

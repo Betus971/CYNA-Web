@@ -12,7 +12,7 @@ class PatchFormatsConfig
 {
     private $mimeTypes;
     private $_usedProperties = [];
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed> $value
      *
@@ -22,10 +22,10 @@ class PatchFormatsConfig
     {
         $this->_usedProperties['mimeTypes'] = true;
         $this->mimeTypes = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('mime_types', $config)) {
@@ -33,19 +33,19 @@ class PatchFormatsConfig
             $this->mimeTypes = $config['mime_types'];
             unset($config['mime_types']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
         if (isset($this->_usedProperties['mimeTypes'])) {
             $output['mime_types'] = $this->mimeTypes;
         }
-
+    
         return $output;
     }
 

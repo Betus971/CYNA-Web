@@ -12,7 +12,7 @@ class CacheConfig
 {
     private $id;
     private $_usedProperties = [];
-
+    
     /**
      * Cache service id to use to cache the OIDC discovery configuration.
      * @default null
@@ -23,10 +23,10 @@ class CacheConfig
     {
         $this->_usedProperties['id'] = true;
         $this->id = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('id', $config)) {
@@ -34,19 +34,19 @@ class CacheConfig
             $this->id = $config['id'];
             unset($config['id']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
         if (isset($this->_usedProperties['id'])) {
             $output['id'] = $this->id;
         }
-
+    
         return $output;
     }
 

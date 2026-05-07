@@ -19,7 +19,7 @@ class SetCookiesConfig
     private $partitioned;
     private $split;
     private $_usedProperties = [];
-
+    
     /**
      * The cookie lifetime. If null, the "token_ttl" option value will be used
      * @default null
@@ -30,10 +30,10 @@ class SetCookiesConfig
     {
         $this->_usedProperties['lifetime'] = true;
         $this->lifetime = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 'lax'
      * @param ParamConfigurator|'none'|'lax'|'strict' $value
@@ -43,10 +43,10 @@ class SetCookiesConfig
     {
         $this->_usedProperties['samesite'] = true;
         $this->samesite = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default '/'
      * @param ParamConfigurator|mixed $value
@@ -56,10 +56,10 @@ class SetCookiesConfig
     {
         $this->_usedProperties['path'] = true;
         $this->path = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -69,10 +69,10 @@ class SetCookiesConfig
     {
         $this->_usedProperties['domain'] = true;
         $this->domain = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default true
      * @param ParamConfigurator|mixed $value
@@ -82,10 +82,10 @@ class SetCookiesConfig
     {
         $this->_usedProperties['secure'] = true;
         $this->secure = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default true
      * @param ParamConfigurator|mixed $value
@@ -95,10 +95,10 @@ class SetCookiesConfig
     {
         $this->_usedProperties['httpOnly'] = true;
         $this->httpOnly = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default false
      * @param ParamConfigurator|mixed $value
@@ -108,10 +108,10 @@ class SetCookiesConfig
     {
         $this->_usedProperties['partitioned'] = true;
         $this->partitioned = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed> $value
      *
@@ -121,10 +121,10 @@ class SetCookiesConfig
     {
         $this->_usedProperties['split'] = true;
         $this->split = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('lifetime', $config)) {
@@ -132,54 +132,54 @@ class SetCookiesConfig
             $this->lifetime = $config['lifetime'];
             unset($config['lifetime']);
         }
-
+    
         if (array_key_exists('samesite', $config)) {
             $this->_usedProperties['samesite'] = true;
             $this->samesite = $config['samesite'];
             unset($config['samesite']);
         }
-
+    
         if (array_key_exists('path', $config)) {
             $this->_usedProperties['path'] = true;
             $this->path = $config['path'];
             unset($config['path']);
         }
-
+    
         if (array_key_exists('domain', $config)) {
             $this->_usedProperties['domain'] = true;
             $this->domain = $config['domain'];
             unset($config['domain']);
         }
-
+    
         if (array_key_exists('secure', $config)) {
             $this->_usedProperties['secure'] = true;
             $this->secure = $config['secure'];
             unset($config['secure']);
         }
-
+    
         if (array_key_exists('httpOnly', $config)) {
             $this->_usedProperties['httpOnly'] = true;
             $this->httpOnly = $config['httpOnly'];
             unset($config['httpOnly']);
         }
-
+    
         if (array_key_exists('partitioned', $config)) {
             $this->_usedProperties['partitioned'] = true;
             $this->partitioned = $config['partitioned'];
             unset($config['partitioned']);
         }
-
+    
         if (array_key_exists('split', $config)) {
             $this->_usedProperties['split'] = true;
             $this->split = $config['split'];
             unset($config['split']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -207,7 +207,7 @@ class SetCookiesConfig
         if (isset($this->_usedProperties['split'])) {
             $output['split'] = $this->split;
         }
-
+    
         return $output;
     }
 

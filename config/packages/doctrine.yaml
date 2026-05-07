@@ -10,11 +10,7 @@ doctrine:
         # « 1071 Specified key was too long » (utf8mb4 = 4 octets/caractère,
         # VARCHAR(255) indexé = 1020 octets, au-dessus du seuil 767/1000 des
         # moteurs configurés avec innodb_large_prefix=OFF ou ROW_FORMAT=COMPACT).
-        charset: utf8mb4
-        default_table_options:
-            charset: utf8mb4
-            collate: utf8mb4_unicode_ci
-            row_format: DYNAMIC
+        charset: utf8
 
         profiling_collect_backtrace: '%kernel.debug%'
         use_savepoints: true

@@ -14,7 +14,7 @@ class CasConfig
     private $prefix;
     private $httpClient;
     private $_usedProperties = [];
-
+    
     /**
      * CAS server validation URL
      * @default null
@@ -25,10 +25,10 @@ class CasConfig
     {
         $this->_usedProperties['validationUrl'] = true;
         $this->validationUrl = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * CAS prefix
      * @default 'cas'
@@ -39,10 +39,10 @@ class CasConfig
     {
         $this->_usedProperties['prefix'] = true;
         $this->prefix = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * HTTP Client service
      * @default null
@@ -53,10 +53,10 @@ class CasConfig
     {
         $this->_usedProperties['httpClient'] = true;
         $this->httpClient = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('validation_url', $config)) {
@@ -64,24 +64,24 @@ class CasConfig
             $this->validationUrl = $config['validation_url'];
             unset($config['validation_url']);
         }
-
+    
         if (array_key_exists('prefix', $config)) {
             $this->_usedProperties['prefix'] = true;
             $this->prefix = $config['prefix'];
             unset($config['prefix']);
         }
-
+    
         if (array_key_exists('http_client', $config)) {
             $this->_usedProperties['httpClient'] = true;
             $this->httpClient = $config['http_client'];
             unset($config['http_client']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -94,7 +94,7 @@ class CasConfig
         if (isset($this->_usedProperties['httpClient'])) {
             $output['http_client'] = $this->httpClient;
         }
-
+    
         return $output;
     }
 

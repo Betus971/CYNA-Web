@@ -13,7 +13,7 @@ class ToolbarConfig
     private $enabled;
     private $ajaxReplace;
     private $_usedProperties = [];
-
+    
     /**
      * @default false
      * @param ParamConfigurator|bool $value
@@ -23,10 +23,10 @@ class ToolbarConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Replace toolbar on AJAX requests
      * @default false
@@ -37,10 +37,10 @@ class ToolbarConfig
     {
         $this->_usedProperties['ajaxReplace'] = true;
         $this->ajaxReplace = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -48,18 +48,18 @@ class ToolbarConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('ajax_replace', $config)) {
             $this->_usedProperties['ajaxReplace'] = true;
             $this->ajaxReplace = $config['ajax_replace'];
             unset($config['ajax_replace']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -69,7 +69,7 @@ class ToolbarConfig
         if (isset($this->_usedProperties['ajaxReplace'])) {
             $output['ajax_replace'] = $this->ajaxReplace;
         }
-
+    
         return $output;
     }
 

@@ -15,7 +15,7 @@ class CachingConfig
     private $shared;
     private $maxTtl;
     private $_usedProperties = [];
-
+    
     /**
      * @default false
      * @param ParamConfigurator|bool $value
@@ -25,10 +25,10 @@ class CachingConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The taggable cache pool to use for storing the responses.
      * @default 'cache.http_client'
@@ -39,10 +39,10 @@ class CachingConfig
     {
         $this->_usedProperties['cachePool'] = true;
         $this->cachePool = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Indicates whether the cache is shared (public) or private.
      * @default true
@@ -53,10 +53,10 @@ class CachingConfig
     {
         $this->_usedProperties['shared'] = true;
         $this->shared = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The maximum TTL (in seconds) allowed for cached responses. Null means no cap.
      * @default null
@@ -67,10 +67,10 @@ class CachingConfig
     {
         $this->_usedProperties['maxTtl'] = true;
         $this->maxTtl = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -78,30 +78,30 @@ class CachingConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('cache_pool', $config)) {
             $this->_usedProperties['cachePool'] = true;
             $this->cachePool = $config['cache_pool'];
             unset($config['cache_pool']);
         }
-
+    
         if (array_key_exists('shared', $config)) {
             $this->_usedProperties['shared'] = true;
             $this->shared = $config['shared'];
             unset($config['shared']);
         }
-
+    
         if (array_key_exists('max_ttl', $config)) {
             $this->_usedProperties['maxTtl'] = true;
             $this->maxTtl = $config['max_ttl'];
             unset($config['max_ttl']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -117,7 +117,7 @@ class CachingConfig
         if (isset($this->_usedProperties['maxTtl'])) {
             $output['max_ttl'] = $this->maxTtl;
         }
-
+    
         return $output;
     }
 

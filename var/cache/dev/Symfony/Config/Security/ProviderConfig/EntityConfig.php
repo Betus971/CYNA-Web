@@ -14,7 +14,7 @@ class EntityConfig
     private $property;
     private $managerName;
     private $_usedProperties = [];
-
+    
     /**
      * The full entity class name of your user class.
      * @default null
@@ -25,10 +25,10 @@ class EntityConfig
     {
         $this->_usedProperties['class'] = true;
         $this->class = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -38,10 +38,10 @@ class EntityConfig
     {
         $this->_usedProperties['property'] = true;
         $this->property = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -51,10 +51,10 @@ class EntityConfig
     {
         $this->_usedProperties['managerName'] = true;
         $this->managerName = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('class', $config)) {
@@ -62,24 +62,24 @@ class EntityConfig
             $this->class = $config['class'];
             unset($config['class']);
         }
-
+    
         if (array_key_exists('property', $config)) {
             $this->_usedProperties['property'] = true;
             $this->property = $config['property'];
             unset($config['property']);
         }
-
+    
         if (array_key_exists('manager_name', $config)) {
             $this->_usedProperties['managerName'] = true;
             $this->managerName = $config['manager_name'];
             unset($config['manager_name']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -92,7 +92,7 @@ class EntityConfig
         if (isset($this->_usedProperties['managerName'])) {
             $output['manager_name'] = $this->managerName;
         }
-
+    
         return $output;
     }
 

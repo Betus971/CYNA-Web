@@ -12,7 +12,7 @@ class SerializerConfig
 {
     private $hydraPrefix;
     private $_usedProperties = [];
-
+    
     /**
      * Use the "hydra:" prefix.
      * @default false
@@ -23,10 +23,10 @@ class SerializerConfig
     {
         $this->_usedProperties['hydraPrefix'] = true;
         $this->hydraPrefix = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('hydra_prefix', $config)) {
@@ -34,19 +34,19 @@ class SerializerConfig
             $this->hydraPrefix = $config['hydra_prefix'];
             unset($config['hydra_prefix']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
         if (isset($this->_usedProperties['hydraPrefix'])) {
             $output['hydra_prefix'] = $this->hydraPrefix;
         }
-
+    
         return $output;
     }
 

@@ -17,7 +17,7 @@ class UidConfig
     private $timeBasedUuidVersion;
     private $timeBasedUuidNode;
     private $_usedProperties = [];
-
+    
     /**
      * @default true
      * @param ParamConfigurator|bool $value
@@ -27,10 +27,10 @@ class UidConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 7
      * @param ParamConfigurator|7|6|4|1 $value
@@ -40,10 +40,10 @@ class UidConfig
     {
         $this->_usedProperties['defaultUuidVersion'] = true;
         $this->defaultUuidVersion = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 5
      * @param ParamConfigurator|5|3 $value
@@ -53,10 +53,10 @@ class UidConfig
     {
         $this->_usedProperties['nameBasedUuidVersion'] = true;
         $this->nameBasedUuidVersion = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -66,10 +66,10 @@ class UidConfig
     {
         $this->_usedProperties['nameBasedUuidNamespace'] = true;
         $this->nameBasedUuidNamespace = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 7
      * @param ParamConfigurator|7|6|1 $value
@@ -79,10 +79,10 @@ class UidConfig
     {
         $this->_usedProperties['timeBasedUuidVersion'] = true;
         $this->timeBasedUuidVersion = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -92,10 +92,10 @@ class UidConfig
     {
         $this->_usedProperties['timeBasedUuidNode'] = true;
         $this->timeBasedUuidNode = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -103,42 +103,42 @@ class UidConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('default_uuid_version', $config)) {
             $this->_usedProperties['defaultUuidVersion'] = true;
             $this->defaultUuidVersion = $config['default_uuid_version'];
             unset($config['default_uuid_version']);
         }
-
+    
         if (array_key_exists('name_based_uuid_version', $config)) {
             $this->_usedProperties['nameBasedUuidVersion'] = true;
             $this->nameBasedUuidVersion = $config['name_based_uuid_version'];
             unset($config['name_based_uuid_version']);
         }
-
+    
         if (array_key_exists('name_based_uuid_namespace', $config)) {
             $this->_usedProperties['nameBasedUuidNamespace'] = true;
             $this->nameBasedUuidNamespace = $config['name_based_uuid_namespace'];
             unset($config['name_based_uuid_namespace']);
         }
-
+    
         if (array_key_exists('time_based_uuid_version', $config)) {
             $this->_usedProperties['timeBasedUuidVersion'] = true;
             $this->timeBasedUuidVersion = $config['time_based_uuid_version'];
             unset($config['time_based_uuid_version']);
         }
-
+    
         if (array_key_exists('time_based_uuid_node', $config)) {
             $this->_usedProperties['timeBasedUuidNode'] = true;
             $this->timeBasedUuidNode = $config['time_based_uuid_node'];
             unset($config['time_based_uuid_node']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -160,7 +160,7 @@ class UidConfig
         if (isset($this->_usedProperties['timeBasedUuidNode'])) {
             $output['time_based_uuid_node'] = $this->timeBasedUuidNode;
         }
-
+    
         return $output;
     }
 

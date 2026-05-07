@@ -13,7 +13,7 @@ class PlaceConfig
     private $name;
     private $metadata;
     private $_usedProperties = [];
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -23,10 +23,10 @@ class PlaceConfig
     {
         $this->_usedProperties['name'] = true;
         $this->name = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @return $this
      */
@@ -34,10 +34,10 @@ class PlaceConfig
     {
         $this->_usedProperties['metadata'] = true;
         $this->metadata[$key] = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('name', $config)) {
@@ -45,18 +45,18 @@ class PlaceConfig
             $this->name = $config['name'];
             unset($config['name']);
         }
-
+    
         if (array_key_exists('metadata', $config)) {
             $this->_usedProperties['metadata'] = true;
             $this->metadata = $config['metadata'];
             unset($config['metadata']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -66,7 +66,7 @@ class PlaceConfig
         if (isset($this->_usedProperties['metadata'])) {
             $output['metadata'] = $this->metadata;
         }
-
+    
         return $output;
     }
 

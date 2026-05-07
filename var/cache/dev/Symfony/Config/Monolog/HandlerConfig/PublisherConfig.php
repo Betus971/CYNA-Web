@@ -16,7 +16,7 @@ class PublisherConfig
     private $chunkSize;
     private $encoder;
     private $_usedProperties = [];
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -26,10 +26,10 @@ class PublisherConfig
     {
         $this->_usedProperties['id'] = true;
         $this->id = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -39,10 +39,10 @@ class PublisherConfig
     {
         $this->_usedProperties['hostname'] = true;
         $this->hostname = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 12201
      * @param ParamConfigurator|mixed $value
@@ -52,10 +52,10 @@ class PublisherConfig
     {
         $this->_usedProperties['port'] = true;
         $this->port = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 1420
      * @param ParamConfigurator|mixed $value
@@ -65,10 +65,10 @@ class PublisherConfig
     {
         $this->_usedProperties['chunkSize'] = true;
         $this->chunkSize = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|'json'|'compressed_json' $value
@@ -78,10 +78,10 @@ class PublisherConfig
     {
         $this->_usedProperties['encoder'] = true;
         $this->encoder = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('id', $config)) {
@@ -89,36 +89,36 @@ class PublisherConfig
             $this->id = $config['id'];
             unset($config['id']);
         }
-
+    
         if (array_key_exists('hostname', $config)) {
             $this->_usedProperties['hostname'] = true;
             $this->hostname = $config['hostname'];
             unset($config['hostname']);
         }
-
+    
         if (array_key_exists('port', $config)) {
             $this->_usedProperties['port'] = true;
             $this->port = $config['port'];
             unset($config['port']);
         }
-
+    
         if (array_key_exists('chunk_size', $config)) {
             $this->_usedProperties['chunkSize'] = true;
             $this->chunkSize = $config['chunk_size'];
             unset($config['chunk_size']);
         }
-
+    
         if (array_key_exists('encoder', $config)) {
             $this->_usedProperties['encoder'] = true;
             $this->encoder = $config['encoder'];
             unset($config['encoder']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -137,7 +137,7 @@ class PublisherConfig
         if (isset($this->_usedProperties['encoder'])) {
             $output['encoder'] = $this->encoder;
         }
-
+    
         return $output;
     }
 

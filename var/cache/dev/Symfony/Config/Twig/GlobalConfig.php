@@ -14,7 +14,7 @@ class GlobalConfig
     private $type;
     private $value;
     private $_usedProperties = [];
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -24,10 +24,10 @@ class GlobalConfig
     {
         $this->_usedProperties['id'] = true;
         $this->id = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -37,10 +37,10 @@ class GlobalConfig
     {
         $this->_usedProperties['type'] = true;
         $this->type = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -51,10 +51,10 @@ class GlobalConfig
     {
         $this->_usedProperties['value'] = true;
         $this->value = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('id', $config)) {
@@ -62,24 +62,24 @@ class GlobalConfig
             $this->id = $config['id'];
             unset($config['id']);
         }
-
+    
         if (array_key_exists('type', $config)) {
             $this->_usedProperties['type'] = true;
             $this->type = $config['type'];
             unset($config['type']);
         }
-
+    
         if (array_key_exists('value', $config)) {
             $this->_usedProperties['value'] = true;
             $this->value = $config['value'];
             unset($config['value']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -92,7 +92,7 @@ class GlobalConfig
         if (isset($this->_usedProperties['value'])) {
             $output['value'] = $this->value;
         }
-
+    
         return $output;
     }
 

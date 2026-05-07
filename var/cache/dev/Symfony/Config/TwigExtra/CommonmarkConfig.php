@@ -23,7 +23,7 @@ class CommonmarkConfig
     private $commonmark;
     private $_usedProperties = [];
     private $_extraKeys;
-
+    
     /**
      * Array of options for rendering HTML.
      */
@@ -35,10 +35,10 @@ class CommonmarkConfig
         } elseif (0 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "renderer()" has already been initialized. You cannot pass values the second time you call renderer().');
         }
-
+    
         return $this->renderer;
     }
-
+    
     /**
      * How to handle HTML input.
      * @default null
@@ -49,10 +49,10 @@ class CommonmarkConfig
     {
         $this->_usedProperties['htmlInput'] = true;
         $this->htmlInput = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Remove risky link and image URLs by setting this to false.
      * @default true
@@ -63,10 +63,10 @@ class CommonmarkConfig
     {
         $this->_usedProperties['allowUnsafeLinks'] = true;
         $this->allowUnsafeLinks = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The maximum nesting level for blocks.
      * @default 9223372036854775807
@@ -77,10 +77,10 @@ class CommonmarkConfig
     {
         $this->_usedProperties['maxNestingLevel'] = true;
         $this->maxNestingLevel = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The maximum number of strong/emphasis delimiters per line.
      * @default 9223372036854775807
@@ -91,10 +91,10 @@ class CommonmarkConfig
     {
         $this->_usedProperties['maxDelimitersPerLine'] = true;
         $this->maxDelimitersPerLine = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Array of options for configuring how URL-safe slugs are created.
      */
@@ -106,10 +106,10 @@ class CommonmarkConfig
         } elseif (0 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "slugNormalizer()" has already been initialized. You cannot pass values the second time you call slugNormalizer().');
         }
-
+    
         return $this->slugNormalizer;
     }
-
+    
     /**
      * Array of options for configuring the CommonMark core extension.
      */
@@ -121,10 +121,10 @@ class CommonmarkConfig
         } elseif (0 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "commonmark()" has already been initialized. You cannot pass values the second time you call commonmark().');
         }
-
+    
         return $this->commonmark;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('renderer', $config)) {
@@ -132,47 +132,47 @@ class CommonmarkConfig
             $this->renderer = new \Symfony\Config\TwigExtra\Commonmark\RendererConfig($config['renderer']);
             unset($config['renderer']);
         }
-
+    
         if (array_key_exists('html_input', $config)) {
             $this->_usedProperties['htmlInput'] = true;
             $this->htmlInput = $config['html_input'];
             unset($config['html_input']);
         }
-
+    
         if (array_key_exists('allow_unsafe_links', $config)) {
             $this->_usedProperties['allowUnsafeLinks'] = true;
             $this->allowUnsafeLinks = $config['allow_unsafe_links'];
             unset($config['allow_unsafe_links']);
         }
-
+    
         if (array_key_exists('max_nesting_level', $config)) {
             $this->_usedProperties['maxNestingLevel'] = true;
             $this->maxNestingLevel = $config['max_nesting_level'];
             unset($config['max_nesting_level']);
         }
-
+    
         if (array_key_exists('max_delimiters_per_line', $config)) {
             $this->_usedProperties['maxDelimitersPerLine'] = true;
             $this->maxDelimitersPerLine = $config['max_delimiters_per_line'];
             unset($config['max_delimiters_per_line']);
         }
-
+    
         if (array_key_exists('slug_normalizer', $config)) {
             $this->_usedProperties['slugNormalizer'] = true;
             $this->slugNormalizer = new \Symfony\Config\TwigExtra\Commonmark\SlugNormalizerConfig($config['slug_normalizer']);
             unset($config['slug_normalizer']);
         }
-
+    
         if (array_key_exists('commonmark', $config)) {
             $this->_usedProperties['commonmark'] = true;
             $this->commonmark = new \Symfony\Config\TwigExtra\Commonmark\CommonmarkConfig($config['commonmark']);
             unset($config['commonmark']);
         }
-
+    
         $this->_extraKeys = $config;
-
+    
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -197,10 +197,10 @@ class CommonmarkConfig
         if (isset($this->_usedProperties['commonmark'])) {
             $output['commonmark'] = $this->commonmark->toArray();
         }
-
+    
         return $output + $this->_extraKeys;
     }
-
+    
     /**
      * @param ParamConfigurator|mixed $value
      *
@@ -209,7 +209,7 @@ class CommonmarkConfig
     public function set(string $key, mixed $value): static
     {
         $this->_extraKeys[$key] = $value;
-
+    
         return $this;
     }
 

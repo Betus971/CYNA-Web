@@ -12,7 +12,7 @@ class ChainConfig
 {
     private $providers;
     private $_usedProperties = [];
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed>|string $value
      *
@@ -22,10 +22,10 @@ class ChainConfig
     {
         $this->_usedProperties['providers'] = true;
         $this->providers = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('providers', $config)) {
@@ -33,19 +33,19 @@ class ChainConfig
             $this->providers = $config['providers'];
             unset($config['providers']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
         if (isset($this->_usedProperties['providers'])) {
             $output['providers'] = $this->providers;
         }
-
+    
         return $output;
     }
 

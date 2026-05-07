@@ -16,7 +16,7 @@ class NelmioCorsConfig implements \Symfony\Component\Config\Builder\ConfigBuilde
     private $paths;
     private $_usedProperties = [];
     private $_hasDeprecatedCalls = false;
-
+    
     /**
      * @default {"allow_credentials":false,"allow_origin":[],"allow_headers":[],"allow_methods":[],"allow_private_network":false,"expose_headers":[],"max_age":0,"hosts":[],"origin_regex":false,"forced_allow_origin_value":null,"skip_same_as_origin":true}
      * @deprecated since Symfony 7.4
@@ -30,10 +30,10 @@ class NelmioCorsConfig implements \Symfony\Component\Config\Builder\ConfigBuilde
         } elseif (0 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "defaults()" has already been initialized. You cannot pass values the second time you call defaults().');
         }
-
+    
         return $this->defaults;
     }
-
+    
     /**
      * @deprecated since Symfony 7.4
      */
@@ -46,15 +46,15 @@ class NelmioCorsConfig implements \Symfony\Component\Config\Builder\ConfigBuilde
         } elseif (1 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "paths()" has already been initialized. You cannot pass values the second time you call paths().');
         }
-
+    
         return $this->paths[$path];
     }
-
+    
     public function getExtensionAlias(): string
     {
         return 'nelmio_cors';
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('defaults', $config)) {
@@ -62,18 +62,18 @@ class NelmioCorsConfig implements \Symfony\Component\Config\Builder\ConfigBuilde
             $this->defaults = new \Symfony\Config\NelmioCors\DefaultsConfig($config['defaults']);
             unset($config['defaults']);
         }
-
+    
         if (array_key_exists('paths', $config)) {
             $this->_usedProperties['paths'] = true;
             $this->paths = array_map(fn ($v) => new \Symfony\Config\NelmioCors\PathsConfig($v), $config['paths']);
             unset($config['paths']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -86,7 +86,7 @@ class NelmioCorsConfig implements \Symfony\Component\Config\Builder\ConfigBuilde
         if ($this->_hasDeprecatedCalls) {
             trigger_deprecation('symfony/config', '7.4', 'Calling any fluent method on "%s" is deprecated; pass the configuration to the constructor instead.', $this::class);
         }
-
+    
         return $output;
     }
 

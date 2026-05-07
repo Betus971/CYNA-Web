@@ -13,7 +13,7 @@ class NotCompromisedPasswordConfig
     private $enabled;
     private $endpoint;
     private $_usedProperties = [];
-
+    
     /**
      * When disabled, compromised passwords will be accepted as valid.
      * @default true
@@ -24,10 +24,10 @@ class NotCompromisedPasswordConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * API endpoint for the NotCompromisedPassword Validator.
      * @default null
@@ -38,10 +38,10 @@ class NotCompromisedPasswordConfig
     {
         $this->_usedProperties['endpoint'] = true;
         $this->endpoint = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -49,18 +49,18 @@ class NotCompromisedPasswordConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('endpoint', $config)) {
             $this->_usedProperties['endpoint'] = true;
             $this->endpoint = $config['endpoint'];
             unset($config['endpoint']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -70,7 +70,7 @@ class NotCompromisedPasswordConfig
         if (isset($this->_usedProperties['endpoint'])) {
             $output['endpoint'] = $this->endpoint;
         }
-
+    
         return $output;
     }
 

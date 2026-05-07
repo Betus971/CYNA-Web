@@ -21,7 +21,7 @@ class OauthConfig
     private $refreshUrl;
     private $scopes;
     private $_usedProperties = [];
-
+    
     /**
      * @default false
      * @param ParamConfigurator|bool $value
@@ -31,10 +31,10 @@ class OauthConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The oauth client id.
      * @param ParamConfigurator|mixed $value
@@ -44,10 +44,10 @@ class OauthConfig
     {
         $this->_usedProperties['clientId'] = true;
         $this->clientId = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The OAuth client secret. Never use this parameter in your production environment. It exposes crucial security information. This feature is intended for dev/test environments only. Enable "oauth.pkce" instead
      * @param ParamConfigurator|mixed $value
@@ -57,10 +57,10 @@ class OauthConfig
     {
         $this->_usedProperties['clientSecret'] = true;
         $this->clientSecret = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Enable the oauth PKCE.
      * @default false
@@ -71,10 +71,10 @@ class OauthConfig
     {
         $this->_usedProperties['pkce'] = true;
         $this->pkce = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The oauth type.
      * @default 'oauth2'
@@ -85,10 +85,10 @@ class OauthConfig
     {
         $this->_usedProperties['type'] = true;
         $this->type = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The oauth flow grant type.
      * @default 'application'
@@ -99,10 +99,10 @@ class OauthConfig
     {
         $this->_usedProperties['flow'] = true;
         $this->flow = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The oauth token url.
      * @param ParamConfigurator|mixed $value
@@ -112,10 +112,10 @@ class OauthConfig
     {
         $this->_usedProperties['tokenUrl'] = true;
         $this->tokenUrl = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The oauth authentication url.
      * @param ParamConfigurator|mixed $value
@@ -125,10 +125,10 @@ class OauthConfig
     {
         $this->_usedProperties['authorizationUrl'] = true;
         $this->authorizationUrl = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The oauth refresh url.
      * @param ParamConfigurator|mixed $value
@@ -138,10 +138,10 @@ class OauthConfig
     {
         $this->_usedProperties['refreshUrl'] = true;
         $this->refreshUrl = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed> $value
      *
@@ -151,10 +151,10 @@ class OauthConfig
     {
         $this->_usedProperties['scopes'] = true;
         $this->scopes = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -162,66 +162,66 @@ class OauthConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('clientId', $config)) {
             $this->_usedProperties['clientId'] = true;
             $this->clientId = $config['clientId'];
             unset($config['clientId']);
         }
-
+    
         if (array_key_exists('clientSecret', $config)) {
             $this->_usedProperties['clientSecret'] = true;
             $this->clientSecret = $config['clientSecret'];
             unset($config['clientSecret']);
         }
-
+    
         if (array_key_exists('pkce', $config)) {
             $this->_usedProperties['pkce'] = true;
             $this->pkce = $config['pkce'];
             unset($config['pkce']);
         }
-
+    
         if (array_key_exists('type', $config)) {
             $this->_usedProperties['type'] = true;
             $this->type = $config['type'];
             unset($config['type']);
         }
-
+    
         if (array_key_exists('flow', $config)) {
             $this->_usedProperties['flow'] = true;
             $this->flow = $config['flow'];
             unset($config['flow']);
         }
-
+    
         if (array_key_exists('tokenUrl', $config)) {
             $this->_usedProperties['tokenUrl'] = true;
             $this->tokenUrl = $config['tokenUrl'];
             unset($config['tokenUrl']);
         }
-
+    
         if (array_key_exists('authorizationUrl', $config)) {
             $this->_usedProperties['authorizationUrl'] = true;
             $this->authorizationUrl = $config['authorizationUrl'];
             unset($config['authorizationUrl']);
         }
-
+    
         if (array_key_exists('refreshUrl', $config)) {
             $this->_usedProperties['refreshUrl'] = true;
             $this->refreshUrl = $config['refreshUrl'];
             unset($config['refreshUrl']);
         }
-
+    
         if (array_key_exists('scopes', $config)) {
             $this->_usedProperties['scopes'] = true;
             $this->scopes = $config['scopes'];
             unset($config['scopes']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -255,7 +255,7 @@ class OauthConfig
         if (isset($this->_usedProperties['scopes'])) {
             $output['scopes'] = $this->scopes;
         }
-
+    
         return $output;
     }
 

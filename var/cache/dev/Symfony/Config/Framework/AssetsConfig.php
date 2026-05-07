@@ -22,7 +22,7 @@ class AssetsConfig
     private $baseUrls;
     private $packages;
     private $_usedProperties = [];
-
+    
     /**
      * @default true
      * @param ParamConfigurator|bool $value
@@ -32,10 +32,10 @@ class AssetsConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Throw an exception if an entry is missing from the manifest.json.
      * @default false
@@ -46,10 +46,10 @@ class AssetsConfig
     {
         $this->_usedProperties['strictMode'] = true;
         $this->strictMode = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -59,10 +59,10 @@ class AssetsConfig
     {
         $this->_usedProperties['versionStrategy'] = true;
         $this->versionStrategy = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -72,10 +72,10 @@ class AssetsConfig
     {
         $this->_usedProperties['version'] = true;
         $this->version = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default '%%s?%%s'
      * @param ParamConfigurator|mixed $value
@@ -85,10 +85,10 @@ class AssetsConfig
     {
         $this->_usedProperties['versionFormat'] = true;
         $this->versionFormat = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -98,10 +98,10 @@ class AssetsConfig
     {
         $this->_usedProperties['jsonManifestPath'] = true;
         $this->jsonManifestPath = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @param ParamConfigurator|mixed $value
      * @return $this
@@ -110,10 +110,10 @@ class AssetsConfig
     {
         $this->_usedProperties['basePath'] = true;
         $this->basePath = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed>|string $value
      *
@@ -123,10 +123,10 @@ class AssetsConfig
     {
         $this->_usedProperties['baseUrls'] = true;
         $this->baseUrls = $value;
-
+    
         return $this;
     }
-
+    
     public function package(string $name, array $value = []): \Symfony\Config\Framework\Assets\PackageConfig
     {
         if (!isset($this->packages[$name])) {
@@ -135,10 +135,10 @@ class AssetsConfig
         } elseif (1 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "package()" has already been initialized. You cannot pass values the second time you call package().');
         }
-
+    
         return $this->packages[$name];
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -146,60 +146,60 @@ class AssetsConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('strict_mode', $config)) {
             $this->_usedProperties['strictMode'] = true;
             $this->strictMode = $config['strict_mode'];
             unset($config['strict_mode']);
         }
-
+    
         if (array_key_exists('version_strategy', $config)) {
             $this->_usedProperties['versionStrategy'] = true;
             $this->versionStrategy = $config['version_strategy'];
             unset($config['version_strategy']);
         }
-
+    
         if (array_key_exists('version', $config)) {
             $this->_usedProperties['version'] = true;
             $this->version = $config['version'];
             unset($config['version']);
         }
-
+    
         if (array_key_exists('version_format', $config)) {
             $this->_usedProperties['versionFormat'] = true;
             $this->versionFormat = $config['version_format'];
             unset($config['version_format']);
         }
-
+    
         if (array_key_exists('json_manifest_path', $config)) {
             $this->_usedProperties['jsonManifestPath'] = true;
             $this->jsonManifestPath = $config['json_manifest_path'];
             unset($config['json_manifest_path']);
         }
-
+    
         if (array_key_exists('base_path', $config)) {
             $this->_usedProperties['basePath'] = true;
             $this->basePath = $config['base_path'];
             unset($config['base_path']);
         }
-
+    
         if (array_key_exists('base_urls', $config)) {
             $this->_usedProperties['baseUrls'] = true;
             $this->baseUrls = $config['base_urls'];
             unset($config['base_urls']);
         }
-
+    
         if (array_key_exists('packages', $config)) {
             $this->_usedProperties['packages'] = true;
             $this->packages = array_map(fn ($v) => new \Symfony\Config\Framework\Assets\PackageConfig($v), $config['packages']);
             unset($config['packages']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -230,7 +230,7 @@ class AssetsConfig
         if (isset($this->_usedProperties['packages'])) {
             $output['packages'] = array_map(fn ($v) => $v->toArray(), $this->packages);
         }
-
+    
         return $output;
     }
 

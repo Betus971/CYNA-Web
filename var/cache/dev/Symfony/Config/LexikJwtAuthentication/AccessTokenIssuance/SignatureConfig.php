@@ -13,7 +13,7 @@ class SignatureConfig
     private $algorithm;
     private $key;
     private $_usedProperties = [];
-
+    
     /**
      * The algorithm use to sign the access tokens.
      * @default null
@@ -24,10 +24,10 @@ class SignatureConfig
     {
         $this->_usedProperties['algorithm'] = true;
         $this->algorithm = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The signature key. It shall be JWK encoded.
      * @default null
@@ -38,10 +38,10 @@ class SignatureConfig
     {
         $this->_usedProperties['key'] = true;
         $this->key = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('algorithm', $config)) {
@@ -49,18 +49,18 @@ class SignatureConfig
             $this->algorithm = $config['algorithm'];
             unset($config['algorithm']);
         }
-
+    
         if (array_key_exists('key', $config)) {
             $this->_usedProperties['key'] = true;
             $this->key = $config['key'];
             unset($config['key']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -70,7 +70,7 @@ class SignatureConfig
         if (isset($this->_usedProperties['key'])) {
             $output['key'] = $this->key;
         }
-
+    
         return $output;
     }
 

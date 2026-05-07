@@ -14,7 +14,7 @@ class AuthorizationHeaderConfig
     private $prefix;
     private $name;
     private $_usedProperties = [];
-
+    
     /**
      * @default true
      * @param ParamConfigurator|bool $value
@@ -24,10 +24,10 @@ class AuthorizationHeaderConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 'Bearer'
      * @param ParamConfigurator|mixed $value
@@ -37,10 +37,10 @@ class AuthorizationHeaderConfig
     {
         $this->_usedProperties['prefix'] = true;
         $this->prefix = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 'Authorization'
      * @param ParamConfigurator|mixed $value
@@ -50,10 +50,10 @@ class AuthorizationHeaderConfig
     {
         $this->_usedProperties['name'] = true;
         $this->name = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -61,24 +61,24 @@ class AuthorizationHeaderConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('prefix', $config)) {
             $this->_usedProperties['prefix'] = true;
             $this->prefix = $config['prefix'];
             unset($config['prefix']);
         }
-
+    
         if (array_key_exists('name', $config)) {
             $this->_usedProperties['name'] = true;
             $this->name = $config['name'];
             unset($config['name']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -91,7 +91,7 @@ class AuthorizationHeaderConfig
         if (isset($this->_usedProperties['name'])) {
             $output['name'] = $this->name;
         }
-
+    
         return $output;
     }
 

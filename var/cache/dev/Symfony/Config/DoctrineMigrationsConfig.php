@@ -28,7 +28,7 @@ class DoctrineMigrationsConfig implements \Symfony\Component\Config\Builder\Conf
     private $transactional;
     private $_usedProperties = [];
     private $_hasDeprecatedCalls = false;
-
+    
     /**
      * Whether to enable fetching migrations from the service container.
      * @default false
@@ -41,10 +41,10 @@ class DoctrineMigrationsConfig implements \Symfony\Component\Config\Builder\Conf
         $this->_hasDeprecatedCalls = true;
         $this->_usedProperties['enableServiceMigrations'] = true;
         $this->enableServiceMigrations = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @return $this
      * @deprecated since Symfony 7.4
@@ -54,10 +54,10 @@ class DoctrineMigrationsConfig implements \Symfony\Component\Config\Builder\Conf
         $this->_hasDeprecatedCalls = true;
         $this->_usedProperties['migrationsPaths'] = true;
         $this->migrationsPaths[$namespace] = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @return $this
      * @deprecated since Symfony 7.4
@@ -67,10 +67,10 @@ class DoctrineMigrationsConfig implements \Symfony\Component\Config\Builder\Conf
         $this->_hasDeprecatedCalls = true;
         $this->_usedProperties['services'] = true;
         $this->services[$service] = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @return $this
      * @deprecated since Symfony 7.4
@@ -80,10 +80,10 @@ class DoctrineMigrationsConfig implements \Symfony\Component\Config\Builder\Conf
         $this->_hasDeprecatedCalls = true;
         $this->_usedProperties['factories'] = true;
         $this->factories[$factory] = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Storage to use for migration status metadata.
      * @default {"table_storage":{"table_name":null,"version_column_name":null,"version_column_length":null,"executed_at_column_name":null,"execution_time_column_name":null}}
@@ -98,10 +98,10 @@ class DoctrineMigrationsConfig implements \Symfony\Component\Config\Builder\Conf
         } elseif (0 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "storage()" has already been initialized. You cannot pass values the second time you call storage().');
         }
-
+    
         return $this->storage;
     }
-
+    
     /**
      * @param ParamConfigurator|list<ParamConfigurator|mixed> $value
      *
@@ -113,10 +113,10 @@ class DoctrineMigrationsConfig implements \Symfony\Component\Config\Builder\Conf
         $this->_hasDeprecatedCalls = true;
         $this->_usedProperties['migrations'] = true;
         $this->migrations = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Connection name to use for the migrations database.
      * @default null
@@ -129,10 +129,10 @@ class DoctrineMigrationsConfig implements \Symfony\Component\Config\Builder\Conf
         $this->_hasDeprecatedCalls = true;
         $this->_usedProperties['connection'] = true;
         $this->connection = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Entity manager name to use for the migrations database (available when doctrine/orm is installed).
      * @default null
@@ -145,10 +145,10 @@ class DoctrineMigrationsConfig implements \Symfony\Component\Config\Builder\Conf
         $this->_hasDeprecatedCalls = true;
         $this->_usedProperties['em'] = true;
         $this->em = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Run all migrations in a transaction.
      * @default false
@@ -161,10 +161,10 @@ class DoctrineMigrationsConfig implements \Symfony\Component\Config\Builder\Conf
         $this->_hasDeprecatedCalls = true;
         $this->_usedProperties['allOrNothing'] = true;
         $this->allOrNothing = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Adds an extra check in the generated migrations to allow execution only on the same platform as they were initially generated on.
      * @default true
@@ -177,10 +177,10 @@ class DoctrineMigrationsConfig implements \Symfony\Component\Config\Builder\Conf
         $this->_hasDeprecatedCalls = true;
         $this->_usedProperties['checkDatabasePlatform'] = true;
         $this->checkDatabasePlatform = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Custom template path for generated migration classes.
      * @default null
@@ -193,10 +193,10 @@ class DoctrineMigrationsConfig implements \Symfony\Component\Config\Builder\Conf
         $this->_hasDeprecatedCalls = true;
         $this->_usedProperties['customTemplate'] = true;
         $this->customTemplate = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Organize migrations mode. Possible values are: "BY_YEAR", "BY_YEAR_AND_MONTH", false
      * @default false
@@ -209,10 +209,10 @@ class DoctrineMigrationsConfig implements \Symfony\Component\Config\Builder\Conf
         $this->_hasDeprecatedCalls = true;
         $this->_usedProperties['organizeMigrations'] = true;
         $this->organizeMigrations = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Whether or not to enable the profiler collector to calculate and visualize migration status. This adds some queries overhead.
      * @default false
@@ -225,10 +225,10 @@ class DoctrineMigrationsConfig implements \Symfony\Component\Config\Builder\Conf
         $this->_hasDeprecatedCalls = true;
         $this->_usedProperties['enableProfiler'] = true;
         $this->enableProfiler = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Whether or not to wrap migrations in a single transaction.
      * @default true
@@ -241,15 +241,15 @@ class DoctrineMigrationsConfig implements \Symfony\Component\Config\Builder\Conf
         $this->_hasDeprecatedCalls = true;
         $this->_usedProperties['transactional'] = true;
         $this->transactional = $value;
-
+    
         return $this;
     }
-
+    
     public function getExtensionAlias(): string
     {
         return 'doctrine_migrations';
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enable_service_migrations', $config)) {
@@ -257,90 +257,90 @@ class DoctrineMigrationsConfig implements \Symfony\Component\Config\Builder\Conf
             $this->enableServiceMigrations = $config['enable_service_migrations'];
             unset($config['enable_service_migrations']);
         }
-
+    
         if (array_key_exists('migrations_paths', $config)) {
             $this->_usedProperties['migrationsPaths'] = true;
             $this->migrationsPaths = $config['migrations_paths'];
             unset($config['migrations_paths']);
         }
-
+    
         if (array_key_exists('services', $config)) {
             $this->_usedProperties['services'] = true;
             $this->services = $config['services'];
             unset($config['services']);
         }
-
+    
         if (array_key_exists('factories', $config)) {
             $this->_usedProperties['factories'] = true;
             $this->factories = $config['factories'];
             unset($config['factories']);
         }
-
+    
         if (array_key_exists('storage', $config)) {
             $this->_usedProperties['storage'] = true;
             $this->storage = new \Symfony\Config\DoctrineMigrations\StorageConfig($config['storage']);
             unset($config['storage']);
         }
-
+    
         if (array_key_exists('migrations', $config)) {
             $this->_usedProperties['migrations'] = true;
             $this->migrations = $config['migrations'];
             unset($config['migrations']);
         }
-
+    
         if (array_key_exists('connection', $config)) {
             $this->_usedProperties['connection'] = true;
             $this->connection = $config['connection'];
             unset($config['connection']);
         }
-
+    
         if (array_key_exists('em', $config)) {
             $this->_usedProperties['em'] = true;
             $this->em = $config['em'];
             unset($config['em']);
         }
-
+    
         if (array_key_exists('all_or_nothing', $config)) {
             $this->_usedProperties['allOrNothing'] = true;
             $this->allOrNothing = $config['all_or_nothing'];
             unset($config['all_or_nothing']);
         }
-
+    
         if (array_key_exists('check_database_platform', $config)) {
             $this->_usedProperties['checkDatabasePlatform'] = true;
             $this->checkDatabasePlatform = $config['check_database_platform'];
             unset($config['check_database_platform']);
         }
-
+    
         if (array_key_exists('custom_template', $config)) {
             $this->_usedProperties['customTemplate'] = true;
             $this->customTemplate = $config['custom_template'];
             unset($config['custom_template']);
         }
-
+    
         if (array_key_exists('organize_migrations', $config)) {
             $this->_usedProperties['organizeMigrations'] = true;
             $this->organizeMigrations = $config['organize_migrations'];
             unset($config['organize_migrations']);
         }
-
+    
         if (array_key_exists('enable_profiler', $config)) {
             $this->_usedProperties['enableProfiler'] = true;
             $this->enableProfiler = $config['enable_profiler'];
             unset($config['enable_profiler']);
         }
-
+    
         if (array_key_exists('transactional', $config)) {
             $this->_usedProperties['transactional'] = true;
             $this->transactional = $config['transactional'];
             unset($config['transactional']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -389,7 +389,7 @@ class DoctrineMigrationsConfig implements \Symfony\Component\Config\Builder\Conf
         if ($this->_hasDeprecatedCalls) {
             trigger_deprecation('symfony/config', '7.4', 'Calling any fluent method on "%s" is deprecated; pass the configuration to the constructor instead.', $this::class);
         }
-
+    
         return $output;
     }
 

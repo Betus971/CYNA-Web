@@ -13,7 +13,7 @@ class TypeInfoConfig
     private $enabled;
     private $aliases;
     private $_usedProperties = [];
-
+    
     /**
      * @default true
      * @param ParamConfigurator|bool $value
@@ -23,10 +23,10 @@ class TypeInfoConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @return $this
      */
@@ -34,10 +34,10 @@ class TypeInfoConfig
     {
         $this->_usedProperties['aliases'] = true;
         $this->aliases[$name] = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -45,18 +45,18 @@ class TypeInfoConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('aliases', $config)) {
             $this->_usedProperties['aliases'] = true;
             $this->aliases = $config['aliases'];
             unset($config['aliases']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -66,7 +66,7 @@ class TypeInfoConfig
         if (isset($this->_usedProperties['aliases'])) {
             $output['aliases'] = $this->aliases;
         }
-
+    
         return $output;
     }
 

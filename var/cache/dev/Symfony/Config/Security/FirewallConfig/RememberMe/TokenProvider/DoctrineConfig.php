@@ -13,7 +13,7 @@ class DoctrineConfig
     private $enabled;
     private $connection;
     private $_usedProperties = [];
-
+    
     /**
      * @default false
      * @param ParamConfigurator|bool $value
@@ -23,10 +23,10 @@ class DoctrineConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -36,10 +36,10 @@ class DoctrineConfig
     {
         $this->_usedProperties['connection'] = true;
         $this->connection = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -47,18 +47,18 @@ class DoctrineConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('connection', $config)) {
             $this->_usedProperties['connection'] = true;
             $this->connection = $config['connection'];
             unset($config['connection']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -68,7 +68,7 @@ class DoctrineConfig
         if (isset($this->_usedProperties['connection'])) {
             $output['connection'] = $this->connection;
         }
-
+    
         return $output;
     }
 

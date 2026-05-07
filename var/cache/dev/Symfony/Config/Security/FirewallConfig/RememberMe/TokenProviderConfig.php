@@ -15,7 +15,7 @@ class TokenProviderConfig
     private $service;
     private $doctrine;
     private $_usedProperties = [];
-
+    
     /**
      * The service ID of a custom remember-me token provider.
      * @default null
@@ -26,10 +26,10 @@ class TokenProviderConfig
     {
         $this->_usedProperties['service'] = true;
         $this->service = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @template TValue of array|bool
      * @param TValue $value
@@ -42,20 +42,20 @@ class TokenProviderConfig
         if (!\is_array($value)) {
             $this->_usedProperties['doctrine'] = true;
             $this->doctrine = $value;
-
+    
             return $this;
         }
-
+    
         if (!$this->doctrine instanceof \Symfony\Config\Security\FirewallConfig\RememberMe\TokenProvider\DoctrineConfig) {
             $this->_usedProperties['doctrine'] = true;
             $this->doctrine = new \Symfony\Config\Security\FirewallConfig\RememberMe\TokenProvider\DoctrineConfig($value);
         } elseif (0 < \func_num_args()) {
             throw new InvalidConfigurationException('The node created by "doctrine()" has already been initialized. You cannot pass values the second time you call doctrine().');
         }
-
+    
         return $this->doctrine;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('service', $config)) {
@@ -63,18 +63,18 @@ class TokenProviderConfig
             $this->service = $config['service'];
             unset($config['service']);
         }
-
+    
         if (array_key_exists('doctrine', $config)) {
             $this->_usedProperties['doctrine'] = true;
             $this->doctrine = \is_array($config['doctrine']) ? new \Symfony\Config\Security\FirewallConfig\RememberMe\TokenProvider\DoctrineConfig($config['doctrine']) : $config['doctrine'];
             unset($config['doctrine']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -84,7 +84,7 @@ class TokenProviderConfig
         if (isset($this->_usedProperties['doctrine'])) {
             $output['doctrine'] = $this->doctrine instanceof \Symfony\Config\Security\FirewallConfig\RememberMe\TokenProvider\DoctrineConfig ? $this->doctrine->toArray() : $this->doctrine;
         }
-
+    
         return $output;
     }
 

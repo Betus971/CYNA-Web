@@ -15,7 +15,7 @@ class GlobalConfig
     private $parameters;
     private $domain;
     private $_usedProperties = [];
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -26,10 +26,10 @@ class GlobalConfig
     {
         $this->_usedProperties['value'] = true;
         $this->value = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -39,10 +39,10 @@ class GlobalConfig
     {
         $this->_usedProperties['message'] = true;
         $this->message = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @return $this
      */
@@ -50,10 +50,10 @@ class GlobalConfig
     {
         $this->_usedProperties['parameters'] = true;
         $this->parameters[$name] = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -63,10 +63,10 @@ class GlobalConfig
     {
         $this->_usedProperties['domain'] = true;
         $this->domain = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('value', $config)) {
@@ -74,30 +74,30 @@ class GlobalConfig
             $this->value = $config['value'];
             unset($config['value']);
         }
-
+    
         if (array_key_exists('message', $config)) {
             $this->_usedProperties['message'] = true;
             $this->message = $config['message'];
             unset($config['message']);
         }
-
+    
         if (array_key_exists('parameters', $config)) {
             $this->_usedProperties['parameters'] = true;
             $this->parameters = $config['parameters'];
             unset($config['parameters']);
         }
-
+    
         if (array_key_exists('domain', $config)) {
             $this->_usedProperties['domain'] = true;
             $this->domain = $config['domain'];
             unset($config['domain']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -113,7 +113,7 @@ class GlobalConfig
         if (isset($this->_usedProperties['domain'])) {
             $output['domain'] = $this->domain;
         }
-
+    
         return $output;
     }
 

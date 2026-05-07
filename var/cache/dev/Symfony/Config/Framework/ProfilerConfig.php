@@ -18,7 +18,7 @@ class ProfilerConfig
     private $dsn;
     private $collectSerializerData;
     private $_usedProperties = [];
-
+    
     /**
      * @default false
      * @param ParamConfigurator|bool $value
@@ -28,10 +28,10 @@ class ProfilerConfig
     {
         $this->_usedProperties['enabled'] = true;
         $this->enabled = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default true
      * @param ParamConfigurator|bool $value
@@ -41,10 +41,10 @@ class ProfilerConfig
     {
         $this->_usedProperties['collect'] = true;
         $this->collect = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * The name of the parameter to use to enable or disable collection on a per request basis.
      * @default null
@@ -55,10 +55,10 @@ class ProfilerConfig
     {
         $this->_usedProperties['collectParameter'] = true;
         $this->collectParameter = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default false
      * @param ParamConfigurator|bool $value
@@ -68,10 +68,10 @@ class ProfilerConfig
     {
         $this->_usedProperties['onlyExceptions'] = true;
         $this->onlyExceptions = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default false
      * @param ParamConfigurator|bool $value
@@ -81,10 +81,10 @@ class ProfilerConfig
     {
         $this->_usedProperties['onlyMainRequests'] = true;
         $this->onlyMainRequests = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 'file:%kernel.cache_dir%/profiler'
      * @param ParamConfigurator|mixed $value
@@ -94,10 +94,10 @@ class ProfilerConfig
     {
         $this->_usedProperties['dsn'] = true;
         $this->dsn = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * Enables the serializer data collector and profiler panel.
      * @default false
@@ -108,10 +108,10 @@ class ProfilerConfig
     {
         $this->_usedProperties['collectSerializerData'] = true;
         $this->collectSerializerData = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('enabled', $config)) {
@@ -119,48 +119,48 @@ class ProfilerConfig
             $this->enabled = $config['enabled'];
             unset($config['enabled']);
         }
-
+    
         if (array_key_exists('collect', $config)) {
             $this->_usedProperties['collect'] = true;
             $this->collect = $config['collect'];
             unset($config['collect']);
         }
-
+    
         if (array_key_exists('collect_parameter', $config)) {
             $this->_usedProperties['collectParameter'] = true;
             $this->collectParameter = $config['collect_parameter'];
             unset($config['collect_parameter']);
         }
-
+    
         if (array_key_exists('only_exceptions', $config)) {
             $this->_usedProperties['onlyExceptions'] = true;
             $this->onlyExceptions = $config['only_exceptions'];
             unset($config['only_exceptions']);
         }
-
+    
         if (array_key_exists('only_main_requests', $config)) {
             $this->_usedProperties['onlyMainRequests'] = true;
             $this->onlyMainRequests = $config['only_main_requests'];
             unset($config['only_main_requests']);
         }
-
+    
         if (array_key_exists('dsn', $config)) {
             $this->_usedProperties['dsn'] = true;
             $this->dsn = $config['dsn'];
             unset($config['dsn']);
         }
-
+    
         if (array_key_exists('collect_serializer_data', $config)) {
             $this->_usedProperties['collectSerializerData'] = true;
             $this->collectSerializerData = $config['collect_serializer_data'];
             unset($config['collect_serializer_data']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -185,7 +185,7 @@ class ProfilerConfig
         if (isset($this->_usedProperties['collectSerializerData'])) {
             $output['collect_serializer_data'] = $this->collectSerializerData;
         }
-
+    
         return $output;
     }
 

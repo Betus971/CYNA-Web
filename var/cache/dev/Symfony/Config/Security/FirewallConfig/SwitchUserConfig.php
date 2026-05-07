@@ -15,7 +15,7 @@ class SwitchUserConfig
     private $role;
     private $targetRoute;
     private $_usedProperties = [];
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -25,10 +25,10 @@ class SwitchUserConfig
     {
         $this->_usedProperties['provider'] = true;
         $this->provider = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default '_switch_user'
      * @param ParamConfigurator|mixed $value
@@ -38,10 +38,10 @@ class SwitchUserConfig
     {
         $this->_usedProperties['parameter'] = true;
         $this->parameter = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default 'ROLE_ALLOWED_TO_SWITCH'
      * @param ParamConfigurator|mixed $value
@@ -51,10 +51,10 @@ class SwitchUserConfig
     {
         $this->_usedProperties['role'] = true;
         $this->role = $value;
-
+    
         return $this;
     }
-
+    
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
@@ -64,10 +64,10 @@ class SwitchUserConfig
     {
         $this->_usedProperties['targetRoute'] = true;
         $this->targetRoute = $value;
-
+    
         return $this;
     }
-
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('provider', $config)) {
@@ -75,30 +75,30 @@ class SwitchUserConfig
             $this->provider = $config['provider'];
             unset($config['provider']);
         }
-
+    
         if (array_key_exists('parameter', $config)) {
             $this->_usedProperties['parameter'] = true;
             $this->parameter = $config['parameter'];
             unset($config['parameter']);
         }
-
+    
         if (array_key_exists('role', $config)) {
             $this->_usedProperties['role'] = true;
             $this->role = $config['role'];
             unset($config['role']);
         }
-
+    
         if (array_key_exists('target_route', $config)) {
             $this->_usedProperties['targetRoute'] = true;
             $this->targetRoute = $config['target_route'];
             unset($config['target_route']);
         }
-
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
     }
-
+    
     public function toArray(): array
     {
         $output = [];
@@ -114,7 +114,7 @@ class SwitchUserConfig
         if (isset($this->_usedProperties['targetRoute'])) {
             $output['target_route'] = $this->targetRoute;
         }
-
+    
         return $output;
     }
 

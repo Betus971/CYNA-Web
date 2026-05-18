@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Repository\PaymentMethodRepository;
+use App\State\PaymentMethodProcessor;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -25,7 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     operations: [
         new GetCollection(security: "is_granted('ROLE_USER')"),
         new Get(security: "is_granted('ROLE_ADMIN') or object.getUser() == user"),
-        new Post(security: "is_granted('ROLE_USER')"),
+        new Post(security: "is_granted('ROLE_USER')", processor: PaymentMethodProcessor::class),
         new Patch(security: "is_granted('ROLE_ADMIN') or object.getUser() == user"),
         new Delete(security: "is_granted('ROLE_ADMIN') or object.getUser() == user"),
     ]

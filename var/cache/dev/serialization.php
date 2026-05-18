@@ -15,11 +15,12 @@ return [[
 'App_Entity_CartItem' => 8,
 'App_Entity_SaasService' => 9,
 'App_Entity_Category' => 10,
-'App_Entity_ContactMessage' => 11,
-'App_Entity_HomepageText' => 12,
-'App_Entity_Invoice' => 13,
-'App_Entity_OrderItem' => 14,
-'App_Entity_PaymentMethod' => 15,
+'App_Entity_ChatbotConversation' => 11,
+'App_Entity_ContactMessage' => 12,
+'App_Entity_HomepageText' => 13,
+'App_Entity_Invoice' => 14,
+'App_Entity_OrderItem' => 15,
+'App_Entity_PaymentMethod' => 16,
 
 ], [
 
@@ -862,6 +863,98 @@ return [[
         clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
         clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
         clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+    ],
+    null,
+    [
+        'Symfony\\Component\\Serializer\\Mapping\\ClassMetadata' => [
+            'name' => [
+                'App\\Entity\\ChatbotConversation',
+            ],
+            'attributesMetadata' => [
+                [
+                    'id' => $o[1],
+                    'fullName' => $o[2],
+                    'email' => $o[3],
+                    'subject' => $o[4],
+                    'question' => $o[5],
+                    'answer' => $o[6],
+                    'transcript' => $o[7],
+                    'locale' => $o[8],
+                    'escalated' => $o[9],
+                    'handled' => $o[10],
+                    'createdAt' => $o[11],
+                ],
+            ],
+        ],
+        'Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata' => [
+            'name' => [
+                1 => 'id',
+                'fullName',
+                'email',
+                'subject',
+                'question',
+                'answer',
+                'transcript',
+                'locale',
+                'escalated',
+                'handled',
+                'createdAt',
+            ],
+            'groups' => [
+                1 => [
+                    'chatbot_conversation:read',
+                ],
+                [
+                    'chatbot_conversation:read',
+                ],
+                [
+                    'chatbot_conversation:read',
+                ],
+                [
+                    'chatbot_conversation:read',
+                ],
+                [
+                    'chatbot_conversation:read',
+                ],
+                [
+                    'chatbot_conversation:read',
+                ],
+                [
+                    'chatbot_conversation:read',
+                ],
+                [
+                    'chatbot_conversation:read',
+                ],
+                [
+                    'chatbot_conversation:read',
+                ],
+                [
+                    'chatbot_conversation:read',
+                    'chatbot_conversation:write',
+                ],
+                [
+                    'chatbot_conversation:read',
+                ],
+            ],
+        ],
+    ],
+    $o[0],
+    []
+); } },
+12 => new class() implements \Symfony\Component\Cache\Traits\CachedValueInterface { public function getValue(): mixed { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Symfony\\Component\\Serializer\\Mapping\\ClassMetadata'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Serializer\\Mapping\\ClassMetadata')),
+        clone ($p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata')),
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
+        clone $p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'],
     ],
     null,
     [
@@ -923,7 +1016,7 @@ return [[
     $o[0],
     []
 ); } },
-12 => new class() implements \Symfony\Component\Cache\Traits\CachedValueInterface { public function getValue(): mixed { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+13 => new class() implements \Symfony\Component\Cache\Traits\CachedValueInterface { public function getValue(): mixed { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
     $o = [
         clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Symfony\\Component\\Serializer\\Mapping\\ClassMetadata'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Serializer\\Mapping\\ClassMetadata')),
         clone ($p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata')),
@@ -975,7 +1068,7 @@ return [[
     $o[0],
     []
 ); } },
-13 => new class() implements \Symfony\Component\Cache\Traits\CachedValueInterface { public function getValue(): mixed { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+14 => new class() implements \Symfony\Component\Cache\Traits\CachedValueInterface { public function getValue(): mixed { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
     $o = [
         clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Symfony\\Component\\Serializer\\Mapping\\ClassMetadata'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Serializer\\Mapping\\ClassMetadata')),
         clone ($p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata')),
@@ -1042,7 +1135,7 @@ return [[
     $o[0],
     []
 ); } },
-14 => new class() implements \Symfony\Component\Cache\Traits\CachedValueInterface { public function getValue(): mixed { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+15 => new class() implements \Symfony\Component\Cache\Traits\CachedValueInterface { public function getValue(): mixed { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
     $o = [
         clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Symfony\\Component\\Serializer\\Mapping\\ClassMetadata'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Serializer\\Mapping\\ClassMetadata')),
         clone ($p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata')),
@@ -1139,7 +1232,7 @@ return [[
     $o[0],
     []
 ); } },
-15 => new class() implements \Symfony\Component\Cache\Traits\CachedValueInterface { public function getValue(): mixed { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+16 => new class() implements \Symfony\Component\Cache\Traits\CachedValueInterface { public function getValue(): mixed { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
     $o = [
         clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Symfony\\Component\\Serializer\\Mapping\\ClassMetadata'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Serializer\\Mapping\\ClassMetadata')),
         clone ($p['Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\Serializer\\Mapping\\AttributeMetadata')),

@@ -9,8 +9,8 @@
     <parameter key="kernel.runtime_mode.cli">%env(not:default:kernel.runtime_mode.web:)%</parameter>
     <parameter key="kernel.runtime_mode.worker">%env(bool:default::key:worker:default:kernel.runtime_mode:)%</parameter>
     <parameter key="kernel.debug">true</parameter>
-    <parameter key="kernel.build_dir">C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev</parameter>
-    <parameter key="kernel.cache_dir">C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev</parameter>
+    <parameter key="kernel.build_dir">C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev</parameter>
+    <parameter key="kernel.cache_dir">C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev</parameter>
     <parameter key="kernel.logs_dir">C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\log</parameter>
     <parameter key="kernel.bundles" type="collection">
       <parameter key="FrameworkBundle">Symfony\Bundle\FrameworkBundle\FrameworkBundle</parameter>
@@ -28,6 +28,7 @@
       <parameter key="LexikJWTAuthenticationBundle">Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle</parameter>
       <parameter key="NelmioCorsBundle">Nelmio\CorsBundle\NelmioCorsBundle</parameter>
       <parameter key="ApiPlatformBundle">ApiPlatform\Symfony\Bundle\ApiPlatformBundle</parameter>
+      <parameter key="SchebTwoFactorBundle">Scheb\TwoFactorBundle\SchebTwoFactorBundle</parameter>
     </parameter>
     <parameter key="kernel.bundles_metadata" type="collection">
       <parameter key="FrameworkBundle" type="collection">
@@ -90,6 +91,10 @@
         <parameter key="path">C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\api-platform\symfony\Bundle</parameter>
         <parameter key="namespace">ApiPlatform\Symfony\Bundle</parameter>
       </parameter>
+      <parameter key="SchebTwoFactorBundle" type="collection">
+        <parameter key="path">C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\scheb\2fa-bundle</parameter>
+        <parameter key="namespace">Scheb\TwoFactorBundle</parameter>
+      </parameter>
     </parameter>
     <parameter key="kernel.charset">UTF-8</parameter>
     <parameter key="kernel.container_class">App_KernelDevDebugContainer</parameter>
@@ -147,9 +152,13 @@
       <parameter key="ApiPlatform\Symfony\Bundle\ApiPlatformBundle" type="collection">
         <parameter key="all">true</parameter>
       </parameter>
+      <parameter key="Scheb\TwoFactorBundle\SchebTwoFactorBundle" type="collection">
+        <parameter key="all">true</parameter>
+      </parameter>
     </parameter>
     <parameter key="app.frontend_url">%env(string:FRONTEND_URL)%</parameter>
     <parameter key="app.mail_from">%env(string:MAIL_FROM)%</parameter>
+    <parameter key="app.gemini_default_model">gemini-3.1-flash-lite-preview</parameter>
     <parameter key="event_dispatcher.event_aliases" type="collection">
       <parameter key="Symfony\Component\Console\Event\ConsoleCommandEvent">console.command</parameter>
       <parameter key="Symfony\Component\Console\Event\ConsoleErrorEvent">console.error</parameter>
@@ -190,15 +199,15 @@
     <parameter key="translator.logging">false</parameter>
     <parameter key="translator.default_path">C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web/translations</parameter>
     <parameter key="debug.error_handler.throw_at">-1</parameter>
-    <parameter key="debug.container.dump">C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/App_KernelDevDebugContainer.xml</parameter>
+    <parameter key="debug.container.dump">C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/App_KernelDevDebugContainer.xml</parameter>
     <parameter key="router.request_context.host">localhost</parameter>
     <parameter key="router.request_context.scheme">http</parameter>
     <parameter key="router.request_context.base_url"/>
     <parameter key="router.resource">kernel::loadRoutes</parameter>
-    <parameter key="router.cache_dir">C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev</parameter>
+    <parameter key="router.cache_dir">C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev</parameter>
     <parameter key="request_listener.http_port">80</parameter>
     <parameter key="request_listener.https_port">443</parameter>
-    <parameter key="serializer.mapping.cache.file">C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/serialization.php</parameter>
+    <parameter key="serializer.mapping.cache.file">C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/serialization.php</parameter>
     <parameter key=".serializer.named_serializers" type="collection"/>
     <parameter key="cache.prefix.seed">_C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web.App_KernelDevDebugContainer</parameter>
     <parameter key="session.metadata.storage_key">_sf2_meta</parameter>
@@ -217,11 +226,11 @@
       <parameter key="data-controller">csrf-protection</parameter>
     </parameter>
     <parameter key=".form.type_extension.csrf.token_id">submit</parameter>
-    <parameter key="validator.mapping.cache.file">C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/validation.php</parameter>
+    <parameter key="validator.mapping.cache.file">C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/validation.php</parameter>
     <parameter key="validator.translation_domain">validators</parameter>
     <parameter key="profiler_listener.only_exceptions">false</parameter>
     <parameter key="profiler_listener.only_main_requests">false</parameter>
-    <parameter key="profiler.storage.dsn">file:C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/profiler</parameter>
+    <parameter key="profiler.storage.dsn">file:C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/profiler</parameter>
     <parameter key="doctrine.dbal.configuration.class">Doctrine\DBAL\Configuration</parameter>
     <parameter key="doctrine.data_collector.class">Doctrine\Bundle\DoctrineBundle\DataCollector\DoctrineDataCollector</parameter>
     <parameter key="doctrine.dbal.connection.event_manager.class">Symfony\Bridge\Doctrine\ContainerAwareEventManager</parameter>
@@ -304,7 +313,7 @@
     <parameter key="doctrine.orm.auto_generate_proxy_classes">true</parameter>
     <parameter key="doctrine.orm.enable_lazy_ghost_objects">true</parameter>
     <parameter key="doctrine.orm.enable_native_lazy_objects">false</parameter>
-    <parameter key="doctrine.orm.proxy_dir">C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/doctrine/orm/Proxies</parameter>
+    <parameter key="doctrine.orm.proxy_dir">C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/doctrine/orm/Proxies</parameter>
     <parameter key="doctrine.orm.proxy_namespace">Proxies</parameter>
     <parameter key="doctrine.migrations.preferred_em">null</parameter>
     <parameter key="doctrine.migrations.preferred_connection">null</parameter>
@@ -511,6 +520,7 @@
       <parameter>App\Entity\Cart</parameter>
       <parameter>App\Entity\CartItem</parameter>
       <parameter>App\Entity\Category</parameter>
+      <parameter>App\Entity\ChatbotConversation</parameter>
       <parameter>App\Entity\ContactMessage</parameter>
       <parameter>App\Entity\HomepageText</parameter>
       <parameter>App\Entity\Invoice</parameter>
@@ -565,6 +575,20 @@
     <parameter key="api_platform.elasticsearch.enabled">false</parameter>
     <parameter key="api_platform.maker.namespace_prefix"/>
     <parameter key="api_platform.mcp.format">jsonld</parameter>
+    <parameter key="scheb_two_factor.model_manager_name">null</parameter>
+    <parameter key="scheb_two_factor.security_tokens" type="collection">
+      <parameter>Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken</parameter>
+      <parameter>Symfony\Component\Security\Http\Authenticator\Token\PostAuthenticationToken</parameter>
+      <parameter>Lexik\Bundle\JWTAuthenticationBundle\Security\Authenticator\Token\JWTPostAuthenticationToken</parameter>
+    </parameter>
+    <parameter key="scheb_two_factor.ip_whitelist" type="collection"/>
+    <parameter key="scheb_two_factor.google.server_name">CYNA IT</parameter>
+    <parameter key="scheb_two_factor.google.issuer">CYNA</parameter>
+    <parameter key="scheb_two_factor.google.template">@SchebTwoFactor/Authentication/form.html.twig</parameter>
+    <parameter key="scheb_two_factor.google.digits">6</parameter>
+    <parameter key="scheb_two_factor.google.leeway">0</parameter>
+    <parameter key="scheb_two_factor.code_reuse_cache_duration">60</parameter>
+    <parameter key="scheb_two_factor.trusted_device.enabled">false</parameter>
     <parameter key="data_collector.templates" type="collection">
       <parameter key="data_collector.request" type="collection">
         <parameter>request</parameter>
@@ -703,6 +727,16 @@
         <argument type="service" id=".service_locator.TJNRSaV.App\Controller\CatalogController"/>
       </call>
     </service>
+    <service id="App\Controller\ChatbotController" class="App\Controller\ChatbotController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="routing.controller"/>
+      <tag name="container.service_subscriber"/>
+      <argument type="service" id="App\Service\Chatbot\GeminiChatbotClient"/>
+      <argument type="service" id="doctrine.orm.default_entity_manager"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.TJNRSaV.App\Controller\ChatbotController"/>
+      </call>
+    </service>
     <service id="App\Controller\HomeController" class="App\Controller\HomeController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="routing.controller"/>
@@ -713,6 +747,24 @@
       <argument type="service" id="App\Repository\HomepageTextRepository"/>
       <call method="setContainer">
         <argument type="service" id=".service_locator.TJNRSaV.App\Controller\HomeController"/>
+      </call>
+    </service>
+    <service id="App\Controller\Security\TwoFactorController" class="App\Controller\Security\TwoFactorController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="routing.controller"/>
+      <tag name="container.service_subscriber"/>
+      <argument type="service" id="scheb_two_factor.security.google_authenticator"/>
+      <argument type="service" id="doctrine.orm.default_entity_manager"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.TJNRSaV.App\Controller\Security\TwoFactorController"/>
+      </call>
+    </service>
+    <service id="App\Controller\Security\TwoFactorLoginController" class="App\Controller\Security\TwoFactorLoginController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="routing.controller"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.TJNRSaV.App\Controller\Security\TwoFactorLoginController"/>
       </call>
     </service>
     <service id="App\Doctrine\CurrentUserOrderExtension" class="App\Doctrine\CurrentUserOrderExtension" autowire="true" autoconfigure="true">
@@ -740,6 +792,11 @@
       <tag name="api_platform.resource"/>
     </service>
     <service id="App\Entity\Category" class="App\Entity\Category" autowire="true" autoconfigure="true">
+      <tag name="container.excluded" source="because it's a Doctrine entity"/>
+      <tag name="container.excluded" source="with #[Doctrine\ORM\Mapping\Entity] attribute"/>
+      <tag name="api_platform.resource"/>
+    </service>
+    <service id="App\Entity\ChatbotConversation" class="App\Entity\ChatbotConversation" autowire="true" autoconfigure="true">
       <tag name="container.excluded" source="because it's a Doctrine entity"/>
       <tag name="container.excluded" source="with #[Doctrine\ORM\Mapping\Entity] attribute"/>
       <tag name="api_platform.resource"/>
@@ -795,6 +852,9 @@
     <service id="App\Enum\SubscriptionStatus" class="App\Enum\SubscriptionStatus" autowire="true" autoconfigure="true">
       <tag name="container.excluded" source="because it's an enum"/>
     </service>
+    <service id="App\EventListener\AuthenticationSuccessListener" class="App\EventListener\AuthenticationSuccessListener" autowire="true" autoconfigure="true">
+      <tag name="kernel.event_listener" event="lexik_jwt_authentication.on_authentication_success" method="onAuthenticationSuccessResponse" priority="0" dispatcher=""/>
+    </service>
     <service id="App\Repository\AddressRepository" class="App\Repository\AddressRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
@@ -812,6 +872,10 @@
       <argument type="service" id="doctrine"/>
     </service>
     <service id="App\Repository\CategoryRepository" class="App\Repository\CategoryRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="App\Repository\ChatbotConversationRepository" class="App\Repository\ChatbotConversationRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
     </service>
@@ -853,6 +917,11 @@
     </service>
     <service id="App\Security\Voter\UserVoter" class="App\Security\Voter\UserVoter" autowire="true" autoconfigure="true">
       <tag name="security.voter"/>
+    </service>
+    <service id="App\Service\Chatbot\GeminiChatbotClient" class="App\Service\Chatbot\GeminiChatbotClient" autowire="true" autoconfigure="true">
+      <argument type="service" id="http_client.uri_template"/>
+      <argument>%env(string:GEMINI_API_KEY)%</argument>
+      <argument>%env(default:app.gemini_default_model:GEMINI_MODEL)%</argument>
     </service>
     <service id="App\Service\EmailVerifier" class="App\Service\EmailVerifier" autowire="true" autoconfigure="true">
       <argument type="service" id="mailer.mailer"/>
@@ -897,7 +966,7 @@
     </service>
     <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
       <tag name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" priority="-50">controller.argument_value_resolver</tag>
-      <argument type="service" id=".service_locator.8JS6QTA"/>
+      <argument type="service" id=".service_locator.Zgl0ntQ"/>
     </service>
     <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">
       <tag name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" priority="-100">controller.argument_value_resolver</tag>
@@ -1001,7 +1070,7 @@
       <tag name="container.no_preload"/>
       <argument type="tagged_iterator" tag="kernel.cache_warmer"/>
       <argument>true</argument>
-      <argument>C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/App_KernelDevDebugContainerDeprecations.log</argument>
+      <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/App_KernelDevDebugContainerDeprecations.log</argument>
     </service>
     <service id="cache_clearer" class="Symfony\Component\HttpKernel\CacheClearer\ChainCacheClearer">
       <argument type="tagged_iterator" tag="kernel.cache_clearer"/>
@@ -1075,6 +1144,7 @@
         <argument key="api_platform.cache.metadata.resource_collection" type="service" id="api_platform.cache.metadata.resource_collection" on-invalid="ignore_uninitialized"/>
         <argument key="api_platform.cache.metadata.operation" type="service" id="api_platform.cache.metadata.operation" on-invalid="ignore_uninitialized"/>
         <argument key="api_platform.cache.openapi" type="service" id="api_platform.cache.openapi" on-invalid="ignore_uninitialized"/>
+        <argument key="scheb_two_factor.security.provider_preparation_listener" type="service" id="scheb_two_factor.security.provider_preparation_listener" on-invalid="ignore_uninitialized"/>
         <argument key="debug.security.event_dispatcher.login" type="service" id="debug.security.event_dispatcher.login" on-invalid="ignore_uninitialized"/>
         <argument key="debug.security.event_dispatcher.api" type="service" id="debug.security.event_dispatcher.api" on-invalid="ignore_uninitialized"/>
         <argument key=".debug.http_client" type="service" id=".debug.http_client" on-invalid="ignore_uninitialized"/>
@@ -1220,6 +1290,9 @@
           <argument>reset</argument>
         </argument>
         <argument key="api_platform.cache.openapi" type="collection">
+          <argument>reset</argument>
+        </argument>
+        <argument key="scheb_two_factor.security.provider_preparation_listener" type="collection">
           <argument>reset</argument>
         </argument>
         <argument key="debug.security.event_dispatcher.login" type="collection">
@@ -1822,6 +1895,7 @@
         <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations</argument>
         <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\form/Resources/translations</argument>
         <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\security-core/Resources/translations</argument>
+        <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\scheb\2fa-bundle/Resources/translations</argument>
       </argument>
       <argument type="collection">
         <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\twig-bridge/Resources/views/Email</argument>
@@ -1848,6 +1922,7 @@
         <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations</argument>
         <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\form/Resources/translations</argument>
         <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\security-core/Resources/translations</argument>
+        <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\scheb\2fa-bundle/Resources/translations</argument>
       </argument>
       <argument type="collection">
         <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\twig-bridge/Resources/views/Email</argument>
@@ -2134,7 +2209,7 @@
       <argument/>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/pools/system</argument>
+      <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/pools/system</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -2336,7 +2411,7 @@
     <service id="asset_mapper.cached_mapped_asset_factory" class="Symfony\Component\AssetMapper\Factory\CachedMappedAssetFactory">
       <tag name="container.decorator" id="asset_mapper.mapped_asset_factory" inner="asset_mapper.cached_mapped_asset_factory.inner"/>
       <argument type="service" id="asset_mapper.cached_mapped_asset_factory.inner"/>
-      <argument>C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/asset_mapper</argument>
+      <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/asset_mapper</argument>
       <argument>true</argument>
     </service>
     <service id="asset_mapper.repository" class="Symfony\Component\AssetMapper\AssetMapperRepository">
@@ -2734,7 +2809,7 @@
         </argument>
       </argument>
       <argument type="collection">
-        <argument key="cache_dir">C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/translations</argument>
+        <argument key="cache_dir">C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/translations</argument>
         <argument key="debug">true</argument>
         <argument key="resource_files" type="collection">
           <argument key="af" type="collection">
@@ -2776,6 +2851,7 @@
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.cs.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\form/Resources/translations\validators.cs.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\security-core/Resources/translations\security.cs.xlf</argument>
+            <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\scheb\2fa-bundle/Resources/translations\SchebTwoFactorBundle.cs.yml</argument>
           </argument>
           <argument key="cy" type="collection">
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.cy.xlf</argument>
@@ -2791,6 +2867,7 @@
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.de.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\form/Resources/translations\validators.de.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\security-core/Resources/translations\security.de.xlf</argument>
+            <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\scheb\2fa-bundle/Resources/translations\SchebTwoFactorBundle.de.yml</argument>
           </argument>
           <argument key="el" type="collection">
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.el.xlf</argument>
@@ -2801,11 +2878,13 @@
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.en.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\form/Resources/translations\validators.en.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\security-core/Resources/translations\security.en.xlf</argument>
+            <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\scheb\2fa-bundle/Resources/translations\SchebTwoFactorBundle.en.yml</argument>
           </argument>
           <argument key="es" type="collection">
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.es.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\form/Resources/translations\validators.es.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\security-core/Resources/translations\security.es.xlf</argument>
+            <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\scheb\2fa-bundle/Resources/translations\SchebTwoFactorBundle.es.yml</argument>
           </argument>
           <argument key="et" type="collection">
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.et.xlf</argument>
@@ -2831,6 +2910,7 @@
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.fr.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\form/Resources/translations\validators.fr.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\security-core/Resources/translations\security.fr.xlf</argument>
+            <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\scheb\2fa-bundle/Resources/translations\SchebTwoFactorBundle.fr.yml</argument>
           </argument>
           <argument key="gl" type="collection">
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.gl.xlf</argument>
@@ -2846,11 +2926,13 @@
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.hr.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\form/Resources/translations\validators.hr.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\security-core/Resources/translations\security.hr.xlf</argument>
+            <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\scheb\2fa-bundle/Resources/translations\SchebTwoFactorBundle.hr.yml</argument>
           </argument>
           <argument key="hu" type="collection">
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.hu.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\form/Resources/translations\validators.hu.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\security-core/Resources/translations\security.hu.xlf</argument>
+            <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\scheb\2fa-bundle/Resources/translations\SchebTwoFactorBundle.hu.yml</argument>
           </argument>
           <argument key="hy" type="collection">
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.hy.xlf</argument>
@@ -2861,6 +2943,7 @@
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.id.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\form/Resources/translations\validators.id.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\security-core/Resources/translations\security.id.xlf</argument>
+            <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\scheb\2fa-bundle/Resources/translations\SchebTwoFactorBundle.id.yml</argument>
           </argument>
           <argument key="it" type="collection">
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.it.xlf</argument>
@@ -2911,6 +2994,7 @@
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.nl.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\form/Resources/translations\validators.nl.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\security-core/Resources/translations\security.nl.xlf</argument>
+            <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\scheb\2fa-bundle/Resources/translations\SchebTwoFactorBundle.nl.yml</argument>
           </argument>
           <argument key="nn" type="collection">
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.nn.xlf</argument>
@@ -2926,6 +3010,7 @@
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.pl.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\form/Resources/translations\validators.pl.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\security-core/Resources/translations\security.pl.xlf</argument>
+            <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\scheb\2fa-bundle/Resources/translations\SchebTwoFactorBundle.pl.yml</argument>
           </argument>
           <argument key="pt" type="collection">
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.pt.xlf</argument>
@@ -2941,16 +3026,19 @@
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.ro.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\form/Resources/translations\validators.ro.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\security-core/Resources/translations\security.ro.xlf</argument>
+            <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\scheb\2fa-bundle/Resources/translations\SchebTwoFactorBundle.ro.yml</argument>
           </argument>
           <argument key="ru" type="collection">
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.ru.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\form/Resources/translations\validators.ru.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\security-core/Resources/translations\security.ru.xlf</argument>
+            <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\scheb\2fa-bundle/Resources/translations\SchebTwoFactorBundle.ru.yml</argument>
           </argument>
           <argument key="sk" type="collection">
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.sk.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\form/Resources/translations\validators.sk.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\security-core/Resources/translations\security.sk.xlf</argument>
+            <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\scheb\2fa-bundle/Resources/translations\SchebTwoFactorBundle.sk.yml</argument>
           </argument>
           <argument key="sl" type="collection">
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.sl.xlf</argument>
@@ -2976,6 +3064,7 @@
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.sv.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\form/Resources/translations\validators.sv.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\security-core/Resources/translations\security.sv.xlf</argument>
+            <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\scheb\2fa-bundle/Resources/translations\SchebTwoFactorBundle.sv.yml</argument>
           </argument>
           <argument key="th" type="collection">
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.th.xlf</argument>
@@ -2991,11 +3080,13 @@
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.tr.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\form/Resources/translations\validators.tr.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\security-core/Resources/translations\security.tr.xlf</argument>
+            <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\scheb\2fa-bundle/Resources/translations\SchebTwoFactorBundle.tr.yml</argument>
           </argument>
           <argument key="uk" type="collection">
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.uk.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\form/Resources/translations\validators.uk.xlf</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\security-core/Resources/translations\security.uk.xlf</argument>
+            <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\scheb\2fa-bundle/Resources/translations\SchebTwoFactorBundle.uk.yml</argument>
           </argument>
           <argument key="ur" type="collection">
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations\validators.ur.xlf</argument>
@@ -3027,6 +3118,7 @@
           <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations</argument>
           <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\form/Resources/translations</argument>
           <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\security-core/Resources/translations</argument>
+          <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\scheb\2fa-bundle/Resources/translations</argument>
           <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web/translations</argument>
           <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\framework-bundle/translations</argument>
           <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\doctrine\doctrine-bundle/translations</argument>
@@ -3049,6 +3141,7 @@
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\validator/Resources/translations</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\form/Resources/translations</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\security-core/Resources/translations</argument>
+            <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\scheb\2fa-bundle/Resources/translations</argument>
             <argument>translations</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\symfony\framework-bundle/translations</argument>
             <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\doctrine\doctrine-bundle/translations</argument>
@@ -3246,6 +3339,7 @@
         <argument>UniqueEntity</argument>
         <argument>Twig</argument>
         <argument>UserPassword</argument>
+        <argument>UserGoogleTotpCode</argument>
       </argument>
     </service>
     <service id="translation.reader" class="Symfony\Component\Translation\Reader\TranslationReader">
@@ -3421,6 +3515,14 @@
       <argument type="service" id="monolog.logger.event" on-invalid="null"/>
       <argument type="service" id=".virtual_request_stack" on-invalid="null"/>
       <argument type="service" id="profiler.is_disabled_state_checker" on-invalid="null"/>
+      <call method="addListener">
+        <argument>lexik_jwt_authentication.on_authentication_success</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="App\EventListener\AuthenticationSuccessListener"/>
+          <argument>onAuthenticationSuccessResponse</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
       <call method="addListener">
         <argument>kernel.response</argument>
         <argument type="collection">
@@ -4048,6 +4150,46 @@
       <call method="addListener">
         <argument>Symfony\Component\Security\Http\Event\CheckPassportEvent</argument>
         <argument type="collection">
+          <argument type="service_closure" id="scheb_two_factor.security.listener.check_two_factor_code"/>
+          <argument>checkPassport</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>scheb_two_factor.authentication.check</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="scheb_two_factor.security.listener.check_two_factor_code_reuse"/>
+          <argument>checkForCodeReuse</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>scheb_two_factor.authentication.code_reused</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="scheb_two_factor.security.listener.throw_exception_on_two_factor_code_reuse"/>
+          <argument>handle</argument>
+        </argument>
+        <argument>-256</argument>
+      </call>
+      <call method="addListener">
+        <argument>Symfony\Component\Security\Http\Event\LoginSuccessEvent</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="scheb_two_factor.security.listener.suppress_remember_me"/>
+          <argument>onSuccessfulLogin</argument>
+        </argument>
+        <argument>-63</argument>
+      </call>
+      <call method="addListener">
+        <argument>security.authentication.success</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="scheb_two_factor.security.authentication_success_event_suppressor"/>
+          <argument>onLogin</argument>
+        </argument>
+        <argument>9223372036854775806</argument>
+      </call>
+      <call method="addListener">
+        <argument>Symfony\Component\Security\Http\Event\CheckPassportEvent</argument>
+        <argument type="collection">
           <argument type="service_closure" id="security.listener.csrf_protection"/>
           <argument>checkPassport</argument>
         </argument>
@@ -4083,7 +4225,7 @@
     </service>
     <service id="argument_resolver.not_tagged_controller" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
       <tag name="controller.argument_value_resolver" priority="-200"/>
-      <argument type="service" id=".service_locator.8JS6QTA"/>
+      <argument type="service" id=".service_locator.Zgl0ntQ"/>
     </service>
     <service id="debug.log_processor" class="Symfony\Bridge\Monolog\Processor\DebugProcessor">
       <tag name="kernel.reset" method="reset"/>
@@ -4171,7 +4313,10 @@
         <argument>App\Controller\AccountController</argument>
         <argument>App\Controller\Admin\DashboardController</argument>
         <argument>App\Controller\CatalogController</argument>
+        <argument>App\Controller\ChatbotController</argument>
         <argument>App\Controller\HomeController</argument>
+        <argument>App\Controller\Security\TwoFactorController</argument>
+        <argument>App\Controller\Security\TwoFactorLoginController</argument>
       </argument>
     </service>
     <service id="routing.loader.attribute.directory" class="Symfony\Component\Routing\Loader\AttributeDirectoryLoader">
@@ -4201,7 +4346,7 @@
       <argument type="service" id=".service_locator.xdLQ5FJ.router.default"/>
       <argument>kernel::loadRoutes</argument>
       <argument type="collection">
-        <argument key="cache_dir">C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev</argument>
+        <argument key="cache_dir">C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev</argument>
         <argument key="debug">true</argument>
         <argument key="generator_class">Symfony\Component\Routing\Generator\CompiledUrlGenerator</argument>
         <argument key="generator_dumper_class">Symfony\Component\Routing\Generator\Dumper\CompiledUrlGeneratorDumper</argument>
@@ -4420,10 +4565,10 @@
           </service>
         </argument>
       </argument>
-      <argument>C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/serialization.php</argument>
+      <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/serialization.php</argument>
     </service>
     <service id="serializer.mapping.cache.symfony" class="Psr\Cache\CacheItemPoolInterface">
-      <argument>C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/serialization.php</argument>
+      <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/serialization.php</argument>
       <argument type="service" id="cache.serializer"/>
       <factory class="Symfony\Component\Cache\Adapter\PhpArrayAdapter" method="create"/>
     </service>
@@ -4674,7 +4819,7 @@
       <argument>true</argument>
     </service>
     <service id="session.storage.factory.mock_file" class="Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorageFactory">
-      <argument>C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/sessions</argument>
+      <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/sessions</argument>
       <argument>MOCKSESSID</argument>
       <argument type="service">
         <service class="Symfony\Component\HttpFoundation\Session\Storage\MetadataBag">
@@ -4904,14 +5049,14 @@
     <service id="validator.mapping.cache_warmer" class="Symfony\Bundle\FrameworkBundle\CacheWarmer\ValidatorCacheWarmer">
       <tag name="kernel.cache_warmer"/>
       <argument type="service" id="validator.builder"/>
-      <argument>C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/validation.php</argument>
+      <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/validation.php</argument>
     </service>
     <service id="validator.mapping.cache.adapter" class="Symfony\Component\Cache\Adapter\PhpArrayAdapter" constructor="create">
-      <argument>C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/validation.php</argument>
+      <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/validation.php</argument>
       <argument type="service" id="cache.validator"/>
     </service>
     <service id="validator.validator_factory" class="Symfony\Component\Validator\ContainerConstraintValidatorFactory">
-      <argument type="service" id=".service_locator.DA6YX9k"/>
+      <argument type="service" id=".service_locator.cBCYkMD"/>
     </service>
     <service id=".abstract.Symfony\Component\Validator\Constraints\AbstractComparisonValidator" class="Symfony\Component\Validator\Constraints\AbstractComparisonValidator" abstract="true">
       <tag name="container.excluded"/>
@@ -5640,7 +5785,7 @@
       </call>
     </service>
     <service id="profiler.storage" class="Symfony\Component\HttpKernel\Profiler\FileProfilerStorage">
-      <argument>file:C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/profiler</argument>
+      <argument>file:C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/profiler</argument>
     </service>
     <service id="profiler_listener" class="Symfony\Component\HttpKernel\EventListener\ProfilerListener">
       <tag name="kernel.reset" method="?reset"/>
@@ -5721,7 +5866,7 @@
       <tag name="monolog.logger" channel="profiler"/>
       <tag name="data_collector" template="@WebProfiler/Collector/logger.html.twig" id="logger" priority="300"/>
       <argument type="service" id="monolog.logger.profiler" on-invalid="ignore"/>
-      <argument>C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/App_KernelDevDebugContainer</argument>
+      <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/App_KernelDevDebugContainer</argument>
       <argument type="service" id=".virtual_request_stack" on-invalid="ignore"/>
     </service>
     <service id="data_collector.time" class="Symfony\Component\HttpKernel\DataCollector\TimeDataCollector">
@@ -6156,7 +6301,7 @@
     <service id="doctrine.orm.configuration" class="Doctrine\ORM\Configuration" abstract="true"/>
     <service id="doctrine.orm.entity_manager.abstract" class="Doctrine\ORM\EntityManager" lazy="true" abstract="true"/>
     <service id="doctrine.orm.container_repository_factory" class="Doctrine\Bundle\DoctrineBundle\Repository\ContainerRepositoryFactory">
-      <argument type="service" id=".service_locator.i0VcQfv"/>
+      <argument type="service" id=".service_locator.hyCzJvQ"/>
     </service>
     <service id="doctrine.orm.manager_configurator.abstract" class="Doctrine\Bundle\DoctrineBundle\ManagerConfigurator" abstract="true">
       <argument type="collection"/>
@@ -6354,7 +6499,7 @@
         <argument type="service" id=".doctrine.orm.default_metadata_driver"/>
       </call>
       <call method="setProxyDir">
-        <argument>C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/doctrine/orm/Proxies</argument>
+        <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/doctrine/orm/Proxies</argument>
       </call>
       <call method="setProxyNamespace">
         <argument>Proxies</argument>
@@ -6785,7 +6930,7 @@
       <tag name="kernel.reset" method="resetGlobals"/>
       <argument type="service" id="twig.loader.native_filesystem"/>
       <argument type="collection">
-        <argument key="cache">C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/twig</argument>
+        <argument key="cache">C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/twig</argument>
         <argument key="charset">UTF-8</argument>
         <argument key="debug">true</argument>
         <argument key="strict_variables">true</argument>
@@ -6992,6 +7137,14 @@
       <call method="addPath">
         <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\api-platform\symfony\Bundle/Resources/views</argument>
         <argument>!ApiPlatform</argument>
+      </call>
+      <call method="addPath">
+        <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\scheb\2fa-bundle/Resources/views</argument>
+        <argument>SchebTwoFactor</argument>
+      </call>
+      <call method="addPath">
+        <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\vendor\scheb\2fa-bundle/Resources/views</argument>
+        <argument>!SchebTwoFactor</argument>
       </call>
       <call method="addPath">
         <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web/templates</argument>
@@ -7324,7 +7477,6 @@
       <tag name="Symfony\Component\Security\Http\Controller\SecurityTokenValueResolver" priority="120">controller.argument_value_resolver</tag>
       <argument type="service" id="security.token_storage"/>
     </service>
-    <service id="security.authentication.trust_resolver" class="Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolver"/>
     <service id="security.authentication.session_strategy" class="Symfony\Component\Security\Http\Session\SessionAuthenticationStrategy">
       <argument>migrate</argument>
       <argument type="service" id="security.csrf.token_storage" on-invalid="ignore"/>
@@ -7353,7 +7505,7 @@
     </service>
     <service id="security.access.authenticated_voter" class="Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter">
       <tag name="security.voter" priority="250"/>
-      <argument type="service" id="security.authentication.trust_resolver"/>
+      <argument type="service" id="scheb_two_factor.security.authentication.trust_resolver"/>
     </service>
     <service id="security.access.role_hierarchy_voter" class="Symfony\Component\Security\Core\Authorization\Voter\RoleHierarchyVoter">
       <tag name="security.voter" priority="245"/>
@@ -7362,7 +7514,7 @@
     <service id="security.access.expression_voter" class="Symfony\Component\Security\Core\Authorization\Voter\ExpressionVoter">
       <tag name="security.voter" priority="245"/>
       <argument type="service" id="security.expression_language"/>
-      <argument type="service" id="security.authentication.trust_resolver"/>
+      <argument type="service" id="scheb_two_factor.security.authentication.trust_resolver"/>
       <argument type="service" id="security.authorization_checker"/>
       <argument type="service" id="security.role_hierarchy" on-invalid="null"/>
     </service>
@@ -7575,6 +7727,20 @@
         <argument>null</argument>
       </call>
       <call method="add">
+        <argument type="service" id=".security.request_matcher.GnWxuJg"/>
+        <argument type="collection">
+          <argument>PUBLIC_ACCESS</argument>
+        </argument>
+        <argument>null</argument>
+      </call>
+      <call method="add">
+        <argument type="service" id=".security.request_matcher.yOfXgSp"/>
+        <argument type="collection">
+          <argument>PUBLIC_ACCESS</argument>
+        </argument>
+        <argument>null</argument>
+      </call>
+      <call method="add">
         <argument type="service" id=".security.request_matcher.twudSrZ"/>
         <argument type="collection">
           <argument>PUBLIC_ACCESS</argument>
@@ -7633,7 +7799,7 @@
       <argument type="abstract">Provider Key</argument>
       <argument type="service" id="monolog.logger.security" on-invalid="null"/>
       <argument type="service" id="debug.event_dispatcher" on-invalid="null"/>
-      <argument type="service" id="security.authentication.trust_resolver"/>
+      <argument type="service" id="scheb_two_factor.security.authentication.trust_resolver"/>
       <argument type="collection">
         <argument type="service" id="security.token_storage"/>
         <argument>enableUsageTracking</argument>
@@ -7689,7 +7855,7 @@
     <service id="security.exception_listener" class="Symfony\Component\Security\Http\Firewall\ExceptionListener" abstract="true">
       <tag name="monolog.logger" channel="security"/>
       <argument type="service" id="security.token_storage"/>
-      <argument type="service" id="security.authentication.trust_resolver"/>
+      <argument type="service" id="scheb_two_factor.security.authentication.trust_resolver"/>
       <argument type="service" id="security.http_utils"/>
       <argument type="abstract">Provider-shared Key</argument>
       <argument type="service" id="security.authentication.entry_point" on-invalid="null"/>
@@ -8127,7 +8293,7 @@
     </service>
     <service id="security.exception_listener.login" class="Symfony\Component\Security\Http\Firewall\ExceptionListener">
       <argument type="service" id="security.token_storage"/>
-      <argument type="service" id="security.authentication.trust_resolver"/>
+      <argument type="service" id="scheb_two_factor.security.authentication.trust_resolver"/>
       <argument type="service" id="security.http_utils"/>
       <argument>login</argument>
       <argument>null</argument>
@@ -8214,7 +8380,7 @@
     </service>
     <service id="security.exception_listener.api" class="Symfony\Component\Security\Http\Firewall\ExceptionListener">
       <argument type="service" id="security.token_storage"/>
-      <argument type="service" id="security.authentication.trust_resolver"/>
+      <argument type="service" id="scheb_two_factor.security.authentication.trust_resolver"/>
       <argument type="service" id="security.http_utils"/>
       <argument>api</argument>
       <argument type="service" id="security.authenticator.jwt.api"/>
@@ -8305,6 +8471,24 @@
       <argument type="collection">
         <argument type="service" id=".security.request_matcher.n_tV7kE"/>
         <argument type="service" id=".security.request_matcher.mTR8aRf"/>
+      </argument>
+    </service>
+    <service id=".security.request_matcher.v.uVLLy" class="Symfony\Component\HttpFoundation\RequestMatcher\PathRequestMatcher">
+      <argument>^/api/contact_messages</argument>
+    </service>
+    <service id=".security.request_matcher.GnWxuJg" class="Symfony\Component\HttpFoundation\ChainRequestMatcher">
+      <argument type="collection">
+        <argument type="service" id=".security.request_matcher.n_tV7kE"/>
+        <argument type="service" id=".security.request_matcher.v.uVLLy"/>
+      </argument>
+    </service>
+    <service id=".security.request_matcher.qsNJ.iu" class="Symfony\Component\HttpFoundation\RequestMatcher\PathRequestMatcher">
+      <argument>^/api/chatbot</argument>
+    </service>
+    <service id=".security.request_matcher.yOfXgSp" class="Symfony\Component\HttpFoundation\ChainRequestMatcher">
+      <argument type="collection">
+        <argument type="service" id=".security.request_matcher.n_tV7kE"/>
+        <argument type="service" id=".security.request_matcher.qsNJ.iu"/>
       </argument>
     </service>
     <service id=".security.request_matcher.3j1QLg2" class="Symfony\Component\HttpFoundation\RequestMatcher\MethodRequestMatcher">
@@ -9885,7 +10069,7 @@
     </service>
     <service id="api_platform.security.resource_access_checker" class="ApiPlatform\Symfony\Security\ResourceAccessChecker">
       <argument type="service" id="security.expression_language" on-invalid="null"/>
-      <argument type="service" id="security.authentication.trust_resolver" on-invalid="null"/>
+      <argument type="service" id="scheb_two_factor.security.authentication.trust_resolver" on-invalid="null"/>
       <argument type="service" id="security.role_hierarchy" on-invalid="null"/>
       <argument type="service" id="security.token_storage" on-invalid="null"/>
       <argument type="service" id="security.authorization_checker" on-invalid="null"/>
@@ -9937,6 +10121,184 @@
       <tag name="api_platform.parameter_provider" key="ApiPlatform\State\ParameterProvider\ReadLinkParameterProvider" priority="-890"/>
       <argument type="service" id="api_platform.state_provider.locator"/>
       <argument type="service" id="api_platform.doctrine.orm.metadata.resource.metadata_collection_factory"/>
+    </service>
+    <service id="scheb_two_factor.security.authenticator" class="Scheb\TwoFactorBundle\Security\Http\Authenticator\TwoFactorAuthenticator">
+      <tag name="monolog.logger" channel="security"/>
+      <argument type="abstract">Two-factor firewall config</argument>
+      <argument type="service" id="security.token_storage"/>
+      <argument type="abstract">Authentication success handler</argument>
+      <argument type="abstract">Authentication failure handler</argument>
+      <argument type="abstract">Authentication required handler</argument>
+      <argument type="service" id="debug.event_dispatcher"/>
+      <argument type="service" id="monolog.logger.security" on-invalid="null"/>
+    </service>
+    <service id="scheb_two_factor.security.authentication.trust_resolver" class="Scheb\TwoFactorBundle\Security\Authentication\AuthenticationTrustResolver">
+      <tag name="container.decorator" id="security.authentication.trust_resolver" inner="scheb_two_factor.security.authentication.trust_resolver.inner"/>
+      <argument type="service" id="scheb_two_factor.security.authentication.trust_resolver.inner"/>
+    </service>
+    <service id="scheb_two_factor.security.access.authenticated_voter" class="Scheb\TwoFactorBundle\Security\Authorization\Voter\TwoFactorInProgressVoter">
+      <tag name="security.voter" priority="249"/>
+    </service>
+    <service id="scheb_two_factor.security.access.access_decider" class="Scheb\TwoFactorBundle\Security\Authorization\TwoFactorAccessDecider">
+      <argument type="service" id="security.access_map"/>
+      <argument type="service" id="debug.security.access.decision_manager"/>
+      <argument type="service" id="security.http_utils"/>
+      <argument type="service" id="security.logout_url_generator"/>
+    </service>
+    <service id="scheb_two_factor.security.listener.token_created" class="Scheb\TwoFactorBundle\Security\TwoFactor\Event\AuthenticationTokenListener">
+      <argument type="abstract">Firewall name</argument>
+      <argument type="service" id="scheb_two_factor.condition_registry"/>
+      <argument type="service" id="scheb_two_factor.provider_initiator"/>
+      <argument type="service" id="scheb_two_factor.authentication_context_factory"/>
+      <argument type="service" id="request_stack"/>
+    </service>
+    <service id="scheb_two_factor.security.listener.check_two_factor_code" class="Scheb\TwoFactorBundle\Security\Http\EventListener\CheckTwoFactorCodeListener">
+      <tag name="kernel.event_subscriber"/>
+      <argument type="service" id="scheb_two_factor.provider_preparation_recorder"/>
+      <argument type="service" id="scheb_two_factor.provider_registry"/>
+      <argument type="service" id="debug.event_dispatcher"/>
+    </service>
+    <service id="scheb_two_factor.security.listener.check_two_factor_code_reuse" class="Scheb\TwoFactorBundle\Security\Http\EventListener\CheckTwoFactorCodeReuseListener">
+      <tag name="kernel.event_subscriber"/>
+      <argument type="service" id="debug.event_dispatcher"/>
+      <argument>null</argument>
+      <argument>60</argument>
+      <argument type="service" id="monolog.logger" on-invalid="null"/>
+    </service>
+    <service id="scheb_two_factor.security.listener.throw_exception_on_two_factor_code_reuse" class="Scheb\TwoFactorBundle\Security\Http\EventListener\ThrowExceptionOnTwoFactorCodeReuseListener">
+      <tag name="kernel.event_subscriber"/>
+    </service>
+    <service id="scheb_two_factor.security.listener.suppress_remember_me" class="Scheb\TwoFactorBundle\Security\Http\EventListener\SuppressRememberMeListener">
+      <tag name="kernel.event_subscriber"/>
+    </service>
+    <service id="scheb_two_factor.security.provider_preparation_listener" class="Scheb\TwoFactorBundle\Security\TwoFactor\Provider\TwoFactorProviderPreparationListener">
+      <tag name="kernel.reset" method="reset"/>
+      <argument type="service" id="scheb_two_factor.provider_registry"/>
+      <argument type="service" id="scheb_two_factor.provider_preparation_recorder"/>
+      <argument type="service" id="monolog.logger" on-invalid="null"/>
+      <argument type="abstract">Firewall name</argument>
+      <argument>false</argument>
+      <argument>false</argument>
+    </service>
+    <service id="scheb_two_factor.security.form_listener" class="Scheb\TwoFactorBundle\Security\TwoFactor\Event\TwoFactorFormListener">
+      <argument type="abstract">Two-factor firewall config</argument>
+      <argument type="service" id="security.token_storage"/>
+      <argument type="service" id="debug.event_dispatcher"/>
+    </service>
+    <service id="scheb_two_factor.security.authentication_success_event_suppressor" class="Scheb\TwoFactorBundle\Security\TwoFactor\Event\AuthenticationSuccessEventSuppressor">
+      <tag name="kernel.event_subscriber"/>
+    </service>
+    <service id="scheb_two_factor.security.kernel_exception_listener" class="Scheb\TwoFactorBundle\Security\Http\Firewall\ExceptionListener">
+      <argument type="abstract">Firewall name</argument>
+      <argument type="service" id="security.token_storage"/>
+      <argument type="abstract">Authentication required handler</argument>
+      <argument type="service" id="debug.event_dispatcher"/>
+    </service>
+    <service id="scheb_two_factor.security.access_listener" class="Scheb\TwoFactorBundle\Security\Http\Firewall\TwoFactorAccessListener">
+      <argument type="abstract">Two-factor firewall config</argument>
+      <argument type="service" id="security.token_storage"/>
+      <argument type="service" id="scheb_two_factor.security.access.access_decider"/>
+    </service>
+    <service id="scheb_two_factor.security.authentication.success_handler" class="Scheb\TwoFactorBundle\Security\Http\Authentication\DefaultAuthenticationSuccessHandler">
+      <argument type="service" id="security.http_utils"/>
+      <argument type="abstract">Two-factor firewall config</argument>
+    </service>
+    <service id="scheb_two_factor.security.authentication.failure_handler" class="Scheb\TwoFactorBundle\Security\Http\Authentication\DefaultAuthenticationFailureHandler">
+      <argument type="service" id="security.http_utils"/>
+      <argument type="abstract">Two-factor firewall config</argument>
+    </service>
+    <service id="scheb_two_factor.security.authentication.authentication_required_handler" class="Scheb\TwoFactorBundle\Security\Http\Authentication\DefaultAuthenticationRequiredHandler">
+      <argument type="service" id="security.http_utils"/>
+      <argument type="abstract">Two-factor firewall config</argument>
+    </service>
+    <service id="scheb_two_factor.null_csrf_token_manager" class="Scheb\TwoFactorBundle\Security\TwoFactor\Csrf\NullCsrfTokenManager"/>
+    <service id="scheb_two_factor.security.firewall_config" class="Scheb\TwoFactorBundle\Security\TwoFactor\TwoFactorFirewallConfig">
+      <argument type="collection"/>
+      <argument type="abstract">Firewall name</argument>
+      <argument type="service" id="security.http_utils"/>
+      <argument type="service" id="scheb_two_factor.security.request_data_reader"/>
+    </service>
+    <service id="scheb_two_factor.security.request_data_reader" class="Scheb\TwoFactorBundle\Security\Http\Utils\RequestDataReader"/>
+    <service id="scheb_two_factor.persister_factory.doctrine" class="Scheb\TwoFactorBundle\Model\Persister\DoctrinePersisterFactory">
+      <argument type="service" id="doctrine" on-invalid="null"/>
+      <argument>null</argument>
+    </service>
+    <service id="scheb_two_factor.persister.doctrine" class="Scheb\TwoFactorBundle\Model\Persister\DoctrinePersister" lazy="true">
+      <factory service="scheb_two_factor.persister_factory.doctrine" method="getPersister"/>
+    </service>
+    <service id="scheb_two_factor.provider_registry" class="Scheb\TwoFactorBundle\Security\TwoFactor\Provider\TwoFactorProviderRegistry">
+      <argument type="iterator">
+        <argument key="google" type="service" id="scheb_two_factor.security.google.provider"/>
+      </argument>
+    </service>
+    <service id="scheb_two_factor.default_token_factory" class="Scheb\TwoFactorBundle\Security\Authentication\Token\TwoFactorTokenFactory"/>
+    <service id="scheb_two_factor.default_provider_decider" class="Scheb\TwoFactorBundle\Security\TwoFactor\Provider\TwoFactorProviderDecider"/>
+    <service id="scheb_two_factor.authentication_context_factory" class="Scheb\TwoFactorBundle\Security\TwoFactor\AuthenticationContextFactory">
+      <argument>Scheb\TwoFactorBundle\Security\TwoFactor\AuthenticationContext</argument>
+    </service>
+    <service id="scheb_two_factor.condition_registry" class="Scheb\TwoFactorBundle\Security\TwoFactor\Condition\TwoFactorConditionRegistry" lazy="true">
+      <argument type="iterator">
+        <argument type="service" id="scheb_two_factor.authenticated_token_condition"/>
+        <argument type="service" id="scheb_two_factor.ip_whitelist_condition"/>
+      </argument>
+      <argument type="service" id="debug.event_dispatcher"/>
+    </service>
+    <service id="scheb_two_factor.authenticated_token_condition" class="Scheb\TwoFactorBundle\Security\TwoFactor\Condition\AuthenticatedTokenCondition" lazy="true">
+      <argument>%scheb_two_factor.security_tokens%</argument>
+    </service>
+    <service id="scheb_two_factor.ip_whitelist_condition" class="Scheb\TwoFactorBundle\Security\TwoFactor\Condition\IpWhitelistCondition" lazy="true">
+      <argument type="service" id="scheb_two_factor.default_ip_whitelist_provider"/>
+    </service>
+    <service id="scheb_two_factor.default_ip_whitelist_provider" class="Scheb\TwoFactorBundle\Security\TwoFactor\IpWhitelist\DefaultIpWhitelistProvider">
+      <argument type="collection"/>
+    </service>
+    <service id="scheb_two_factor.provider_initiator" class="Scheb\TwoFactorBundle\Security\TwoFactor\Provider\TwoFactorProviderInitiator" lazy="true">
+      <argument type="service" id="scheb_two_factor.provider_registry"/>
+      <argument type="service" id="scheb_two_factor.default_token_factory"/>
+      <argument type="service" id="scheb_two_factor.default_provider_decider"/>
+    </service>
+    <service id="scheb_two_factor.firewall_context" class="Scheb\TwoFactorBundle\Security\TwoFactor\TwoFactorFirewallContext" public="true">
+      <argument type="collection"/>
+    </service>
+    <service id="scheb_two_factor.provider_preparation_recorder" class="Scheb\TwoFactorBundle\Security\TwoFactor\Provider\TokenPreparationRecorder">
+      <argument type="service" id="security.token_storage"/>
+    </service>
+    <service id="scheb_two_factor.form_controller" class="Scheb\TwoFactorBundle\Controller\FormController" public="true">
+      <argument type="service" id="security.token_storage"/>
+      <argument type="service" id="scheb_two_factor.provider_registry"/>
+      <argument type="service" id="scheb_two_factor.firewall_context"/>
+      <argument type="service" id="security.logout_url_generator"/>
+      <argument>null</argument>
+      <argument>false</argument>
+    </service>
+    <service id="scheb_two_factor.security.form_renderer" class="Scheb\TwoFactorBundle\Security\TwoFactor\Provider\DefaultTwoFactorFormRenderer" lazy="true">
+      <argument type="service" id="twig"/>
+      <argument>@SchebTwoFactor/Authentication/form.html.twig</argument>
+    </service>
+    <service id="scheb_two_factor.security.google_totp_factory" class="Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Google\GoogleTotpFactory">
+      <argument>CYNA IT</argument>
+      <argument>CYNA</argument>
+      <argument>6</argument>
+      <argument type="service" id="clock" on-invalid="null"/>
+    </service>
+    <service id="scheb_two_factor.security.google_authenticator" class="Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Google\GoogleAuthenticator" public="true">
+      <argument type="service" id="scheb_two_factor.security.google_totp_factory"/>
+      <argument type="service" id="debug.event_dispatcher"/>
+      <argument>0</argument>
+    </service>
+    <service id="scheb_two_factor.security.google.default_form_renderer" class="Scheb\TwoFactorBundle\Security\TwoFactor\Provider\DefaultTwoFactorFormRenderer" lazy="true">
+      <argument type="service" id="twig"/>
+      <argument>@SchebTwoFactor/Authentication/form.html.twig</argument>
+    </service>
+    <service id="scheb_two_factor.security.google.provider" class="Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Google\GoogleAuthenticatorTwoFactorProvider">
+      <tag name="scheb_two_factor.provider" alias="google"/>
+      <argument type="service" id="scheb_two_factor.security.google_authenticator"/>
+      <argument type="service" id="scheb_two_factor.security.google.default_form_renderer"/>
+    </service>
+    <service id="scheb_two_factor.security.totp.validator.user_google_totp_code" class="Scheb\TwoFactorBundle\Security\TwoFactor\Validator\Constraints\UserGoogleTotpCodeValidator">
+      <tag name="validator.constraint_validator" alias="scheb_two_factor.security.totp.validator.user_google_totp_code"/>
+      <argument type="service" id="security.token_storage"/>
+      <argument type="service" id="scheb_two_factor.security.google_authenticator"/>
     </service>
     <service id="annotated_app_entity_carousel_slide_api_platform_doctrine_orm_filter_boolean_filter" class="ApiPlatform\Doctrine\Orm\Filter\BooleanFilter" autowire="true">
       <tag name="api_platform.filter"/>
@@ -10028,10 +10390,22 @@
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\CatalogController" class="App\Controller\CatalogController" autowire="true" abstract="true"/>
     <service id=".instanceof.App\Controller\CatalogController.0.App\Controller\CatalogController" class="App\Controller\CatalogController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\CatalogController" class="App\Controller\CatalogController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ChatbotController" class="App\Controller\ChatbotController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ChatbotController" class="App\Controller\ChatbotController" autowire="true" abstract="true"/>
+    <service id=".instanceof.App\Controller\ChatbotController.0.App\Controller\ChatbotController" class="App\Controller\ChatbotController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\ChatbotController" class="App\Controller\ChatbotController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\HomeController" class="App\Controller\HomeController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\HomeController" class="App\Controller\HomeController" autowire="true" abstract="true"/>
     <service id=".instanceof.App\Controller\HomeController.0.App\Controller\HomeController" class="App\Controller\HomeController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\HomeController" class="App\Controller\HomeController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\Security\TwoFactorController" class="App\Controller\Security\TwoFactorController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\Security\TwoFactorController" class="App\Controller\Security\TwoFactorController" autowire="true" abstract="true"/>
+    <service id=".instanceof.App\Controller\Security\TwoFactorController.0.App\Controller\Security\TwoFactorController" class="App\Controller\Security\TwoFactorController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\Security\TwoFactorController" class="App\Controller\Security\TwoFactorController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\Security\TwoFactorLoginController" class="App\Controller\Security\TwoFactorLoginController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\Security\TwoFactorLoginController" class="App\Controller\Security\TwoFactorLoginController" autowire="true" abstract="true"/>
+    <service id=".instanceof.App\Controller\Security\TwoFactorLoginController.0.App\Controller\Security\TwoFactorLoginController" class="App\Controller\Security\TwoFactorLoginController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\Security\TwoFactorLoginController" class="App\Controller\Security\TwoFactorLoginController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.ApiPlatform\Doctrine\Orm\Extension\QueryCollectionExtensionInterface.0.App\Doctrine\CurrentUserOrderExtension" class="App\Doctrine\CurrentUserOrderExtension" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Doctrine\CurrentUserOrderExtension" class="App\Doctrine\CurrentUserOrderExtension" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.App\Entity\Address.0.App\Entity\Address" class="App\Entity\Address" autowire="true" abstract="true"/>
@@ -10044,6 +10418,8 @@
     <service id=".abstract.instanceof.App\Entity\CartItem" class="App\Entity\CartItem" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.App\Entity\Category.0.App\Entity\Category" class="App\Entity\Category" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Entity\Category" class="App\Entity\Category" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.App\Entity\ChatbotConversation.0.App\Entity\ChatbotConversation" class="App\Entity\ChatbotConversation" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Entity\ChatbotConversation" class="App\Entity\ChatbotConversation" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.App\Entity\ContactMessage.0.App\Entity\ContactMessage" class="App\Entity\ContactMessage" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Entity\ContactMessage" class="App\Entity\ContactMessage" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.App\Entity\HomepageText.0.App\Entity\HomepageText" class="App\Entity\HomepageText" autowire="true" abstract="true"/>
@@ -10066,6 +10442,8 @@
     <service id=".abstract.instanceof.App\Enum\OrderStatus" class="App\Enum\OrderStatus" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.UnitEnum.0.App\Enum\SubscriptionStatus" class="App\Enum\SubscriptionStatus" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Enum\SubscriptionStatus" class="App\Enum\SubscriptionStatus" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.App\EventListener\AuthenticationSuccessListener.0.App\EventListener\AuthenticationSuccessListener" class="App\EventListener\AuthenticationSuccessListener" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\EventListener\AuthenticationSuccessListener" class="App\EventListener\AuthenticationSuccessListener" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\AddressRepository" class="App\Repository\AddressRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\AddressRepository" class="App\Repository\AddressRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\CarouselSlideRepository" class="App\Repository\CarouselSlideRepository" autowire="true" abstract="true"/>
@@ -10076,6 +10454,8 @@
     <service id=".abstract.instanceof.App\Repository\CartRepository" class="App\Repository\CartRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\CategoryRepository" class="App\Repository\CategoryRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\CategoryRepository" class="App\Repository\CategoryRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\ChatbotConversationRepository" class="App\Repository\ChatbotConversationRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\ChatbotConversationRepository" class="App\Repository\ChatbotConversationRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\ContactMessageRepository" class="App\Repository\ContactMessageRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\ContactMessageRepository" class="App\Repository\ContactMessageRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\HomepageTextRepository" class="App\Repository\HomepageTextRepository" autowire="true" abstract="true"/>
@@ -10180,6 +10560,30 @@
       <call method="addListener">
         <argument>Symfony\Component\Security\Http\Event\CheckPassportEvent</argument>
         <argument type="collection">
+          <argument type="service_closure" id="scheb_two_factor.security.listener.check_two_factor_code"/>
+          <argument>checkPassport</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>Symfony\Component\Security\Http\Event\LoginSuccessEvent</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="scheb_two_factor.security.listener.suppress_remember_me"/>
+          <argument>onSuccessfulLogin</argument>
+        </argument>
+        <argument>-63</argument>
+      </call>
+      <call method="addListener">
+        <argument>security.authentication.success</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="scheb_two_factor.security.authentication_success_event_suppressor"/>
+          <argument>onLogin</argument>
+        </argument>
+        <argument>9223372036854775806</argument>
+      </call>
+      <call method="addListener">
+        <argument>Symfony\Component\Security\Http\Event\CheckPassportEvent</argument>
+        <argument type="collection">
           <argument type="service_closure" id="security.listener.csrf_protection"/>
           <argument>checkPassport</argument>
         </argument>
@@ -10242,6 +10646,30 @@
           <argument>onLoginSuccess</argument>
         </argument>
         <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>Symfony\Component\Security\Http\Event\CheckPassportEvent</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="scheb_two_factor.security.listener.check_two_factor_code"/>
+          <argument>checkPassport</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>Symfony\Component\Security\Http\Event\LoginSuccessEvent</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="scheb_two_factor.security.listener.suppress_remember_me"/>
+          <argument>onSuccessfulLogin</argument>
+        </argument>
+        <argument>-63</argument>
+      </call>
+      <call method="addListener">
+        <argument>security.authentication.success</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="scheb_two_factor.security.authentication_success_event_suppressor"/>
+          <argument>onLogin</argument>
+        </argument>
+        <argument>9223372036854775806</argument>
       </call>
       <call method="addListener">
         <argument>Symfony\Component\Security\Http\Event\CheckPassportEvent</argument>
@@ -10712,18 +11140,35 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.1vYpZ1B" method="withContext"/>
     </service>
-    <service id=".service_locator.8JS6QTA" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.qx5CUsw" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="userRepository" type="service_closure" id="App\Repository\UserRepository"/>
+        <argument key="passwordHasher" type="service_closure" id="security.user_password_hasher"/>
+        <argument key="googleAuthenticator" type="service_closure" id="scheb_two_factor.security.google_authenticator"/>
+        <argument key="jwtManager" type="service_closure" id="lexik_jwt_authentication.jwt_manager"/>
+      </argument>
+    </service>
+    <service id=".service_locator.qx5CUsw.App\Controller\Security\TwoFactorLoginController::verify()" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\Security\TwoFactorLoginController::verify()"/>
+      <argument>App\Controller\Security\TwoFactorLoginController::verify()</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.qx5CUsw" method="withContext"/>
+    </service>
+    <service id=".service_locator.Zgl0ntQ" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.1vYpZ1B.kernel::registerContainerConfiguration()"/>
         <argument key="App\Kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.1vYpZ1B.kernel::registerContainerConfiguration()"/>
         <argument key="kernel::loadRoutes" type="service_closure" id=".service_locator.1vYpZ1B.kernel::loadRoutes()"/>
         <argument key="App\Kernel::loadRoutes" type="service_closure" id=".service_locator.1vYpZ1B.kernel::loadRoutes()"/>
+        <argument key="App\Controller\Security\TwoFactorLoginController::verify" type="service_closure" id=".service_locator.qx5CUsw.App\Controller\Security\TwoFactorLoginController::verify()"/>
         <argument key="kernel:registerContainerConfiguration" type="service_closure" id=".service_locator.1vYpZ1B.kernel::registerContainerConfiguration()"/>
         <argument key="kernel:loadRoutes" type="service_closure" id=".service_locator.1vYpZ1B.kernel::loadRoutes()"/>
+        <argument key="App\Controller\Security\TwoFactorLoginController:verify" type="service_closure" id=".service_locator.qx5CUsw.App\Controller\Security\TwoFactorLoginController::verify()"/>
       </argument>
     </service>
-    <service id=".service_locator.DA6YX9k" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.cBCYkMD" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="validator.expression" type="service_closure" id="validator.expression"/>
@@ -10737,6 +11182,8 @@
         <argument key="Symfony\Bridge\Twig\Validator\Constraints\TwigValidator" type="service_closure" id="twig.validator"/>
         <argument key="security.validator.user_password" type="service_closure" id="security.validator.user_password"/>
         <argument key="Symfony\Component\Security\Core\Validator\Constraints\UserPasswordValidator" type="service_closure" id="security.validator.user_password"/>
+        <argument key="scheb_two_factor.security.totp.validator.user_google_totp_code" type="service_closure" id="scheb_two_factor.security.totp.validator.user_google_totp_code"/>
+        <argument key="Scheb\TwoFactorBundle\Security\TwoFactor\Validator\Constraints\UserGoogleTotpCodeValidator" type="service_closure" id="scheb_two_factor.security.totp.validator.user_google_totp_code"/>
       </argument>
     </service>
     <service id=".service_locator.nqEKT7G" class="Symfony\Component\DependencyInjection\ServiceLocator">
@@ -11160,7 +11607,7 @@
         <argument key="turbo.doctrine.event_listener" type="service_closure" id="turbo.doctrine.event_listener"/>
       </argument>
     </service>
-    <service id=".service_locator.i0VcQfv" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.hyCzJvQ" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Repository\AddressRepository" type="service_closure" id="App\Repository\AddressRepository"/>
@@ -11168,6 +11615,7 @@
         <argument key="App\Repository\CartItemRepository" type="service_closure" id="App\Repository\CartItemRepository"/>
         <argument key="App\Repository\CartRepository" type="service_closure" id="App\Repository\CartRepository"/>
         <argument key="App\Repository\CategoryRepository" type="service_closure" id="App\Repository\CategoryRepository"/>
+        <argument key="App\Repository\ChatbotConversationRepository" type="service_closure" id="App\Repository\ChatbotConversationRepository"/>
         <argument key="App\Repository\ContactMessageRepository" type="service_closure" id="App\Repository\ContactMessageRepository"/>
         <argument key="App\Repository\HomepageTextRepository" type="service_closure" id="App\Repository\HomepageTextRepository"/>
         <argument key="App\Repository\InvoiceRepository" type="service_closure" id="App\Repository\InvoiceRepository"/>
@@ -11218,6 +11666,10 @@
     </service>
     <service id=".debug.security.voter.security.access.authenticated_voter" class="Symfony\Component\Security\Core\Authorization\Voter\TraceableVoter">
       <argument type="service" id="security.access.authenticated_voter"/>
+      <argument type="service" id="debug.event_dispatcher"/>
+    </service>
+    <service id=".debug.security.voter.scheb_two_factor.security.access.authenticated_voter" class="Symfony\Component\Security\Core\Authorization\Voter\TraceableVoter">
+      <argument type="service" id="scheb_two_factor.security.access.authenticated_voter"/>
       <argument type="service" id="debug.event_dispatcher"/>
     </service>
     <service id=".debug.security.voter.security.access.role_hierarchy_voter" class="Symfony\Component\Security\Core\Authorization\Voter\TraceableVoter">
@@ -11467,9 +11919,27 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.TJNRSaV" method="withContext"/>
     </service>
+    <service id=".service_locator.TJNRSaV.App\Controller\ChatbotController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\ChatbotController"/>
+      <argument>App\Controller\ChatbotController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.TJNRSaV" method="withContext"/>
+    </service>
     <service id=".service_locator.TJNRSaV.App\Controller\HomeController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\HomeController"/>
       <argument>App\Controller\HomeController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.TJNRSaV" method="withContext"/>
+    </service>
+    <service id=".service_locator.TJNRSaV.App\Controller\Security\TwoFactorController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\Security\TwoFactorController"/>
+      <argument>App\Controller\Security\TwoFactorController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.TJNRSaV" method="withContext"/>
+    </service>
+    <service id=".service_locator.TJNRSaV.App\Controller\Security\TwoFactorLoginController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\Security\TwoFactorLoginController"/>
+      <argument>App\Controller\Security\TwoFactorLoginController</argument>
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.TJNRSaV" method="withContext"/>
     </service>
@@ -11744,7 +12214,10 @@
           <argument>App\Controller\AccountController</argument>
           <argument>App\Controller\Admin\DashboardController</argument>
           <argument>App\Controller\CatalogController</argument>
+          <argument>App\Controller\ChatbotController</argument>
           <argument>App\Controller\HomeController</argument>
+          <argument>App\Controller\Security\TwoFactorController</argument>
+          <argument>App\Controller\Security\TwoFactorLoginController</argument>
           <argument>Doctrine\Bundle\DoctrineBundle\Controller\ProfilerController</argument>
         </argument>
       </call>
@@ -12079,6 +12552,7 @@
     <service id="debug.security.access.decision_manager.inner" class="Symfony\Component\Security\Core\Authorization\AccessDecisionManager">
       <argument type="iterator">
         <argument type="service" id=".debug.security.voter.security.access.authenticated_voter"/>
+        <argument type="service" id=".debug.security.voter.scheb_two_factor.security.access.authenticated_voter"/>
         <argument type="service" id=".debug.security.voter.security.access.role_hierarchy_voter"/>
         <argument type="service" id=".debug.security.voter.security.access.expression_voter"/>
         <argument type="service" id=".debug.security.voter.security.access.closure_voter"/>
@@ -12146,6 +12620,7 @@
       <argument type="service" id="api_platform.state_provider.access_checker.post_deserialize"/>
       <argument type="service" id="api_platform.validator"/>
     </service>
+    <service id="scheb_two_factor.security.authentication.trust_resolver.inner" class="Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolver"/>
     <service id="debug.security.event_dispatcher.login.inner" class="Symfony\Component\EventDispatcher\EventDispatcher"/>
     <service id="debug.security.event_dispatcher.api.inner" class="Symfony\Component\EventDispatcher\EventDispatcher"/>
     <service id="debug.traced.messenger.bus.default.inner" class="Symfony\Component\Messenger\MessageBus">
@@ -13262,7 +13737,7 @@
       <argument>ipYINR8N8M</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/pools/system</argument>
+      <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/pools/system</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -13270,7 +13745,7 @@
       <argument>Zy9t9AyjnE</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/pools/system</argument>
+      <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/pools/system</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -13278,7 +13753,7 @@
       <argument>LVjC2T1bA8</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/pools/system</argument>
+      <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/pools/system</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -13286,7 +13761,7 @@
       <argument>2Hec+Zmzsm</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/pools/system</argument>
+      <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/pools/system</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -13294,7 +13769,7 @@
       <argument>PPgigdn8+l</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/pools/system</argument>
+      <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/pools/system</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -13320,7 +13795,7 @@
       <argument>ZXuVy2lPCD</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/pools/system</argument>
+      <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/pools/system</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -13330,7 +13805,7 @@
       <argument>SxkQKJJU2W</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/pools/system</argument>
+      <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/pools/system</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -13338,7 +13813,7 @@
       <argument>Qzo42RKaCi</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/pools/system</argument>
+      <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/pools/system</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -13346,7 +13821,7 @@
       <argument>K3QmozyU0O</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/pools/system</argument>
+      <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/pools/system</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -13354,7 +13829,7 @@
       <argument>6BxjD1WdJ4</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/pools/system</argument>
+      <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/pools/system</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -13362,7 +13837,7 @@
       <argument>NCUZnYbWre</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/pools/system</argument>
+      <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/pools/system</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -13370,7 +13845,7 @@
       <argument>9vmz-u9iBF</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/pools/system</argument>
+      <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/pools/system</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -13378,7 +13853,7 @@
       <argument>UlPfXSlbGy</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/pools/system</argument>
+      <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/pools/system</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -13386,7 +13861,7 @@
       <argument>EC9pYcN1Qu</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/pools/system</argument>
+      <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/pools/system</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -13394,7 +13869,7 @@
       <argument>Ne+9sXsKmQ</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/Users/julia/Documents/GitHub/CYNA/CYNA-Web/var/cache/dev/pools/system</argument>
+      <argument>C:\Users\julia\Documents\GitHub\CYNA\CYNA-Web\var\cache\dev/pools/system</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -13637,10 +14112,21 @@
     <service id="api_platform.message_bus" alias="debug.traced.messenger.bus.default"/>
     <service id="api_platform.security.expression_language" alias="security.expression_language"/>
     <service id="ApiPlatform\Metadata\ResourceAccessCheckerInterface" alias="api_platform.security.resource_access_checker"/>
+    <service id="scheb_two_factor.csrf_token_manager" alias="security.csrf.same_origin_token_manager"/>
+    <service id="Scheb\TwoFactorBundle\Model\PersisterInterface" alias="scheb_two_factor.persister.doctrine"/>
+    <service id="Scheb\TwoFactorBundle\Security\TwoFactor\TwoFactorFirewallContext" alias="scheb_two_factor.firewall_context"/>
+    <service id="Scheb\TwoFactorBundle\Security\TwoFactor\Provider\TwoFactorFormRendererInterface" alias="scheb_two_factor.security.form_renderer"/>
+    <service id="scheb_two_factor.security.google.form_renderer" alias="scheb_two_factor.security.google.default_form_renderer"/>
+    <service id="Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Google\GoogleAuthenticatorInterface" alias="scheb_two_factor.security.google_authenticator"/>
+    <service id="Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Google\GoogleAuthenticator" alias="scheb_two_factor.security.google_authenticator"/>
+    <service id="scheb_two_factor.persister" alias="scheb_two_factor.persister.doctrine"/>
+    <service id="scheb_two_factor.ip_whitelist_provider" alias="scheb_two_factor.default_ip_whitelist_provider"/>
+    <service id="scheb_two_factor.token_factory" alias="scheb_two_factor.default_token_factory"/>
+    <service id="scheb_two_factor.provider_decider" alias="scheb_two_factor.default_provider_decider"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.ryAvHi4" public="true"/>
     <service id="api_platform.name_converter" alias="api_platform.hydra.name_converter.hydra_prefix"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.8JS6QTA"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.Zgl0ntQ"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.W55Po6X"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id=".Psr\Log\LoggerInterface $request.logger" alias="monolog.logger.request"/>
@@ -13679,7 +14165,7 @@
     <service id=".service_locator.oeWXF0n" alias="messenger.retry_strategy_locator"/>
     <service id=".service_locator.8CvI_5C" alias="api_platform.serializer_locator"/>
     <service id=".service_locator.i.f19op" alias="api_platform.filter_locator"/>
-    <service id=".service_locator.S9tnIXR" alias=".service_locator.DA6YX9k"/>
+    <service id=".service_locator.d3JzipH" alias=".service_locator.cBCYkMD"/>
     <service id="api_platform.metadata.resource.metadata_collection_factory.parameter.inner" alias="api_platform.metadata.resource.metadata_collection_factory.attributes"/>
     <service id="api_platform.validator.metadata.resource.metadata_collection_factory.parameter.inner" alias="api_platform.metadata.resource.metadata_collection_factory.parameter"/>
     <service id="api_platform.doctrine.orm.metadata.resource.parameter_metadata_collection_factory.inner" alias="api_platform.validator.metadata.resource.metadata_collection_factory.parameter"/>
@@ -13760,6 +14246,7 @@
     <service id="api_platform.state_provider.deserialize" alias="api_platform.state_provider.access_checker.post_deserialize"/>
     <service id="api_platform.state_provider.access_checker" alias="api_platform.state_provider.security_parameter"/>
     <service id="api_platform.state_provider.validate" alias="api_platform.state_provider.access_checker.post_validate"/>
+    <service id="security.authentication.trust_resolver" alias="scheb_two_factor.security.authentication.trust_resolver"/>
     <service id="security.event_dispatcher.login" alias="debug.security.event_dispatcher.login"/>
     <service id="security.event_dispatcher.api" alias="debug.security.event_dispatcher.api"/>
     <service id="messenger.bus.default" alias="debug.traced.messenger.bus.default"/>
@@ -13776,6 +14263,7 @@
     <service id="api_platform.metadata.operation.metadata_factory" alias="api_platform.metadata.operation.metadata_factory.cached"/>
     <service id="api_platform.doctrine.orm.metadata.resource.metadata_collection_factory.inner" alias="api_platform.metadata.resource.metadata_collection_factory.cached"/>
     <service id=".service_locator.c0wzfI4" alias=".service_locator.1vYpZ1B"/>
+    <service id=".service_locator.C2Q86_8" alias=".service_locator.qx5CUsw"/>
     <service id=".service_locator.D6tJ4Px" alias=".service_locator.TJNRSaV"/>
   </services>
 </container>

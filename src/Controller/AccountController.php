@@ -148,6 +148,7 @@ final class AccountController extends AbstractController
             'roles' => $user->getRoles(),
             'isVerified' => $user->isVerified(),
             'totpEnabled' => $user->isTotpEnabled(),
+            'isTotpConfigured' => $user->isTotpConfigured(),
         ]);
     }
 }

@@ -20,8 +20,8 @@ class ComposerStaticInit2cf8707fdc24ce3530709907d8ce2f3b
         'ffecb95d45175fd40f75be8a23b34f90' => __DIR__ . '/..' . '/twig/twig/src/Resources/debug.php',
         'c7baa00073ee9c61edf148c51917cfb4' => __DIR__ . '/..' . '/twig/twig/src/Resources/escaper.php',
         'f844ccf1d25df8663951193c3fc307c8' => __DIR__ . '/..' . '/twig/twig/src/Resources/string_loader.php',
-        '09f6b20656683369174dd6fa83b7e5fb' => __DIR__ . '/..' . '/symfony/polyfill-uuid/bootstrap.php',
         '2203a247e6fda86070a5e4e07aed533a' => __DIR__ . '/..' . '/symfony/clock/Resources/now.php',
+        '09f6b20656683369174dd6fa83b7e5fb' => __DIR__ . '/..' . '/symfony/polyfill-uuid/bootstrap.php',
         'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
         'ac295ee8be42f266c7e20d14b8cf500a' => __DIR__ . '/..' . '/api-platform/jsonld/HydraContext.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
@@ -121,6 +121,7 @@ class ComposerStaticInit2cf8707fdc24ce3530709907d8ce2f3b
             'Symfony\\Bridge\\Twig\\' => 20,
             'Symfony\\Bridge\\Monolog\\' => 23,
             'Symfony\\Bridge\\Doctrine\\' => 24,
+            'Scheb\\TwoFactorBundle\\' => 22,
         ),
         'P' => 
         array (
@@ -131,7 +132,12 @@ class ComposerStaticInit2cf8707fdc24ce3530709907d8ce2f3b
             'Psr\\Clock\\' => 10,
             'Psr\\Cache\\' => 10,
             'PhpParser\\' => 10,
+            'ParagonIE\\ConstantTime\\' => 23,
             'PHPStan\\PhpDocParser\\' => 21,
+        ),
+        'O' => 
+        array (
+            'OTPHP\\' => 6,
         ),
         'N' => 
         array (
@@ -512,6 +518,11 @@ class ComposerStaticInit2cf8707fdc24ce3530709907d8ce2f3b
         array (
             0 => __DIR__ . '/..' . '/symfony/doctrine-bridge',
         ),
+        'Scheb\\TwoFactorBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/scheb/2fa-google-authenticator',
+            1 => __DIR__ . '/..' . '/scheb/2fa-bundle',
+        ),
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/src',
@@ -540,9 +551,17 @@ class ComposerStaticInit2cf8707fdc24ce3530709907d8ce2f3b
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
         ),
+        'ParagonIE\\ConstantTime\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src',
+        ),
         'PHPStan\\PhpDocParser\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpstan/phpdoc-parser/src',
+        ),
+        'OTPHP\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/spomky-labs/otphp/src',
         ),
         'Nelmio\\CorsBundle\\' => 
         array (

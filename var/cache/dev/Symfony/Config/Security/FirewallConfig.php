@@ -17,6 +17,7 @@ require_once __DIR__.\DIRECTORY_SEPARATOR.'FirewallConfig'.\DIRECTORY_SEPARATOR.
 require_once __DIR__.\DIRECTORY_SEPARATOR.'FirewallConfig'.\DIRECTORY_SEPARATOR.'HttpBasicConfig.php';
 require_once __DIR__.\DIRECTORY_SEPARATOR.'FirewallConfig'.\DIRECTORY_SEPARATOR.'HttpBasicLdapConfig.php';
 require_once __DIR__.\DIRECTORY_SEPARATOR.'FirewallConfig'.\DIRECTORY_SEPARATOR.'RememberMeConfig.php';
+require_once __DIR__.\DIRECTORY_SEPARATOR.'FirewallConfig'.\DIRECTORY_SEPARATOR.'TwoFactorConfig.php';
 
 use Symfony\Component\Config\Loader\ParamConfigurator;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
@@ -56,6 +57,7 @@ class FirewallConfig
     private $httpBasic;
     private $httpBasicLdap;
     private $rememberMe;
+    private $twoFactor;
     private $_usedProperties = [];
     
     /**
@@ -435,6 +437,18 @@ class FirewallConfig
         return $this->rememberMe;
     }
     
+    public function twoFactor(array $value = []): \Symfony\Config\Security\FirewallConfig\TwoFactorConfig
+    {
+        if (null === $this->twoFactor) {
+            $this->_usedProperties['twoFactor'] = true;
+            $this->twoFactor = new \Symfony\Config\Security\FirewallConfig\TwoFactorConfig($value);
+        } elseif (0 < \func_num_args()) {
+            throw new InvalidConfigurationException('The node created by "twoFactor()" has already been initialized. You cannot pass values the second time you call twoFactor().');
+        }
+    
+        return $this->twoFactor;
+    }
+    
     public function __construct(array $config = [])
     {
         if (array_key_exists('pattern', $config)) {
@@ -617,6 +631,12 @@ class FirewallConfig
             unset($config['remember_me']);
         }
     
+        if (array_key_exists('two_factor', $config)) {
+            $this->_usedProperties['twoFactor'] = true;
+            $this->twoFactor = new \Symfony\Config\Security\FirewallConfig\TwoFactorConfig($config['two_factor']);
+            unset($config['two_factor']);
+        }
+    
         if ($config) {
             throw new InvalidConfigurationException(sprintf('The following keys are not supported by "%s": ', __CLASS__).implode(', ', array_keys($config)));
         }
@@ -714,6 +734,9 @@ class FirewallConfig
         }
         if (isset($this->_usedProperties['rememberMe'])) {
             $output['remember_me'] = $this->rememberMe->toArray();
+        }
+        if (isset($this->_usedProperties['twoFactor'])) {
+            $output['two_factor'] = $this->twoFactor->toArray();
         }
     
         return $output;

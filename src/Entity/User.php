@@ -13,11 +13,10 @@ use App\State\UserRegistrationProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -37,7 +36,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Delete(security: "is_granted('ROLE_ADMIN') or object == user"),
     ]
 )]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -330,11 +329,40 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->totpEnabled;
     }
 
+    public function isTotpConfigured(): bool
+    {
+        return $this->totpSecret !== null;
+    }
+
     public function setTotpEnabled(bool $totpEnabled): static
     {
         $this->totpEnabled = $totpEnabled;
 
         return $this;
+    }
+
+    /**
+     * @see TwoFactorInterface
+     */
+    public function isGoogleAuthenticatorEnabled(): bool
+    {
+        return $this->totpEnabled && null !== $this->totpSecret;
+    }
+
+    /**
+     * @see TwoFactorInterface
+     */
+    public function getGoogleAuthenticatorUsername(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @see TwoFactorInterface
+     */
+    public function getGoogleAuthenticatorSecret(): ?string
+    {
+        return $this->totpSecret;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable

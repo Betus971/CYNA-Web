@@ -57,6 +57,18 @@ class Order
     #[Groups(['order:read'])]
     private ?\DateTimeImmutable $paidAt = null;
 
+    #[ORM\Column(length: 255, unique: true, nullable: true)]
+    #[Groups(['order:read'])]
+    private ?string $stripePaymentIntentId = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    #[Groups(['order:read'])]
+    private ?string $stripePaymentStatus = null;
+
+    #[ORM\Column(length: 500, nullable: true)]
+    #[Groups(['order:read'])]
+    private ?string $paymentFailureReason = null;
+
     #[ORM\ManyToOne(inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['order:read'])]
@@ -144,6 +156,42 @@ class Order
     public function setPaidAt(?\DateTimeImmutable $paidAt): static
     {
         $this->paidAt = $paidAt;
+
+        return $this;
+    }
+
+    public function getStripePaymentIntentId(): ?string
+    {
+        return $this->stripePaymentIntentId;
+    }
+
+    public function setStripePaymentIntentId(?string $stripePaymentIntentId): static
+    {
+        $this->stripePaymentIntentId = $stripePaymentIntentId;
+
+        return $this;
+    }
+
+    public function getStripePaymentStatus(): ?string
+    {
+        return $this->stripePaymentStatus;
+    }
+
+    public function setStripePaymentStatus(?string $stripePaymentStatus): static
+    {
+        $this->stripePaymentStatus = $stripePaymentStatus;
+
+        return $this;
+    }
+
+    public function getPaymentFailureReason(): ?string
+    {
+        return $this->paymentFailureReason;
+    }
+
+    public function setPaymentFailureReason(?string $paymentFailureReason): static
+    {
+        $this->paymentFailureReason = $paymentFailureReason;
 
         return $this;
     }

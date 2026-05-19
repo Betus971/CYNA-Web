@@ -50,6 +50,8 @@ class GoogleAuthenticator extends OAuth2Authenticator
                     $user = new User();
                     $user->setEmail($email);
                     $user->setRoles(['ROLE_USER']);
+                    $user->setFirstname($googleUser->getFirstName() ?? 'Google');
+                    $user->setLastname($googleUser->getLastName() ?? 'User');
                     // Pas de mot de passe — compte SSO uniquement
                     $user->setPassword('');
                     $this->em->persist($user);

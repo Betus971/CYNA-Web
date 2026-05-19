@@ -23,11 +23,11 @@ final class AppFixtures extends Fixture
     {
         /* ---------------- Catégories ---------------- */
         $categoriesData = [
-            ['name' => 'SOC manage',        'order' => 1, 'image' => null],
-            ['name' => 'Protection postes', 'order' => 2, 'image' => null],
-            ['name' => 'Cloud & XDR',       'order' => 3, 'image' => null],
-            ['name' => 'Reseaux',           'order' => 4, 'image' => null],
-            ['name' => 'Formation cyber',   'order' => 5, 'image' => null],
+            ['name' => 'SOC manage', 'order' => 1, 'image' => null],
+            ['name' => 'EDR & postes', 'order' => 2, 'image' => null],
+            ['name' => 'XDR & cloud', 'order' => 3, 'image' => null],
+            ['name' => 'Reseau securise', 'order' => 4, 'image' => null],
+            ['name' => 'Formation cyber', 'order' => 5, 'image' => null],
         ];
 
         $categories = [];
@@ -42,22 +42,28 @@ final class AppFixtures extends Fixture
 
         /* ---------------- Services SaaS ---------------- */
         $servicesData = [
-            ['SOC manage 24/7', 'Surveillance continue avec analystes dedies et alertes prioritaires.', '1499.00', 'SOC manage', 100, true],
-            ['SOC pilotage essentiel', 'Pilotage securite operationnelle pour PME, supervision 8h/j.', '799.00', 'SOC manage', 90, true],
-            ['EDR Endpoint Pro', 'Detection comportementale et reponse sur tous vos postes.', '399.00', 'Protection postes', 95, true],
-            ['EDR Workstation Lite', 'Protection antivirus avancee pour postes utilisateurs.', '149.00', 'Protection postes', 60, true],
-            ['XDR Cloud Pack', 'Visibilite XDR sur infrastructures cloud (AWS / Azure / GCP).', '1899.00', 'Cloud & XDR', 80, true],
-            ['Cloud Security Monitoring', 'Detection des erreurs de configuration cloud.', '599.00', 'Cloud & XDR', 70, true],
-            ['Firewall manage', 'Gestion et maintenance de votre firewall periphique.', '349.00', 'Reseaux', 50, true],
-            ['Audit reseaux & pentest', 'Audit annuel de la securite reseau + rapport executif.', '2499.00', 'Reseaux', 40, true],
-            ['Sensibilisation cyber', 'Programme de formation pour vos collaborateurs.', '299.00', 'Formation cyber', 30, true],
-            ['Simulation phishing', 'Campagnes de simulation et reporting RGPD.', '199.00', 'Formation cyber', 20, true],
+            ['SOC manage 24/7', 'Surveillance continue, triage des alertes et escalade incident critique.', 'Collecte SIEM, correlation, runbooks d escalade, reporting mensuel.', '1499.00', 'SOC manage', 100, true],
+            ['SOC pilotage essentiel', 'Supervision cyber en heures ouvrees pour PME et ETI.', 'Comite mensuel, indicateurs MTTD/MTTR, qualification alertes EDR.', '799.00', 'SOC manage', 90, true],
+            ['SOC incident readiness', 'Preparation operationnelle a la reponse incident.', 'Plan de crise, matrice contacts, exercice table-top et rapport executif.', '1199.00', 'SOC manage', 75, true],
+            ['EDR Endpoint Pro', 'Detection comportementale et reponse automatisee sur postes et serveurs.', 'Isolation machine, rollback, IOC, politiques Windows/macOS/Linux.', '399.00', 'EDR & postes', 95, true],
+            ['EDR Workstation Lite', 'Protection endpoint avancee pour postes utilisateurs.', 'Antimalware nouvelle generation, controle peripheriques, alerting centralise.', '149.00', 'EDR & postes', 60, true],
+            ['Patch posture monitoring', 'Suivi des correctifs critiques et priorisation des failles exploitees.', 'Inventaire agents, scoring CVSS/EPSS, exports CSV et alertes email.', '249.00', 'EDR & postes', 55, true],
+            ['XDR Cloud Pack', 'Visibilite XDR sur environnements SaaS, identite et cloud public.', 'Connecteurs AWS Azure GCP M365, detection lateral movement, tableaux de bord.', '1899.00', 'XDR & cloud', 80, true],
+            ['Cloud Security Monitoring', 'Detection des erreurs de configuration cloud et ecarts de conformite.', 'CIS benchmarks, IAM risky grants, stockage public, recommandations.', '599.00', 'XDR & cloud', 70, true],
+            ['Identity Threat Detection', 'Detection des compromissions de comptes privilegies.', 'Analyse MFA, connexions impossibles, impossible travel, alertes AD/Azure AD.', '699.00', 'XDR & cloud', 65, true],
+            ['Firewall manage', 'Gestion et maintien en condition de securite du firewall perimetrique.', 'Revue regles, sauvegardes, firmware, changements mensuels inclus.', '349.00', 'Reseau securise', 50, true],
+            ['Audit reseau & pentest', 'Audit annuel reseau avec rapport technique et restitution direction.', 'Cartographie exposition, tests controles, preuves, plan de remediation.', '2499.00', 'Reseau securise', 40, true],
+            ['Zero Trust starter', 'Cadrage et premiere mise en oeuvre Zero Trust pour acces sensibles.', 'Segmentation, MFA, bastion, politique acces conditionnel.', '1299.00', 'Reseau securise', 45, true],
+            ['Sensibilisation cyber', 'Programme de formation pour collaborateurs et managers.', 'Modules e-learning, quiz, suivi participation, attestation.', '299.00', 'Formation cyber', 30, true],
+            ['Simulation phishing', 'Campagnes de simulation phishing et reporting pedagogique.', 'Templates FR/EN, ciblage populations, statistiques clic/saisie.', '199.00', 'Formation cyber', 20, true],
+            ['Formation crise cyber COMEX', 'Session courte pour dirigeants sur decisions de crise cyber.', 'Scenario ransomware, obligations notification, communication de crise.', '899.00', 'Formation cyber', 25, true],
         ];
 
-        foreach ($servicesData as [$name, $desc, $price, $catName, $priority, $available]) {
+        foreach ($servicesData as [$name, $desc, $specs, $price, $catName, $priority, $available]) {
             $svc = (new SaasService())
                 ->setName($name)
                 ->setDescription($desc)
+                ->setTechnicalSpecs($specs)
                 ->setPrice($price)
                 ->setCategory($categories[$catName] ?? null)
                 ->setPriority($priority)

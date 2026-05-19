@@ -8,6 +8,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Repository\CartRepository;
+use App\State\CartProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -23,7 +24,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     normalizationContext: ['groups' => ['cart:read']],
     denormalizationContext: ['groups' => ['cart:write']],
     operations: [
-        new Post(),
+        new Post(processor: CartProcessor::class),
         new Get(),
         new Patch(),
         new Delete(),

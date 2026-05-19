@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     normalizationContext: ['groups' => ['address:read']],
     denormalizationContext: ['groups' => ['address:write']],
     operations: [
-        new GetCollection(security: "is_granted('ROLE_ADMIN')"),
+        new GetCollection(security: "is_granted('ROLE_USER')"),
         new Get(security: "is_granted('ROLE_ADMIN') or object.getUser() == user"),
         new Post(security: "is_granted('ROLE_USER')", processor: AddressProcessor::class),
         new Patch(security: "is_granted('ROLE_ADMIN') or object.getUser() == user"),

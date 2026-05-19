@@ -4,6 +4,7 @@ namespace App\Controller\Security;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Service\SecurityEmailService;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Google\GoogleAuthenticatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +21,8 @@ class TwoFactorLoginController extends AbstractController
         UserRepository $userRepository,
         UserPasswordHasherInterface $passwordHasher,
         GoogleAuthenticatorInterface $googleAuthenticator,
-        JWTTokenManagerInterface $jwtManager
+        JWTTokenManagerInterface $jwtManager,
+        SecurityEmailService $securityEmailService
     ): JsonResponse {
         $data = json_decode($request->getContent(), true) ?? [];
         $email = (string) ($data['email'] ?? '');
@@ -41,13 +43,17 @@ class TwoFactorLoginController extends AbstractController
             return $this->json(['error' => 'Identifiants invalides.'], 401);
         }
 
-        // Verify TOTP 2FA code
-        if (!$googleAuthenticator->checkCode($user, $code)) {
+        if ($user->isEmailTwoFactorEnabled()) {
+            if (!$securityEmailService->verifyTwoFactorCode($user, $code)) {
+                return $this->json(['error' => 'Code 2FA invalide.'], 400);
+            }
+        } elseif (!$googleAuthenticator->checkCode($user, $code)) {
             return $this->json(['error' => 'Code 2FA invalide.'], 400);
         }
 
         // Generate the JWT token
         $token = $jwtManager->create($user);
+        $securityEmailService->sendLoginNotification($user, $request);
 
         return $this->json([
             'token' => $token,

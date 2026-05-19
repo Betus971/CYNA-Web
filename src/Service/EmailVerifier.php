@@ -105,4 +105,38 @@ final class EmailVerifier
 
         $this->mailer->send($email);
     }
+
+    public function sendEmailTwoFactorCode(User $user, string $code): void
+    {
+        $email = (new TemplatedEmail())
+            ->from($this->mailFrom)
+            ->to((string) $user->getEmail())
+            ->subject('CYNA - Code de securite')
+            ->htmlTemplate('emails/security_two_factor_code.html.twig')
+            ->context([
+                'user' => $user,
+                'code' => $code,
+                'expires_in_minutes' => 10,
+            ]);
+
+        $this->mailer->send($email);
+    }
+
+    /**
+     * @param array{ip: string, user_agent: string, platform: string, browser: string, occurred_at: \DateTimeImmutable} $context
+     */
+    public function sendLoginNotification(User $user, array $context): void
+    {
+        $email = (new TemplatedEmail())
+            ->from($this->mailFrom)
+            ->to((string) $user->getEmail())
+            ->subject('CYNA - Nouvelle connexion a votre compte')
+            ->htmlTemplate('emails/security_login_notification.html.twig')
+            ->context([
+                'user' => $user,
+                'login' => $context,
+            ]);
+
+        $this->mailer->send($email);
+    }
 }

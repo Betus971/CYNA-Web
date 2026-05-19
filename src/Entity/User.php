@@ -113,6 +113,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     #[Groups(['user:read'])]
     private bool $totpEnabled = false;
 
+    #[ORM\Column(options: ['default' => false])]
+    #[Groups(['user:read'])]
+    private bool $emailTwoFactorEnabled = false;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $emailTwoFactorCodeHash = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $emailTwoFactorCodeExpiresAt = null;
+
+    #[ORM\Column(options: ['default' => false])]
+    #[Groups(['user:read'])]
+    private bool $loginNotificationEnabled = false;
+
     #[ORM\Column]
     #[Groups(['user:read'])]
     private ?\DateTimeImmutable $createdAt = null;
@@ -339,6 +353,54 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     public function setTotpEnabled(bool $totpEnabled): static
     {
         $this->totpEnabled = $totpEnabled;
+
+        return $this;
+    }
+
+    public function isEmailTwoFactorEnabled(): bool
+    {
+        return $this->emailTwoFactorEnabled;
+    }
+
+    public function setEmailTwoFactorEnabled(bool $emailTwoFactorEnabled): static
+    {
+        $this->emailTwoFactorEnabled = $emailTwoFactorEnabled;
+
+        return $this;
+    }
+
+    public function getEmailTwoFactorCodeHash(): ?string
+    {
+        return $this->emailTwoFactorCodeHash;
+    }
+
+    public function setEmailTwoFactorCodeHash(?string $emailTwoFactorCodeHash): static
+    {
+        $this->emailTwoFactorCodeHash = $emailTwoFactorCodeHash;
+
+        return $this;
+    }
+
+    public function getEmailTwoFactorCodeExpiresAt(): ?\DateTimeImmutable
+    {
+        return $this->emailTwoFactorCodeExpiresAt;
+    }
+
+    public function setEmailTwoFactorCodeExpiresAt(?\DateTimeImmutable $emailTwoFactorCodeExpiresAt): static
+    {
+        $this->emailTwoFactorCodeExpiresAt = $emailTwoFactorCodeExpiresAt;
+
+        return $this;
+    }
+
+    public function isLoginNotificationEnabled(): bool
+    {
+        return $this->loginNotificationEnabled;
+    }
+
+    public function setLoginNotificationEnabled(bool $loginNotificationEnabled): static
+    {
+        $this->loginNotificationEnabled = $loginNotificationEnabled;
 
         return $this;
     }

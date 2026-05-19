@@ -8,11 +8,12 @@ use ApiPlatform\Metadata\Operation;
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Entity\Address;
+use App\Entity\PaymentMethod;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bundle\SecurityBundle\Security;
 
 /**
- * Filtre automatiquement les collections Order / OrderItem / Address
+ * Filtre automatiquement les collections Order / OrderItem / Address / PaymentMethod
  * pour n'exposer que les ressources appartenant à l'utilisateur courant.
  * Les ROLE_ADMIN voient tout.
  */
@@ -40,7 +41,7 @@ final class CurrentUserOrderExtension implements QueryCollectionExtensionInterfa
 
         $rootAlias = $queryBuilder->getRootAliases()[0];
 
-        if (Order::class === $resourceClass || Address::class === $resourceClass) {
+        if (Order::class === $resourceClass || Address::class === $resourceClass || PaymentMethod::class === $resourceClass) {
             $queryBuilder
                 ->andWhere(sprintf('%s.user = :current_user', $rootAlias))
                 ->setParameter('current_user', $user);

@@ -181,6 +181,8 @@ final class AccountController extends AbstractController
             'isVerified' => $user->isVerified(),
             'totpEnabled' => $user->isTotpEnabled(),
             'isTotpConfigured' => $user->isTotpConfigured(),
+            'emailTwoFactorEnabled' => $user->isEmailTwoFactorEnabled(),
+            'loginNotificationEnabled' => $user->isLoginNotificationEnabled(),
         ]);
     }
 }

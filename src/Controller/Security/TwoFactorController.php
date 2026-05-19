@@ -3,6 +3,7 @@
 namespace App\Controller\Security;
 
 use App\Entity\User;
+use App\Service\SecurityEmailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Google\GoogleAuthenticatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,7 +18,8 @@ class TwoFactorController extends AbstractController
 {
     public function __construct(
         private readonly GoogleAuthenticatorInterface $googleAuthenticator,
-        private readonly EntityManagerInterface $entityManager
+        private readonly EntityManagerInterface $entityManager,
+        private readonly SecurityEmailService $securityEmailService,
     ) {
     }
 
@@ -102,5 +104,74 @@ class TwoFactorController extends AbstractController
         $this->entityManager->flush();
 
         return $this->json(['success' => true, 'totpEnabled' => $user->isTotpEnabled()]);
+    }
+
+    #[Route('/email/setup', name: 'email_setup', methods: ['POST'])]
+    public function setupEmailTwoFactor(): JsonResponse
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $this->securityEmailService->generateAndSendTwoFactorCode($user);
+
+        return $this->json(['success' => true]);
+    }
+
+    #[Route('/email/enable', name: 'email_enable', methods: ['POST'])]
+    public function enableEmailTwoFactor(Request $request): JsonResponse
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $data = json_decode($request->getContent(), true) ?? [];
+        $code = (string) ($data['code'] ?? '');
+
+        if (!$this->securityEmailService->verifyTwoFactorCode($user, $code)) {
+            return $this->json(['error' => 'Code invalide'], 400);
+        }
+
+        $user->setEmailTwoFactorEnabled(true);
+        $this->entityManager->flush();
+
+        return $this->json(['success' => true, 'emailTwoFactorEnabled' => true]);
+    }
+
+    #[Route('/email/disable', name: 'email_disable', methods: ['POST'])]
+    public function disableEmailTwoFactor(): JsonResponse
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $user
+            ->setEmailTwoFactorEnabled(false)
+            ->setEmailTwoFactorCodeHash(null)
+            ->setEmailTwoFactorCodeExpiresAt(null);
+        $this->entityManager->flush();
+
+        return $this->json(['success' => true, 'emailTwoFactorEnabled' => false]);
+    }
+
+    #[Route('/login-notifications/toggle', name: 'login_notifications_toggle', methods: ['POST'])]
+    public function toggleLoginNotifications(Request $request): JsonResponse
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $data = json_decode($request->getContent(), true) ?? [];
+        $enabled = (bool) ($data['enabled'] ?? false);
+
+        $user->setLoginNotificationEnabled($enabled);
+        $this->entityManager->flush();
+
+        return $this->json(['success' => true, 'loginNotificationEnabled' => $enabled]);
+    }
+
+    #[Route('/login-notifications/test', name: 'login_notifications_test', methods: ['POST'])]
+    public function testLoginNotification(Request $request): JsonResponse
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $this->securityEmailService->sendLoginNotification($user, $request, true);
+
+        return $this->json(['success' => true]);
     }
 }

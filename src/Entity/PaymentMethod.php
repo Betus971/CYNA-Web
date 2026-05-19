@@ -47,7 +47,6 @@ class PaymentMethod
      * Identifiant opaque fourni par le prestataire de paiement (Stripe, etc.).
      */
     #[ORM\Column(length: 191)]
-    #[Assert\NotBlank]
     private ?string $providerToken = null;
 
     #[ORM\Column(length: 50)]

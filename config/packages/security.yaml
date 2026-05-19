@@ -19,6 +19,13 @@ security:
             pattern: ^/(_profiler|_wdt|assets|build)/
             security: false
 
+        # Firewall dédié au SSO Google (routes web avec session)
+        web:
+            pattern: ^/login/google
+            provider: app_user_provider
+            custom_authenticators:
+                - App\Security\GoogleAuthenticator
+
         login:
             pattern: ^/api/login
             stateless: true
@@ -38,6 +45,9 @@ security:
 
     # Ordre important : seule la première règle qui matche est appliquée.
     access_control:
+        # SSO Google
+        - { path: ^/login/google,               roles: PUBLIC_ACCESS }
+
         # Auth & onboarding
         - { path: ^/api/login,                  roles: PUBLIC_ACCESS }
         - { path: ^/api/docs,                   roles: PUBLIC_ACCESS }

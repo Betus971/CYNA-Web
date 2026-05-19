@@ -28,6 +28,10 @@ services:
         tags:
             - { name: api_platform.doctrine.orm.query_extension.collection }
 
+    App\Security\GoogleAuthenticator:
+        arguments:
+            $frontendCallbackUrl: '%env(string:FRONTEND_URL)%/auth/google/callback'
+
     App\Service\Chatbot\GeminiChatbotClient:
         arguments:
             $apiKey: '%env(string:GEMINI_API_KEY)%'

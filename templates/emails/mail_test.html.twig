@@ -1,0 +1,44 @@
+{% set firstname = user.firstname|default('') %}
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>Test Brevo CYNA</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f7fb;font-family:Arial,Helvetica,sans-serif;color:#172033;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f4f7fb;padding:32px 16px;">
+        <tr>
+            <td align="center">
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:600px;background:#ffffff;border-radius:8px;overflow:hidden;border:1px solid #e4eaf2;">
+                    <tr>
+                        <td style="background:#0f172a;color:#ffffff;padding:24px 28px;">
+                            <div style="font-size:22px;font-weight:700;">CYNA</div>
+                            <div style="font-size:14px;margin-top:6px;color:#cbd5e1;">Validation Brevo</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:32px 28px;">
+                            <h1 style="margin:0 0 16px;font-size:24px;line-height:1.3;color:#0f172a;">E-mail de test envoye</h1>
+                            <p style="margin:0 0 16px;font-size:16px;line-height:1.6;">
+                                Bonjour {{ firstname ? firstname : 'CYNA' }},
+                            </p>
+                            <p style="margin:0 0 16px;font-size:16px;line-height:1.6;">
+                                Ce message confirme que le transport Brevo transactionnel est connecte a l'application CYNA.
+                            </p>
+                            <p style="margin:0;font-size:14px;line-height:1.6;color:#475569;">
+                                Destinataire teste : {{ recipient }}<br>
+                                Envoi demande le {{ sent_at|date('d/m/Y H:i') }}.
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:20px 28px;background:#f8fafc;border-top:1px solid #e4eaf2;font-size:13px;line-height:1.5;color:#64748b;">
+                            Message technique de validation. Aucun suivi client n'est declenche.
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -89,4 +89,20 @@ final class EmailVerifier
             ]);
         }
     }
+
+    public function sendTestEmail(User $user, string $recipient): void
+    {
+        $email = (new TemplatedEmail())
+            ->from($this->mailFrom)
+            ->to($recipient)
+            ->subject('CYNA - Test Brevo transactionnel')
+            ->htmlTemplate('emails/mail_test.html.twig')
+            ->context([
+                'user' => $user,
+                'recipient' => $recipient,
+                'sent_at' => new \DateTimeImmutable(),
+            ]);
+
+        $this->mailer->send($email);
+    }
 }

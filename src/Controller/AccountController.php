@@ -131,6 +131,38 @@ final class AccountController extends AbstractController
         return $this->json(['status' => 'ok']);
     }
 
+    #[Route('/mail/test', name: 'mail_test', methods: ['POST'])]
+    public function testMail(Request $request): JsonResponse
+    {
+        /** @var User|null $user */
+        $user = $this->getUser();
+        if (null === $user) {
+            return $this->json(['error' => 'Not authenticated.'], 401);
+        }
+
+        $payload = json_decode($request->getContent() ?: '{}', true) ?? [];
+        $recipient = trim((string) ($payload['recipient'] ?? ''));
+
+        $violations = $this->validator->validate($recipient, [
+            new Assert\NotBlank(),
+            new Assert\Email(),
+        ]);
+        if (count($violations) > 0) {
+            return $this->json(['error' => 'Email invalide.'], 400);
+        }
+
+        try {
+            $this->emailVerifier->sendTestEmail($user, $recipient);
+        } catch (\Throwable $e) {
+            return $this->json(['error' => 'Impossible d\'envoyer l\'email de test.'], 502);
+        }
+
+        return $this->json([
+            'status' => 'sent',
+            'recipient' => $recipient,
+        ]);
+    }
+
     #[Route('/me', name: 'me', methods: ['GET'])]
     public function me(): JsonResponse
     {

@@ -51,4 +51,6 @@ class InvoiceCrudController extends AbstractCrudController
         yield TextField::new('pdfPath', 'Fichier PDF')->hideOnIndex();
         yield DateTimeField::new('issuedAt', 'Émise le')
             ->setFormat('dd/MM/yyyy HH:mm')
-            ->hideOnFor
+            ->hideOnForm();
+    }
+}

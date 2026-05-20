@@ -81,4 +81,6 @@ class OrderCrudController extends AbstractCrudController
             ->hideOnForm();
         yield TextField::new('stripePaymentIntentId', 'Stripe PI')
             ->hideOnIndex()
-            ->hideO
+            ->hideOnForm();
+    }
+}

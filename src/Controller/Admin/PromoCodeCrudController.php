@@ -47,4 +47,6 @@ class PromoCodeCrudController extends AbstractCrudController
         yield DateTimeField::new('startsAt', 'Début')->setFormat('dd/MM/yyyy');
         yield DateTimeField::new('endsAt', 'Fin')->setFormat('dd/MM/yyyy');
         yield IntegerField::new('maxUsages', 'Usages max')->hideOnIndex();
-        yie
+        yield IntegerField::new('usageCount', 'Utilisé')->hideOnForm();
+    }
+}

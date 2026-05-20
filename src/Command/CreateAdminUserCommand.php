@@ -59,4 +59,14 @@ class CreateAdminUserCommand extends Command
         $user->setRoles(['ROLE_ADMIN']);
         $user->setIsVerified(true);
 
- 
+        $hashed = $this->hasher->hashPassword($user, $input->getArgument('password'));
+        $user->setPassword($hashed);
+
+        $this->em->persist($user);
+        $this->em->flush();
+
+        $io->success(sprintf('Administrateur "%s" créé avec succès.', $email));
+
+        return Command::SUCCESS;
+    }
+}

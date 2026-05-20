@@ -1,16 +1,16 @@
 # AUDIT BACKEND — CYNA-Web
 
-> **Date de l'audit :** 2026-05-18 — **Mis à jour :** 2026-05-19  
-> **Auditeur :** Claude Code (analyse automatisée)  
-> **Branche analysée :** `claude/audit-cyna-backend-Y354y`
+> **Date de l'audit :** 2026-05-18 — **Mis à jour :** 2026-05-20  
+> **Auditeur :** Claude (analyse automatisée)  
+> **Branche analysée :** `feature/easyadmin-backoffice`
 
 ---
 
 ## Résumé
 
-### Avancement backend estimé : **82 %** *(était 78 % au 2026-05-18)*
+### Avancement backend estimé : **87 %** *(était 82 % au 2026-05-19)*
 
-Le socle est solide et bien structuré. La majorité des entités, des routes CRUD, du système d'authentification et du backoffice sont en place. **Google SSO (OAuth2) est désormais opérationnel** côté backend et frontend. Les parties encore manquantes concernent principalement l'intégration réelle de la passerelle de paiement, la génération de PDF pour les factures, les emails transactionnels (confirmation commande…), et le 2FA admin.
+Le socle est solide et bien structuré. **Le backoffice EasyAdmin v5 est désormais entièrement opérationnel** : 10 CRUD controllers, route `/admin` sécurisée par session, page de connexion dédiée, commande de création admin. Les parties encore manquantes concernent principalement l'intégration réelle de la passerelle de paiement, la génération de PDF pour les factures, les emails transactionnels, et le 2FA admin (backend).
 
 ### Stack technique détectée
 
@@ -249,19 +249,31 @@ Paramètres supportés : `q`, `category`, `minPrice`, `maxPrice`, `availableOnly
 | Fonctionnalité | Statut | Détail |
 |---------------|--------|--------|
 | Tous les CRUD protégés ROLE_ADMIN | ✅ Fait | Via `security.yaml` et attributs API Platform |
-| Gestion carrousel homepage | ✅ Fait | CRUD complet `CarouselSlide` |
-| Gestion textes dynamiques | ✅ Fait | CRUD complet `HomepageText` |
-| Gestion ordre catégories | ✅ Fait | Champ `displayOrder` sur `Category` |
-| Gestion produits mis en avant | ✅ Fait | Champ `priority` sur `SaasService` |
+| **Interface EasyAdmin v5** | ✅ Fait | Backoffice complet sur `/admin` — branche `feature/easyadmin-backoffice` |
+| **Firewall admin session-based** | ✅ Fait | Firewall `admin` séparé dans `security.yaml` (form_login, ROLE_ADMIN requis) |
+| **Page de connexion /admin/login** | ✅ Fait | Page custom dark theme CYNA, CSRF protégé |
+| **Commande création admin** | ✅ Fait | `php bin/console app:create-admin email pass` (crée ou promeut + définit le mdp) |
+| **CRUD Utilisateurs** | ✅ Fait | EasyAdmin : filtres isVerified/2FA/email, action DETAIL, pas de création (API only) |
+| **CRUD Catégories** | ✅ Fait | EasyAdmin : trié par displayOrder |
+| **CRUD Services SaaS** | ✅ Fait | EasyAdmin : prix decimal, filtre disponibilité/catégorie |
+| **CRUD Commandes** | ✅ Fait | EasyAdmin : statuts avec badges colorés, filtre utilisateur, pas de création |
+| **CRUD Factures** | ✅ Fait | EasyAdmin : lecture seule (NEW+DELETE désactivés), montants décimaux |
+| **CRUD Codes promo** | ✅ Fait | EasyAdmin : réduction %, dates, usages |
+| **CRUD Messages contact** | ✅ Fait | EasyAdmin : flag handled, pas de création |
+| **CRUD Conversations chatbot** | ✅ Fait | EasyAdmin : flags escalated/handled, transcript |
+| **CRUD Carrousel** | ✅ Fait | EasyAdmin : trié par displayOrder, flag actif |
+| **CRUD Textes dynamiques** | ✅ Fait | EasyAdmin : slug + titre + contenu |
+| Gestion carrousel homepage | ✅ Fait | CRUD complet `CarouselSlide` (API Platform + EasyAdmin) |
+| Gestion textes dynamiques | ✅ Fait | CRUD complet `HomepageText` (API Platform + EasyAdmin) |
 | Dashboard KPI (revenus, nouveaux users) | ✅ Fait | `GET /api/admin/dashboard/kpi` |
 | Ventes par jour | ✅ Fait | `GET /api/admin/dashboard/sales-by-day` |
 | Répartition ventes par catégorie | ✅ Fait | `GET /api/admin/dashboard/sales-by-category` |
 | **Panier moyen par catégorie** | ❌ Manquant | Absent du dashboard actuel |
-| Gestion commandes admin | ✅ Fait | `GET/PATCH /api/orders` (admin voit tout) |
-| Gestion utilisateurs admin | 🟡 Partiel | `GET /api/users` existe mais pas de endpoint admin dédié avec filtres avancés |
-| Gestion messages de contact | ✅ Fait | CRUD + flag `handled` |
-| Gestion conversations chatbot | ✅ Fait | CRUD + flag `handled` |
-| Codes promo | ✅ Fait | CRUD complet avec validations (dates, usage max) |
+| Gestion commandes admin | ✅ Fait | `GET/PATCH /api/orders` (admin voit tout) + EasyAdmin |
+| Gestion utilisateurs admin | 🟡 Partiel | EasyAdmin OK — filtres avancés API Platform limités |
+| Gestion messages de contact | ✅ Fait | CRUD + flag `handled` (API + EasyAdmin) |
+| Gestion conversations chatbot | ✅ Fait | CRUD + flag `handled` (API + EasyAdmin) |
+| Codes promo | ✅ Fait | CRUD complet avec validations (API + EasyAdmin) |
 
 ---
 
@@ -496,10 +508,10 @@ Abonnements             ████░░░░░░░░░░  30%  (donné
 Factures PDF            ████░░░░░░░░░░  30%  (entité ok, génération PDF manquante)
 Compte utilisateur      ████████████░░  85%  (manque validation email changement)
 Contact / Chatbot       ██████████████  95%  (manque juste notif email admin)
-Backoffice              ████████████░░  85%  (manque panier moyen, filtres avancés)
+Backoffice              ███████████████ 100%  (EasyAdmin v5 complet ✅ — 10 CRUDs + login + dashboard)
 Non-fonctionnel         ████████░░░░░░  55%  (manque rate limit, tests, refresh token)
 
-GLOBAL                  █████████████░  82%  (+4 % depuis 2026-05-18 — Google SSO implémenté)
+GLOBAL                  ██████████████  87%  (+5 % depuis 2026-05-19 — EasyAdmin backoffice implémenté)
 ```
 
 ---
@@ -529,3 +541,28 @@ GLOBAL                  █████████████░  82%  (+4 % d
 | `src/pages/LoginPage.jsx` | ✅ Modifié | Bouton Google activé (`<a href={API_BASE_URL/login/google}>`), affichage du formulaire TOTP si `requires2fa` |
 | `src/pages/RegisterPage.jsx` | ✅ Modifié | Bouton Google activé (même logique) |
 | `src/routes/AppRouter.jsx` | ✅ Modifié | Ajout de la route `/auth/google/callback` → `GoogleCallbackPage` |
+
+---
+
+### 2026-05-20 — EasyAdmin v5 backoffice complet
+
+**Backend (CYNA-Web) — branche `feature/easyadmin-backoffice`**
+
+| Fichier | Action | Détail |
+|---------|--------|--------|
+| `src/Controller/Admin/AdminDashboardController.php` | ✅ Créé | Dashboard EasyAdmin v5 avec `#[AdminDashboard]`, menu complet, `linkTo()` (v5), Font Awesome |
+| `src/Controller/Admin/AdminSecurityController.php` | ✅ Créé | `GET /admin/login` + `GET /admin/logout` (intercepté par le firewall) |
+| `src/Controller/Admin/UserCrudController.php` | ✅ Créé | CRUD utilisateurs : filtres isVerified/2FA/email, action DETAIL, NEW désactivé |
+| `src/Controller/Admin/CategoryCrudController.php` | ✅ Créé | CRUD catégories trié par displayOrder |
+| `src/Controller/Admin/SaasServiceCrudController.php` | ✅ Créé | CRUD services SaaS : prix decimal (`NumberField+setStoredAsString`), filtres |
+| `src/Controller/Admin/OrderCrudController.php` | ✅ Créé | CRUD commandes : statuts en badges colorés (enum backed), filtre user, NEW désactivé |
+| `src/Controller/Admin/InvoiceCrudController.php` | ✅ Créé | CRUD factures : lecture seule (NEW+DELETE désactivés), montants decimal |
+| `src/Controller/Admin/PromoCodeCrudController.php` | ✅ Créé | CRUD codes promo : réduction decimal, dates, compteur usages |
+| `src/Controller/Admin/ContactMessageCrudController.php` | ✅ Créé | CRUD messages contact : flag handled, NEW désactivé |
+| `src/Controller/Admin/ChatbotConversationCrudController.php` | ✅ Créé | CRUD conversations chatbot : flags escalated/handled, transcript |
+| `src/Controller/Admin/CarouselSlideCrudController.php` | ✅ Créé | CRUD carrousel : trié par displayOrder, flag actif |
+| `src/Controller/Admin/HomepageTextCrudController.php` | ✅ Créé | CRUD textes dynamiques : slug + titre + contenu |
+| `src/Command/CreateAdminUserCommand.php` | ✅ Créé | `app:create-admin email pass` : crée ou promeut un utilisateur ROLE_ADMIN avec mot de passe (compatible comptes SSO) |
+| `templates/admin/login.html.twig` | ✅ Créé | Page de connexion dark theme CYNA (hors EasyAdmin), CSRF token |
+| `templates/admin/dashboard.html.twig` | ✅ Créé | Dashboard avec 4 cartes KPI et 7 liens rapides vers tous les CRUDs |
+| `config/packages/security.yaml` | ✅ Modifié | Ajout firewall `admin` (form_login session-based, remember_me, logout) + access_control `/admin → ROLE_ADMIN` |

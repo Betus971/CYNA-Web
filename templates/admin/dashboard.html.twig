@@ -83,4 +83,35 @@
         <div class="kpi-arrow">→</div>
         <div class="kpi-sub">Catalogue & tarifs</div>
     </a>
-    <a href="{{ ea_url().setController('App\\Controller\\Admin\\ContactMessageCrudController
+    <a href="{{ ea_url().setController('App\\Controller\\Admin\\ContactMessageCrudController') }}" class="kpi-card">
+        <div class="kpi-label"><i class="fa fa-envelope"></i> Messages contact</div>
+        <div class="kpi-arrow">→</div>
+        <div class="kpi-sub">Support client</div>
+    </a>
+</div>
+
+<div class="section-title">Accès rapides</div>
+<div class="quick-links">
+    <a href="{{ ea_url().setController('App\\Controller\\Admin\\CategoryCrudController') }}" class="quick-link">
+        <i class="fa fa-folder"></i> Catégories
+    </a>
+    <a href="{{ ea_url().setController('App\\Controller\\Admin\\InvoiceCrudController') }}" class="quick-link">
+        <i class="fa fa-file-invoice"></i> Factures
+    </a>
+    <a href="{{ ea_url().setController('App\\Controller\\Admin\\PromoCodeCrudController') }}" class="quick-link">
+        <i class="fa fa-tag"></i> Codes promo
+    </a>
+    <a href="{{ ea_url().setController('App\\Controller\\Admin\\ChatbotConversationCrudController') }}" class="quick-link">
+        <i class="fa fa-robot"></i> Chatbot
+    </a>
+    <a href="{{ ea_url().setController('App\\Controller\\Admin\\CarouselSlideCrudController') }}" class="quick-link">
+        <i class="fa fa-images"></i> Carrousel
+    </a>
+    <a href="{{ ea_url().setController('App\\Controller\\Admin\\HomepageTextCrudController') }}" class="quick-link">
+        <i class="fa fa-align-left"></i> Textes dynamiques
+    </a>
+    <a href="/api/admin/dashboard/kpi" target="_blank" class="quick-link">
+        <i class="fa fa-chart-line"></i> API KPI
+    </a>
+</div>
+{% endblock %}

@@ -380,6 +380,8 @@ Paramètres supportés : `q`, `category`, `minPrice`, `maxPrice`, `availableOnly
 
 ### Tables manquantes (à créer)
 
+> **Note :** La table `user` a été étendue pour le Google SSO — les utilisateurs créés via OAuth ont un mot de passe vide (`''`), identifiables car pas de `emailVerificationToken`.
+
 | Table | Pourquoi nécessaire |
 |-------|---------------------|
 | `stripe_event` (ou `webhook_event`) | Stocker les webhooks Stripe reçus pour éviter les doublons (idempotence) |
@@ -499,3 +501,31 @@ Non-fonctionnel         ████████░░░░░░  55%  (manque
 
 GLOBAL                  █████████████░  82%  (+4 % depuis 2026-05-18 — Google SSO implémenté)
 ```
+
+---
+
+## Changelog des implémentations
+
+### 2026-05-19 — Google SSO + 2FA frontend
+
+**Backend (CYNA-Web)**
+
+| Fichier | Action | Détail |
+|---------|--------|--------|
+| `src/Security/GoogleAuthenticator.php` | ✅ Créé | Authenticator OAuth2 : récupère l'utilisateur Google, crée le compte si inexistant, émet un JWT et redirige vers le frontend |
+| `src/Controller/GoogleController.php` | ✅ Créé | `GET /login/google` → redirection OAuth2 ; `GET /login/google/check` → intercepté par l'authenticator |
+| `config/packages/security.yaml` | ✅ Modifié | Ajout firewall `web` (pattern `^/login/google`, stateful, authenticator Google) + règle `PUBLIC_ACCESS` dans `access_control` |
+| `config/services.yaml` | ✅ Modifié | Binding explicite `$frontendCallbackUrl` pour `GoogleAuthenticator` depuis `FRONTEND_URL` |
+| `config/packages/knpu_oauth2_client.yaml` | ✅ Créé | Configuration du client Google OAuth2 (client_id, client_secret, redirect_route) |
+| `composer.json` / `composer.lock` | ✅ Modifié | Ajout `knpuniversity/oauth2-client-bundle ^2.20` et `league/oauth2-google ^5.0` |
+| `.env` | ✅ Modifié | Ajout `GOOGLE_CLIENT_ID` et `GOOGLE_CLIENT_SECRET` (projet OAuth2 dédié `cyna-web` sur Google Cloud Console) |
+
+**Frontend (CYNA-frontend-react)**
+
+| Fichier | Action | Détail |
+|---------|--------|--------|
+| `src/pages/GoogleCallbackPage.jsx` | ✅ Créé | Lit `?token=` ou `?error=` dans l'URL, stocke le JWT via `loginWithToken`, redirige vers `/espace-client` |
+| `src/context/AuthContext.jsx` | ✅ Modifié | Ajout de `loginWithToken(token)` (stocke le JWT reçu du SSO et hydrate le profil) + `verify2fa` pour le flux 2FA |
+| `src/pages/LoginPage.jsx` | ✅ Modifié | Bouton Google activé (`<a href={API_BASE_URL/login/google}>`), affichage du formulaire TOTP si `requires2fa` |
+| `src/pages/RegisterPage.jsx` | ✅ Modifié | Bouton Google activé (même logique) |
+| `src/routes/AppRouter.jsx` | ✅ Modifié | Ajout de la route `/auth/google/callback` → `GoogleCallbackPage` |

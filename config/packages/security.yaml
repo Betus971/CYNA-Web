@@ -26,6 +26,24 @@ security:
             custom_authenticators:
                 - App\Security\GoogleAuthenticator
 
+        # Backoffice EasyAdmin (session-based, ROLE_ADMIN requis)
+        admin:
+            pattern: ^/admin
+            provider: app_user_provider
+            form_login:
+                login_path: admin_login
+                check_path: admin_login
+                default_target_path: /admin
+                username_parameter: email
+                password_parameter: password
+                enable_csrf: true
+            logout:
+                path: admin_logout
+                target: admin_login
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
+
         login:
             pattern: ^/api/login
             stateless: true
@@ -47,6 +65,10 @@ security:
     access_control:
         # SSO Google
         - { path: ^/login/google,               roles: PUBLIC_ACCESS }
+
+        # Backoffice EasyAdmin
+        - { path: ^/admin/login,                roles: PUBLIC_ACCESS }
+        - { path: ^/admin,                      roles: ROLE_ADMIN }
 
         # Auth & onboarding
         - { path: ^/api/login,                  roles: PUBLIC_ACCESS }

@@ -1,16 +1,16 @@
 # AUDIT BACKEND — CYNA-Web
 
-> **Date de l'audit :** 2026-05-18 — **Mis à jour :** 2026-05-20  
+> **Date de l'audit :** 2026-05-18 — **Mis à jour :** 2026-05-20 (soir)  
 > **Auditeur :** Claude (analyse automatisée)  
-> **Branche analysée :** `feature/easyadmin-backoffice`
+> **Branche analysée :** `main` (synchro avec `origin/main`)
 
 ---
 
 ## Résumé
 
-### Avancement backend estimé : **87 %** *(était 82 % au 2026-05-19)*
+### Avancement backend estimé : **92 %** *(était 87 % en milieu de journée, 82 % au 2026-05-19)*
 
-Le socle est solide et bien structuré. **Le backoffice EasyAdmin v5 est désormais entièrement opérationnel** : 10 CRUD controllers, route `/admin` sécurisée par session, page de connexion dédiée, commande de création admin. Les parties encore manquantes concernent principalement l'intégration réelle de la passerelle de paiement, la génération de PDF pour les factures, les emails transactionnels, et le 2FA admin (backend).
+Le socle est solide et bien structuré. **L'intégration Stripe est désormais opérationnelle** (PaymentIntent + webhook signé), **le 2FA email + les notifications de login sont en place**, et 5 templates email transactionnels sont câblés au Mailer (Brevo). Le backoffice EasyAdmin v5 reste 100 % opérationnel. Les parties encore manquantes concernent la **génération PDF des factures**, la **création automatique d'Invoice après paiement**, l'**email de confirmation de commande**, le rate limiting, le refresh token JWT, et l'**absence totale de tests**.
 
 ### Stack technique détectée
 
@@ -74,13 +74,18 @@ Le socle est solide et bien structuré. **Le backoffice EasyAdmin v5 est désorm
 | Voter personnalisé pour User | ✅ Fait | `UserVoter` (USER_VIEW, USER_EDIT, USER_DELETE) |
 | **Redirection vers login si non authentifié** | ❌ Manquant | API retourne un 401 JSON mais pas de redirection HTTP — normal pour une API REST, mais à gérer côté frontend |
 
-#### Authentification admin avec 2FA
+#### Authentification 2FA (TOTP + email)
 | Élément | Statut | Détail |
 |---------|--------|--------|
-| Champs TOTP en base (`totpSecret`, `totpEnabled`) | ✅ Fait | Champs présents dans l'entité User |
-| Flux 2FA côté frontend | ✅ Fait | `LoginPage` détecte `requires2fa`, affiche le formulaire de code, appelle `verify2fa` dans `AuthContext` |
-| **Génération du QR code TOTP** | ❌ Manquant | Aucun service ni endpoint pour activer le 2FA depuis le compte |
-| **Vérification du code TOTP à la connexion (backend)** | ❌ Manquant | Le login JWT doit retourner `requires2fa: true` et exposer un endpoint `POST /api/login/2fa` |
+| Champs TOTP en base (`totpSecret`, `totpEnabled`) | ✅ Fait | Entité User |
+| Champs 2FA email (`emailTwoFactorEnabled`, `emailTwoFactorCodeHash`, `emailTwoFactorCodeExpiresAt`) | ✅ Fait | Migration `Version20260519120000` |
+| Champ `loginNotificationEnabled` | ✅ Fait | Toggle notification email à chaque connexion |
+| Flux 2FA frontend (TOTP + email) | ✅ Fait | `LoginPage` détecte `requires2fa.method`, `SecuritySettings` gère setup/enable/disable |
+| **Génération du QR code TOTP** | ✅ Fait | `POST /api/security/2fa/setup` retourne le secret + QR (lu côté front via `qrcode.react`) |
+| **Vérification du code à la connexion** | ✅ Fait | `AuthenticationSuccessListener` intercepte le login, renvoie `requires2fa` au lieu du JWT ; `POST /api/login/2fa-verify` finalise (re-vérifie password puis code) |
+| **Génération + envoi code 2FA email** | ✅ Fait | `SecurityEmailService::generateAndSendTwoFactorCode` — code 6 chiffres, hash bcrypt, expiration 10 min |
+| **Notification email à chaque connexion** | ✅ Fait | `SecurityEmailService::sendLoginNotification` (IP, navigateur, OS) si activé |
+| Endpoints `/api/security/2fa/{setup,enable,disable,test,toggle-login}` | ✅ Fait | `TwoFactorController` |
 
 #### Hashage et sécurité des mots de passe
 | Élément | Statut | Détail |
@@ -198,17 +203,23 @@ Paramètres supportés : `q`, `category`, `minPrice`, `maxPrice`, `availableOnly
 
 ---
 
-### 5. Paiement
+### 5. Paiement (Stripe)
 
 | Élément | Statut | Détail |
 |---------|--------|--------|
 | Entité `PaymentMethod` (token PSP, brand, last4, expiry, isDefault) | ✅ Fait | Jamais de données carte en clair |
 | CRUD méthodes de paiement | ✅ Fait | Endpoints protégés par rôle |
-| **Intégration Stripe/PayPal réelle** | ❌ Manquant | Aucun appel SDK Stripe, aucun webhook de paiement |
-| **Webhook Stripe** (`POST /api/webhooks/stripe`) | ❌ Manquant | Nécessaire pour confirmer le paiement et mettre à jour le statut de la commande |
-| **Intent de paiement** (`POST /api/orders/{id}/pay`) | ❌ Manquant | Aucun endpoint pour initialiser le paiement côté Stripe |
-| Chiffrement des données sensibles | ✅ Fait | `providerToken` est un opaque ID PSP, pas de données carte |
-| Statuts commande (`pending`, `paid`, `failed`, etc.) | ✅ Fait | ENUM complet sur l'entité Order |
+| **SDK Stripe** | ✅ Fait | `stripe/stripe-php ^20.1` |
+| **Intent de paiement** (`POST /api/checkout/payment-intent`) | ✅ Fait | `CheckoutController` + `CheckoutService` — crée Order PENDING, génère PaymentIntent avec metadata (`order_id`, `user_id`, `order_reference`), retourne `clientSecret` au front |
+| **Webhook Stripe** (`POST /api/stripe/webhook`) | ✅ Fait | `StripeWebhookController` — vérifie signature `STRIPE_WEBHOOK_SECRET`, gère `payment_intent.succeeded` (Order → PAID + active abonnements OrderItem) et `payment_intent.payment_failed` (Order → FAILED + raison) |
+| Conversion EUR → cents | ✅ Fait | Service centralisé, devise configurable via `app.stripe_currency` |
+| Référence commande unique | ✅ Fait | Format `CYNA-YYYYMMDDHHmmss-XXXXXX` |
+| Chiffrement des données sensibles | ✅ Fait | `providerToken` opaque, jamais de données carte |
+| Statuts commande (`PENDING`, `PAID`, `FAILED`) | ✅ Fait | Enum `OrderStatus` |
+| Statuts abonnement (`ACTIVE`, `CANCELLED`, `EXPIRED`, `PENDING_RENEWAL`) | ✅ Fait | Enum `SubscriptionStatus` |
+| **Variables d'env Stripe** | ⚠️ À renseigner | `STRIPE_SECRET_KEY` et `STRIPE_WEBHOOK_SECRET` à mettre dans `.env.local` |
+| **Création auto `Invoice` après PAID** | ❌ Manquant | Le webhook met à jour Order mais ne crée pas l'Invoice associée |
+| **Email confirmation de commande** | ❌ Manquant | `EmailVerifier` n'a pas encore de méthode `sendOrderConfirmation()` |
 
 ---
 
@@ -499,19 +510,20 @@ Utiliser VichUploaderBundle ou une solution simple avec `$request->files`. Crée
 ### Résumé visuel de l'avancement
 
 ```
-Authentification        █████████████░  92%  (Google SSO ✅ + 2FA frontend ✅ — manque backend 2FA + "se souvenir de moi")
+Authentification        ███████████████ 100%  (Google SSO ✅ + 2FA TOTP ✅ + 2FA email ✅ + notifs login ✅)
 Produits / Catalogue    ████████████░░  90%  (manque upload images, recherche specs)
 Panier                  ████████████░░  85%  (manque fusion anonyme → compte)
-Commandes               █████████░░░░░  65%  (manque paiement, email confirm, workflow étapes)
-Paiement                ████░░░░░░░░░░  25%  (structure ok, intégration Stripe manquante)
-Abonnements             ████░░░░░░░░░░  30%  (données ok, logique métier manquante)
-Factures PDF            ████░░░░░░░░░░  30%  (entité ok, génération PDF manquante)
+Commandes               ██████████████░ 95%  (Stripe webhook met à jour Order)
+Paiement                ██████████████░ 90%  (Stripe complet — manque .env keys)
+Abonnements             █████████░░░░░  60%  (webhook active OrderItems — manque endpoints user)
+Factures PDF            ████░░░░░░░░░░  25%  (entité ok, génération PDF + création auto manquantes)
 Compte utilisateur      ████████████░░  85%  (manque validation email changement)
 Contact / Chatbot       ██████████████  95%  (manque juste notif email admin)
-Backoffice              ███████████████ 100%  (EasyAdmin v5 complet ✅ — 10 CRUDs + login + dashboard)
-Non-fonctionnel         ████████░░░░░░  55%  (manque rate limit, tests, refresh token)
+Emails transactionnels  █████████████░  80%  (5 templates — manque order confirmation + notif admin)
+Backoffice              ███████████████ 100%  (EasyAdmin v5 complet ✅)
+Non-fonctionnel         ██████████░░░░  70%  (manque rate limit, tests, refresh token)
 
-GLOBAL                  ██████████████  87%  (+5 % depuis 2026-05-19 — EasyAdmin backoffice implémenté)
+GLOBAL                  ██████████████  92%  (+5 % depuis 2026-05-20 matin — Stripe + 2FA email + mails)
 ```
 
 ---
@@ -541,6 +553,33 @@ GLOBAL                  ██████████████  87%  (+5 % d
 | `src/pages/LoginPage.jsx` | ✅ Modifié | Bouton Google activé (`<a href={API_BASE_URL/login/google}>`), affichage du formulaire TOTP si `requires2fa` |
 | `src/pages/RegisterPage.jsx` | ✅ Modifié | Bouton Google activé (même logique) |
 | `src/routes/AppRouter.jsx` | ✅ Modifié | Ajout de la route `/auth/google/callback` → `GoogleCallbackPage` |
+
+---
+
+### 2026-05-20 (soir) — Stripe + 2FA email + emails transactionnels
+
+**Backend (CYNA-Web) — branche `main`**
+
+| Fichier | Action | Détail |
+|---------|--------|--------|
+| `composer.json` | ✅ Modifié | Ajout `stripe/stripe-php ^20.1`, `symfony/brevo-mailer` |
+| `src/Controller/CheckoutController.php` | ✅ Créé | `POST /api/checkout/payment-intent` (auth ROLE_USER) |
+| `src/Service/Checkout/CheckoutService.php` | ✅ Créé | Crée Order PENDING + PaymentIntent Stripe avec conversion EUR/cents, génère ref `CYNA-YYYYMMDDHHmmss-XXXXXX`, retourne `clientSecret` |
+| `src/Service/Checkout/CheckoutPaymentIntentResult.php` | ✅ Créé | DTO (order, clientSecret, amount, currency) |
+| `src/Controller/StripeWebhookController.php` | ✅ Créé | `POST /api/stripe/webhook` — vérifie signature, gère `payment_intent.succeeded` (Order PAID + active OrderItems) et `payment_intent.payment_failed` (Order FAILED) |
+| `src/Entity/Order.php` | ✅ Modifié | Champs `stripePaymentIntentId`, `stripePaymentStatus`, `paymentFailureReason` |
+| `migrations/Version20260519103000.php` | ✅ Créé | Ajout colonnes Stripe + index unique |
+| `migrations/Version20260519104500.php` | ✅ Créé | Normalisation nom d'index Stripe |
+| `src/Service/SecurityEmailService.php` | ✅ Créé | 2FA email : génération code 6 chiffres (hash bcrypt, TTL 10 min), vérification, notification login (IP/navigateur/OS) |
+| `src/Service/EmailVerifier.php` | ✅ Étendu | + `sendEmailTwoFactorCode()` + `sendLoginNotification()` |
+| `src/EventListener/AuthenticationSuccessListener.php` | ✅ Créé | Intercepte JWT login : si 2FA actif → retourne `{requires2fa:true, method:'email'|'totp'}` au lieu du token ; sinon envoie notif login + JWT |
+| `src/Controller/Security/TwoFactorLoginController.php` | ✅ Créé | `POST /api/login/2fa-verify` — re-vérifie password puis code 2FA (email ou TOTP), émet JWT final |
+| `src/Controller/Security/TwoFactorController.php` | ✅ Créé | `POST /api/security/2fa/{setup,enable,disable,test,toggle-login}` |
+| `src/Entity/User.php` | ✅ Modifié | Champs `emailTwoFactorEnabled`, `emailTwoFactorCodeHash`, `emailTwoFactorCodeExpiresAt`, `loginNotificationEnabled` |
+| `migrations/Version20260519120000.php` | ✅ Créé | Ajout colonnes 2FA email + notifs login |
+| `templates/emails/security_two_factor_code.html.twig` | ✅ Créé | Template code 2FA |
+| `templates/emails/security_login_notification.html.twig` | ✅ Créé | Template alerte connexion |
+| `config/services.yaml` | ✅ Modifié | `app.stripe_currency: 'eur'`, autowire `STRIPE_SECRET_KEY` |
 
 ---
 

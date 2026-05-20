@@ -1,0 +1,86 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block page_title %}Tableau de bord{% endblock %}
+
+{% block main %}
+<style>
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+.kpi-card {
+    background: var(--color-sidebar-dark, #1e293b);
+    border: 1px solid var(--color-border, #334155);
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-decoration: none;
+    display: block;
+    transition: border-color .15s;
+}
+.kpi-card:hover { border-color: #6366f1; }
+.kpi-label {
+    color: var(--color-text-secondary, #94a3b8);
+    font-size: .75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-bottom: .5rem;
+}
+.kpi-arrow {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text-heading, #f8fafc);
+}
+.kpi-sub {
+    font-size: .8rem;
+    color: var(--color-text-secondary, #94a3b8);
+    margin-top: .35rem;
+}
+.section-title {
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--color-text-secondary, #94a3b8);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin: 2rem 0 .875rem;
+}
+.quick-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .625rem;
+}
+.quick-link {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    background: var(--color-sidebar-dark, #1e293b);
+    border: 1px solid var(--color-border, #334155);
+    border-radius: 8px;
+    padding: .5rem .875rem;
+    color: var(--color-text, #e2e8f0);
+    text-decoration: none;
+    font-size: .8125rem;
+    transition: border-color .15s, color .15s;
+}
+.quick-link:hover { border-color: #6366f1; color: #818cf8; }
+</style>
+
+<div class="kpi-grid">
+    <a href="{{ ea_url().setController('App\\Controller\\Admin\\OrderCrudController') }}" class="kpi-card">
+        <div class="kpi-label"><i class="fa fa-shopping-cart"></i> Commandes</div>
+        <div class="kpi-arrow">→</div>
+        <div class="kpi-sub">Historique & statuts</div>
+    </a>
+    <a href="{{ ea_url().setController('App\\Controller\\Admin\\UserCrudController') }}" class="kpi-card">
+        <div class="kpi-label"><i class="fa fa-users"></i> Utilisateurs</div>
+        <div class="kpi-arrow">→</div>
+        <div class="kpi-sub">Comptes & rôles</div>
+    </a>
+    <a href="{{ ea_url().setController('App\\Controller\\Admin\\SaasServiceCrudController') }}" class="kpi-card">
+        <div class="kpi-label"><i class="fa fa-box"></i> Services SaaS</div>
+        <div class="kpi-arrow">→</div>
+        <div class="kpi-sub">Catalogue & tarifs</div>
+    </a>
+    <a href="{{ ea_url().setController('App\\Controller\\Admin\\ContactMessageCrudController

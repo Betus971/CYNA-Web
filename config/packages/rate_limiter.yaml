@@ -1,0 +1,25 @@
+framework:
+    rate_limiter:
+        # Login : 10 tentatives / 5 min par IP
+        login:
+            policy: sliding_window
+            limit: 10
+            interval: '5 minutes'
+
+        # Mot de passe oublié : 5 / 15 min
+        password_forgot:
+            policy: sliding_window
+            limit: 5
+            interval: '15 minutes'
+
+        # Contact : 5 messages / 10 min
+        contact:
+            policy: sliding_window
+            limit: 5
+            interval: '10 minutes'
+
+        # Chatbot : 30 messages / min (usage intensif possible)
+        chatbot:
+            policy: sliding_window
+            limit: 30
+            interval: '1 minute'

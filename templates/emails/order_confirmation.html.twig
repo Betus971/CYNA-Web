@@ -1,0 +1,98 @@
+{% set firstname = user.firstname|default('') %}
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>Confirmation de commande</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f7fb;font-family:Arial,Helvetica,sans-serif;color:#172033;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f4f7fb;padding:32px 16px;">
+        <tr>
+            <td align="center">
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:600px;background:#ffffff;border-radius:8px;overflow:hidden;border:1px solid #e4eaf2;">
+                    <!-- Header -->
+                    <tr>
+                        <td style="background:#0f172a;color:#ffffff;padding:24px 28px;">
+                            <div style="font-size:22px;font-weight:700;">CYNA</div>
+                            <div style="font-size:14px;margin-top:6px;color:#cbd5e1;">Cybersecurite SaaS pour entreprises</div>
+                        </td>
+                    </tr>
+                    <!-- Body -->
+                    <tr>
+                        <td style="padding:32px 28px;">
+                            <h1 style="margin:0 0 16px;font-size:24px;color:#0f172a;">Votre commande est confirmee !</h1>
+                            <p style="margin:0 0 16px;font-size:16px;line-height:1.6;">
+                                Bonjour {{ firstname ? firstname : 'client' }},
+                            </p>
+                            <p style="margin:0 0 24px;font-size:16px;line-height:1.6;">
+                                Merci pour votre commande. Votre paiement a ete accepte et vos services sont maintenant actifs.
+                            </p>
+
+                            <!-- Recap commande -->
+                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0"
+                                   style="background:#f8fafc;border:1px solid #e4eaf2;border-radius:6px;margin-bottom:24px;">
+                                <tr>
+                                    <td style="padding:16px 20px;border-bottom:1px solid #e4eaf2;">
+                                        <div style="font-size:13px;color:#64748b;text-transform:uppercase;letter-spacing:.05em;">Référence commande</div>
+                                        <div style="font-size:16px;font-weight:700;color:#0f172a;margin-top:4px;">{{ order.reference }}</div>
+                                    </td>
+                                    <td style="padding:16px 20px;border-bottom:1px solid #e4eaf2;">
+                                        <div style="font-size:13px;color:#64748b;text-transform:uppercase;letter-spacing:.05em;">Facture</div>
+                                        <div style="font-size:16px;font-weight:700;color:#0f172a;margin-top:4px;">{{ invoice.number }}</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="padding:16px 20px;">
+                                        <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                                            <tr style="border-bottom:1px solid #e4eaf2;">
+                                                <th align="left" style="padding:0 0 8px;font-size:13px;color:#64748b;font-weight:600;">Service</th>
+                                                <th align="right" style="padding:0 0 8px;font-size:13px;color:#64748b;font-weight:600;">Qté</th>
+                                                <th align="right" style="padding:0 0 8px;font-size:13px;color:#64748b;font-weight:600;">Prix</th>
+                                            </tr>
+                                            {% for item in order.items %}
+                                            <tr>
+                                                <td style="padding:8px 0;font-size:14px;color:#334155;">
+                                                    {{ item.productNameSnapshot }}
+                                                    {% if item.durationMonths %}
+                                                        <span style="color:#64748b;font-size:12px;"> / {{ item.durationMonths }} mois</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td align="right" style="padding:8px 0;font-size:14px;color:#334155;">{{ item.quantity }}</td>
+                                                <td align="right" style="padding:8px 0;font-size:14px;font-weight:600;color:#0f172a;">{{ item.unitPriceSnapshot }} €</td>
+                                            </tr>
+                                            {% endfor %}
+                                            <tr style="border-top:2px solid #0f172a;">
+                                                <td colspan="2" style="padding:12px 0 0;font-size:15px;font-weight:700;color:#0f172a;">Total HT</td>
+                                                <td align="right" style="padding:12px 0 0;font-size:15px;font-weight:700;color:#0f172a;">{{ invoice.totalAmount }} €</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="padding:4px 0;font-size:13px;color:#64748b;">TVA (20 %)</td>
+                                                <td align="right" style="padding:4px 0;font-size:13px;color:#64748b;">{{ invoice.taxAmount }} €</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <p style="margin:0 0 24px;font-size:15px;line-height:1.6;color:#475569;">
+                                Vos services sont desormais actifs dans votre espace client. Vous pouvez telecharger votre facture depuis la rubrique <strong>Mes commandes</strong>.
+                            </p>
+                            <p>
+                                <a href="{{ frontend_url }}/account/orders" style="display:inline-block;background:#2563eb;color:#ffffff;text-decoration:none;padding:13px 20px;border-radius:6px;font-weight:700;font-size:15px;">
+                                    Voir mes commandes
+                                </a>
+                            </p>
+                        </td>
+                    </tr>
+                    <!-- Footer -->
+                    <tr>
+                        <td style="padding:20px 28px;background:#f8fafc;border-top:1px solid #e4eaf2;font-size:13px;line-height:1.5;color:#64748b;">
+                            Ce message est automatique. Pour toute question, contactez notre support depuis votre espace client.
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

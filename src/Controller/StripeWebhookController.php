@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Enum\OrderStatus;
 use App\Enum\SubscriptionStatus;
 use App\Repository\OrderRepository;
+use App\Service\EmailVerifier;
+use App\Service\InvoiceService;
 use Doctrine\ORM\EntityManagerInterface;
 use Stripe\Event;
 use Stripe\Exception\SignatureVerificationException;
@@ -22,6 +24,8 @@ final class StripeWebhookController extends AbstractController
     public function __construct(
         private readonly OrderRepository $orders,
         private readonly EntityManagerInterface $em,
+        private readonly InvoiceService $invoiceService,
+        private readonly EmailVerifier $emailVerifier,
         #[Autowire('%env(string:STRIPE_WEBHOOK_SECRET)%')]
         private readonly string $webhookSecret,
     ) {
@@ -77,7 +81,16 @@ final class StripeWebhookController extends AbstractController
                 ->setSubscriptionStatus(SubscriptionStatus::ACTIVE);
         }
 
+        // Création automatique de la facture
+        $invoice = $this->invoiceService->createForOrder($order);
+
         $this->em->flush();
+
+        // Email de confirmation après flush (invoice.id disponible)
+        $user = $order->getUser();
+        if ($user !== null) {
+            $this->emailVerifier->sendOrderConfirmation($user, $order, $invoice);
+        }
     }
 
     private function markFailed(Event $event): void

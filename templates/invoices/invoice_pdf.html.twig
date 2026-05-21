@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>Facture {{ invoice.number }}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #1e293b; background: #fff; }
+        .page { padding: 40px; max-width: 800px; margin: 0 auto; }
+
+        /* Header */
+        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; border-bottom: 3px solid #0f172a; padding-bottom: 20px; }
+        .logo { font-size: 28px; font-weight: 700; color: #0f172a; letter-spacing: -0.5px; }
+        .logo-sub { font-size: 12px; color: #64748b; margin-top: 4px; }
+        .invoice-meta { text-align: right; }
+        .invoice-title { font-size: 22px; font-weight: 700; color: #0f172a; }
+        .invoice-number { font-size: 16px; color: #2563eb; font-weight: 600; margin-top: 4px; }
+        .invoice-date { font-size: 12px; color: #64748b; margin-top: 4px; }
+
+        /* Parties */
+        .parties { display: flex; justify-content: space-between; margin-bottom: 36px; gap: 40px; }
+        .party { flex: 1; }
+        .party-label { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #64748b; font-weight: 600; margin-bottom: 8px; }
+        .party-name { font-weight: 700; font-size: 14px; color: #0f172a; margin-bottom: 4px; }
+        .party-info { font-size: 12px; color: #475569; line-height: 1.6; }
+
+        /* Tableau lignes */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+        thead th { background: #0f172a; color: #fff; padding: 10px 12px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; text-align: left; }
+        thead th:last-child { text-align: right; }
+        tbody tr:nth-child(even) { background: #f8fafc; }
+        tbody td { padding: 10px 12px; font-size: 13px; color: #334155; border-bottom: 1px solid #e2e8f0; }
+        tbody td:last-child { text-align: right; font-weight: 600; }
+
+        /* Totaux */
+        .totals { margin-left: auto; width: 260px; }
+        .total-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; color: #475569; }
+        .total-row.main { font-size: 16px; font-weight: 700; color: #0f172a; border-top: 2px solid #0f172a; padding-top: 10px; margin-top: 4px; }
+
+        /* Ref commande */
+        .order-ref { background: #f1f5f9; border-radius: 6px; padding: 14px 16px; margin-bottom: 36px; font-size: 12px; color: #64748b; }
+        .order-ref strong { color: #0f172a; }
+
+        /* Footer */
+        .footer { margin-top: 60px; border-top: 1px solid #e2e8f0; padding-top: 16px; font-size: 11px; color: #94a3b8; text-align: center; }
+    </style>
+</head>
+<body>
+<div class="page">
+    <!-- En-tête -->
+    <div class="header">
+        <div>
+            <div class="logo">CYNA</div>
+            <div class="logo-sub">Cybersécurité SaaS pour entreprises</div>
+        </div>
+        <div class="invoice-meta">
+            <div class="invoice-title">FACTURE</div>
+            <div class="invoice-number">{{ invoice.number }}</div>
+            <div class="invoice-date">Émise le {{ invoice.issuedAt|date('d/m/Y') }}</div>
+        </div>
+    </div>
+
+    <!-- Émetteur / Client -->
+    <div class="parties">
+        <div class="party">
+            <div class="party-label">Émetteur</div>
+            <div class="party-name">CYNA SAS</div>
+            <div class="party-info">
+                123 Avenue de la Cybersécurité<br>
+                75001 Paris — France<br>
+                contact@cyna.fr<br>
+                TVA : FR00000000000
+            </div>
+        </div>
+        <div class="party">
+            <div class="party-label">Facturé à</div>
+            {% set user = order.user %}
+            <div class="party-name">{{ user.firstname }} {{ user.lastname }}</div>
+            <div class="party-info">
+                {{ user.email }}
+                {% if order.billingAddress %}
+                <br>{{ order.billingAddress.street }}
+                <br>{{ order.billingAddress.postalCode }} {{ order.billingAddress.city }}
+                {% if order.billingAddress.country %}<br>{{ order.billingAddress.country }}{% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Référence commande -->
+    <div class="order-ref">
+        Commande : <strong>{{ order.reference }}</strong> &nbsp;·&nbsp;
+        Payée le : <strong>{{ order.paidAt ? order.paidAt|date('d/m/Y') : '—' }}</strong>
+    </div>
+
+    <!-- Lignes de commande -->
+    <table>
+        <thead>
+            <tr>
+                <th style="width:50%">Description</th>
+                <th style="width:15%">Durée</th>
+                <th style="width:10%">Qté</th>
+                <th style="width:15%">Prix unit. HT</th>
+                <th style="width:10%">Total HT</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.items %}
+            <tr>
+                <td>{{ item.productNameSnapshot }}</td>
+                <td>{{ item.durationMonths ? item.durationMonths ~ ' mois' : '—' }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.unitPriceSnapshot }} €</td>
+                <td>{{ (item.unitPriceSnapshot * item.quantity)|number_format(2, ',', ' ') }} €</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Totaux -->
+    <div class="totals">
+        <div class="total-row">
+            <span>Sous-total HT</span>
+            <span>{{ invoice.totalAmount }} €</span>
+        </div>
+        <div class="total-row">
+            <span>TVA (20 %)</span>
+            <span>{{ invoice.taxAmount }} €</span>
+        </div>
+        <div class="total-row main">
+            <span>Total TTC</span>
+            <span>{{ (invoice.totalAmount + invoice.taxAmount)|number_format(2, ',', ' ') }} €</span>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        CYNA SAS · Document généré automatiquement · Non soumis au droit de rétractation (services B2B)
+    </div>
+</div>
+</body>
+</html>

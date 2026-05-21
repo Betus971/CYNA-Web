@@ -82,6 +82,9 @@ security:
         - { path: ^/api/chatbot,                methods: [POST],   roles: PUBLIC_ACCESS }
         - { path: ^/api/stripe/webhook,         methods: [POST],   roles: PUBLIC_ACCESS }
 
+        # API Géo DINUM — données publiques (autocomplétion adresse, pas d'auth requise)
+        - { path: ^/api/geo,                    methods: [GET],    roles: PUBLIC_ACCESS }
+
         # Catalogue / home : lecture libre
         - { path: ^/api/categories,             methods: [GET],    roles: PUBLIC_ACCESS }
         - { path: ^/api/saas_services,          methods: [GET],    roles: PUBLIC_ACCESS }

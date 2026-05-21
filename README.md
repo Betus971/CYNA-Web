@@ -260,5 +260,5 @@ public/
 
 ## 📄 Licence
 
-Projet réalisé dans le cadre du **BAC+3 CPI — Coordinateur de Projet Informatique** (RNCP 38478).  
+Projet réalisé dans le cadre du **BAC+3 CPI — Coordinateur de Projet Informatique**.  
 © 2026 CYNA — Tous droits réservés.

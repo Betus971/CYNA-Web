@@ -40,27 +40,27 @@ final class AppFixtures extends Fixture
     private function loadCatalogue(ObjectManager $manager): void
     {
         $catalogue = [
-            ['SOC Managed', 1, '/images/categories/soc.svg', [
+            ['SOC Managed', 1, '/images/categories/soc.png', [
                 ['SOC 24/7 Essentiel', 'Surveillance continue de votre SI par nos analystes SOC. Detection, triage et escalade des incidents critiques 24h/24, 7j/7.', "Collecte et correlation SIEM (Elastic/Splunk)\nQualification des alertes EDR et reseau\nRunbooks d escalade personnalises\nReporting mensuel MTTD/MTTR\nSLA reponse critique : 15 min", '1499.00', 1],
                 ['SOC Heures Ouvrees', 'Supervision en heures ouvrees (8h-20h, lun-ven) ideale pour PME et ETI.', "Surveillance 8h-20h lun-ven\nComite mensuel de securite\nIndicateurs MTTD/MTTR\nRapport mensuel executif", '799.00', 2],
                 ['SOC Incident Readiness', 'Preparez votre organisation a repondre efficacement a une cyberattaque.', "Audit de maturite reponse incident\nPlan de reponse a incident (PRI)\nExercice table-top ransomware\nRapport executif et plan de remediation", '1199.00', 3],
             ]],
-            ['EDR & Postes', 2, '/images/categories/edr.svg', [
+            ['EDR & Postes', 2, '/images/categories/edr.png', [
                 ['EDR Endpoint Pro', 'Protection endpoint nouvelle generation avec detection comportementale et reponse automatisee sur postes, serveurs et mobiles.', "Agent leger Windows/macOS/Linux\nIsolation machine en 1 clic\nRollback post-infection\nThreat Hunting\nIndicateurs de compromission IOC/TTPs", '399.00', 4],
                 ['EDR Workstation Lite', 'Antimalware nouvelle generation pour postes utilisateurs. Ideal pour TPE et collectivites.', "Protection comportementale ML\nControle des peripheriques USB\nAlerting centralise\nMises a jour silencieuses\nCompatible VDI", '149.00', 5],
                 ['Patch & Posture Monitoring', 'Suivi continu de l etat de patching et priorisation des correctifs sur CVE activement exploitees.', "Inventaire agents Windows/Linux/macOS\nScoring CVSS + EPSS\nAlertes email sur CVE critiques\nRapport mensuel de conformite patching", '249.00', 6],
             ]],
-            ['XDR & Cloud', 3, '/images/categories/xdr.svg', [
+            ['XDR & Cloud', 3, '/images/categories/xdr.png', [
                 ['XDR Cloud Pack', 'Visibilite XDR etendue sur SaaS, identite et cloud public AWS/Azure/GCP. Detection des mouvements lateraux.', "Connecteurs AWS/Azure/GCP/M365\nDetection mouvement lateral\nAnalyse comportementale UEBA\nIntegration SIEM/SOAR\nRapport hebdomadaire", '1899.00', 7],
                 ['Cloud Security Monitoring', 'Detection des erreurs de configuration cloud et ecarts de conformite sur AWS, Azure ou GCP.', "Referentiels CIS Benchmarks\nDetection IAM risky grants\nAlertes stockage public non chiffre\nScore de conformite en temps reel", '599.00', 8],
                 ['Identity Threat Detection', 'Detection des compromissions de comptes privilegies Active Directory et Azure AD.', "Analyse des evenements MFA\nDetection impossible travel\nAlertes connexions suspectes AD/Azure AD\nMonitoring comptes a privileges", '699.00', 9],
             ]],
-            ['Reseau Securise', 4, '/images/categories/network.svg', [
+            ['Reseau Securise', 4, '/images/categories/network.png', [
                 ['Firewall Manage', 'Gestion complete et maintien en condition de securite de votre firewall perimetrique.', "Revue mensuelle des regles\nSauvegardes automatiques\nGestion firmware\n5 changements/mois inclus\nRapport de conformite trimestriel", '349.00', 10],
                 ['Audit Reseau & Pentest', 'Audit complet securite reseau avec tests d intrusion et restitution direction inclus.', "Cartographie exposition externe\nTests de penetration boite grise\nPreuves de compromission documentees\nPlan de remediation priorise", '2499.00', 11],
                 ['Zero Trust Starter', 'Cadrage et premiere mise en oeuvre Zero Trust pour securiser les acces sensibles.', "Atelier definition de la politique\nSegmentation reseau\nMFA renforce\nBastion acces PAM\nFeuille de route 12 mois", '1299.00', 12],
             ]],
-            ['Formation Cyber', 5, '/images/categories/training.svg', [
+            ['Formation Cyber', 5, '/images/categories/training.png', [
                 ['Sensibilisation Collaborateurs', 'Programme e-learning pour l ensemble de vos collaborateurs avec suivi de participation.', "6 modules e-learning (phishing, mots de passe, USB, teletravail)\nQuiz de validation des acquis\nAttestation de formation\nTableau de bord RH\nDisponible FR/EN", '299.00', 13],
                 ['Simulation Phishing', 'Campagnes de simulation phishing pour mesurer la vigilance de vos equipes.', "Templates phishing FR/EN/DE\nCiblage par population\nStatistiques clics/saisie\nRapport pedagogique post-campagne\n4 campagnes/an incluses", '199.00', 14],
                 ['Crise Cyber COMEX', 'Session demi-journee pour dirigeants et COMEX sur la prise de decision en crise cyber.', "Scenario ransomware immersif\nObligations notification ANSSI/CNIL\nCommunication de crise\nGuide decisionnel post-crise\nJusqu a 12 participants", '899.00', 15],

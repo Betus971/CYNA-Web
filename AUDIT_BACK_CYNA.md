@@ -1,16 +1,16 @@
 # AUDIT BACKEND — CYNA-Web
 
-> **Date de l'audit :** 2026-05-18 — **Mis à jour :** 2026-05-21  
+> **Date de l'audit :** 2026-05-18 — **Mis à jour :** 2026-05-21 (v3)  
 > **Auditeur :** Claude (analyse automatisée)  
-> **Branche analysée :** `main` + `feat/backend-finalisation` (PR en attente)
+> **Branche analysée :** `main` + `feat/backend-finalisation` (PR en attente) + `feat/api-geo-dinum` (PR en attente)
 
 ---
 
 ## Résumé
 
-### Avancement backend estimé : **96 %** *(était 92 % le 2026-05-20, 87 % le matin, 82 % au 2026-05-19)*
+### Avancement backend estimé : **97 %** *(était 96 % le 2026-05-21 v2, 92 % le 2026-05-20, 82 % au 2026-05-19)*
 
-Le backend est quasi finalisé pour la soutenance. Les trois actions haute priorité de l'audit du 20 mai ont été livrées dans la branche `feat/backend-finalisation` (PR en cours) : **création automatique d'Invoice après paiement**, **email de confirmation de commande**, **génération PDF + endpoint download**, et **rate limiting** sur les 4 endpoints sensibles. Les points restants sont le refresh token JWT, les tests PHPUnit, et les notifications admin email (contact/chatbot).
+Le backend est quasi finalisé pour la soutenance. Les trois actions haute priorité de l'audit du 20 mai ont été livrées dans `feat/backend-finalisation` (PR en cours) : **création automatique d'Invoice après paiement**, **email de confirmation de commande**, **génération PDF + endpoint download**, et **rate limiting** sur les 4 endpoints sensibles. La branche `feat/api-geo-dinum` ajoute l'intégration de **l'API Géo du gouvernement français (DINUM)** pour l'autocomplétion d'adresse en checkout. Les points restants sont le refresh token JWT, les tests PHPUnit, et les notifications admin email (contact/chatbot).
 
 ### Stack technique détectée
 
@@ -305,6 +305,31 @@ Paramètres supportés : `q`, `category`, `minPrice`, `maxPrice`, `availableOnly
 | API consommable par app mobile | ✅ Fait | JSON pur + JWT = compatible toutes plateformes |
 | **Tests automatisés** | ❌ Manquant | PHPUnit configuré mais aucun test écrit |
 | **Refresh token JWT** | ❌ Manquant | Pas de renouvellement de session |
+
+---
+
+### 10. API Géo — Autocomplétion d'adresse (DINUM)
+
+| Endpoint | Méthode | Statut | Détail |
+|----------|---------|--------|--------|
+| `GET /api/geo/communes?q=Paris&limit=10` | Autocomplétion commune | ✅ Fait | Proxy vers `geo.api.gouv.fr/communes`, retourne nom, code INSEE, codes postaux, département, région, population — `feat/api-geo-dinum` |
+| `GET /api/geo/communes/postal?cp=75001` | Recherche par code postal | ✅ Fait | Proxy vers `geo.api.gouv.fr/communes?codePostal=` — `feat/api-geo-dinum` |
+| `GET /api/geo/regions` | Liste des régions | ✅ Fait | Proxy vers `geo.api.gouv.fr/regions`, données en cache de facto (rarement modifiées) — `feat/api-geo-dinum` |
+| `GET /api/geo/departements?region=11` | Liste des départements | ✅ Fait | Proxy vers `geo.api.gouv.fr/departements` avec filtre région optionnel — `feat/api-geo-dinum` |
+| `GET /api/geo/departements/{code}/communes` | Communes d'un département | ✅ Fait | Proxy vers `geo.api.gouv.fr/communes?codeDepartement=`, triées par population — `feat/api-geo-dinum` |
+
+**Caractéristiques techniques :**
+- API publique officielle du gouvernement français (DINUM) — aucun token requis
+- `GeoApiService` : wrapper Symfony HttpClient (`symfony/http-client` déjà installé), timeout 5s, logs des erreurs réseau sans crash
+- `GeoController` : endpoints publics sans authentification JWT (`PUBLIC_ACCESS` dans `security.yaml`)
+- Validation des paramètres : `q` minimum 2 caractères, `limit` plafonné à 20, codes postaux et codes département validés par regex
+- Fallback silencieux : en cas d'indisponibilité de l'API Géo, retourne `[]` sans erreur 500
+- Aucune dépendance nouvelle (zéro `composer require`)
+
+**Utilisation prévue côté frontend React :**
+- Autocomplétion dans les champs Ville/Code postal du formulaire d'adresse (checkout + gestion compte)
+- Sélecteur Région → Département → Commune en cascade
+- Validation de cohérence code postal / ville avant soumission
 
 ---
 

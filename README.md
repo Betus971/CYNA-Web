@@ -260,5 +260,5 @@ public/
 
 ## 📄 Licence
 
-Projet réalisé dans le cadre du **BTS SIO — Projet fil rouge CYNA DEV**.  
+Projet réalisé dans le cadre du **BAC+3 CPI — Coordinateur de Projet Informatique** (RNCP 38478).  
 © 2026 CYNA — Tous droits réservés.

@@ -1,0 +1,25 @@
+feat(geo): add full address autocomplete via API Adresse BAN
+
+Integrate the French government's BAN (Base Adresse Nationale) API
+https://api-adresse.data.gouv.fr for full address search (street number,
+street name, postal code, city) -- the key tool for pre-filling user
+address forms.
+
+New endpoints:
+  GET /api/geo/address?q=8+bd+du+port+amiens     -- full address autocomplete
+  GET /api/geo/address?q=...&postcode=75001       -- scoped to postal code
+  GET /api/geo/address?q=...&type=housenumber     -- filter by type
+  GET /api/geo/streets?q=rue+de+rivoli            -- street-only autocomplete
+
+Response shape (normalised from GeoJSON):
+  { label, housenumber, street, postcode, city, context, type, score, lon, lat }
+
+Frontend usage:
+  - User types address -> GET /api/geo/address?q=...
+  - Pick suggestion -> pre-fill adresse1, codePostal, city fields instantly
+  - Zero extra dependencies (same symfony/http-client, same GeoApiService)
+
+Also refactored GeoApiService:
+  - Split getAbsolute() helper (handles both BAN and geo.api.gouv.fr URLs)
+  - Added searchStreets() and searchCitiesByAddress() helpers
+  - Consistent 5s timeout + silent fallback on all calls

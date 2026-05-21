@@ -1,0 +1,21 @@
+feat(geo): integrate API Geo DINUM for address autocomplete
+
+Add GeoApiService and GeoController to expose French government geographic
+data (https://geo.api.gouv.fr) to the React checkout flow.
+
+New endpoints (PUBLIC_ACCESS, no JWT required):
+  GET /api/geo/communes?q=Paris&limit=10         -- search communes by name
+  GET /api/geo/communes/postal?cp=75001           -- search by postal code
+  GET /api/geo/regions                            -- list all regions
+  GET /api/geo/departements?region=11             -- list departments (opt. filter)
+  GET /api/geo/departements/{code}/communes       -- communes of a department
+
+Technical notes:
+  - Uses symfony/http-client (already installed, v7.4.9)
+  - No new composer dependency
+  - GeoApiService: 5s timeout, silent fallback to [] on network error
+  - Input validation: q >= 2 chars, limit capped to 20, regex on codes
+  - security.yaml: added PUBLIC_ACCESS rule for ^/api/geo GET
+  - AUDIT_BACK_CYNA.md: updated to v3 (97%), added section 10
+
+Branch: feat/api-geo-dinum

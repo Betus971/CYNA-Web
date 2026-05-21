@@ -1,0 +1,1 @@
+chore: update config reference — rate_limiter enabled default true

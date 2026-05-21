@@ -1,0 +1,21 @@
+feat(back): finalisation backend — invoice auto, PDF, rate limiter, email commande
+
+Actions #2, #3, #4 de l'audit 2026-05-20 :
+
+Invoice & email commande :
+- InvoiceService : création auto Invoice après payment_intent.succeeded (idempotent)
+- EmailVerifier : +sendOrderConfirmation(User, Order, Invoice)
+- Template emails/order_confirmation.html.twig avec recap lignes + totaux
+- StripeWebhookController : appel InvoiceService + sendOrderConfirmation post-flush
+
+Génération PDF factures :
+- composer require dompdf/dompdf (v3.1.5)
+- InvoicePdfService : génère PDF via DomPDF dans var/invoices/ (lazy, idempotent)
+- Template invoices/invoice_pdf.html.twig : facture A4 complète avec logo, parties, lignes, totaux TTC
+- InvoiceDownloadController : GET /api/invoices/{id}/download (BinaryFileResponse, vérif propriétaire)
+- services.yaml : param app.invoice_dir + binding InvoicePdfService::$invoiceDir
+
+Rate limiting :
+- composer require symfony/rate-limiter (v7.4.10)
+- config/packages/rate_limiter.yaml : 4 limiteurs sliding_window (login 10/5min, password 5/15min, contact 5/10min, chatbot 30/min)
+- RateLimiterListener : AsEventListener kernel.request priority 16, rate-limite par IP, 429 + Retry-After

@@ -10,12 +10,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 /**
- * Proxy vers l'API Géo du gouvernement français (DINUM — https://geo.api.gouv.fr).
+ * Proxy vers les APIs géographiques du gouvernement français (DINUM).
  *
- * Endpoints publics (pas d'authentification requise) destinés à l'autocomplétion
- * d'adresse dans le tunnel de commande React.
+ *  - API Adresse (BAN) : https://api-adresse.data.gouv.fr
+ *    Autocomplétion d'adresses complètes (numéro + rue + code postal + ville).
  *
- * Toutes les routes sont préfixées /api/geo/* et exclues d'API Platform.
+ *  - API Géo : https://geo.api.gouv.fr
+ *    Régions, départements, communes.
+ *
+ * Tous les endpoints sont PUBLIC_ACCESS (security.yaml) car l'autocomplétion
+ * d'adresse doit fonctionner même avant la connexion (formulaire checkout guest).
  */
 #[Route('/api/geo', name: 'geo_')]
 final class GeoController extends AbstractController
@@ -25,14 +29,82 @@ final class GeoController extends AbstractController
     ) {
     }
 
+    // =========================================================================
+    // API Adresse — BAN
+    // =========================================================================
+
     /**
-     * Recherche de communes par nom (autocomplétion).
+     * Autocomplétion d'adresses complètes.
+     *
+     * Retourne : label, housenumber, street, postcode, city, context, type, score, lon, lat.
+     * Le frontend peut directement pré-remplir les champs adresse1 / code postal / ville.
+     *
+     * GET /api/geo/address?q=8+bd+du+port+amiens&limit=8
+     * GET /api/geo/address?q=8+rue+de+rivoli&postcode=75001
+     */
+    #[Route('/address', name: 'address_search', methods: ['GET'])]
+    public function addressSearch(Request $request): JsonResponse
+    {
+        $q = trim((string) $request->query->get('q', ''));
+
+        if (mb_strlen($q) < 3) {
+            return $this->json(
+                ['error' => 'Le paramètre "q" doit contenir au moins 3 caractères.'],
+                Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+        }
+
+        $limit    = (int) $request->query->get('limit', 8);
+        $limit    = max(1, min($limit, 20));
+        $postcode = $request->query->get('postcode');
+        $type     = $request->query->get('type');
+
+        $allowedTypes = ['housenumber', 'street', 'municipality', 'locality'];
+        if ($type !== null && !in_array($type, $allowedTypes, true)) {
+            $type = null;
+        }
+
+        $data = $this->geoApi->searchAddresses(
+            $q,
+            $limit,
+            $postcode !== null ? (string) $postcode : null,
+            $type,
+        );
+
+        return $this->json($data);
+    }
+
+    /**
+     * Autocomplétion de rues uniquement (sans numéro de voie).
+     *
+     * GET /api/geo/streets?q=rue+de+rivoli&limit=8
+     */
+    #[Route('/streets', name: 'street_search', methods: ['GET'])]
+    public function streetSearch(Request $request): JsonResponse
+    {
+        $q = trim((string) $request->query->get('q', ''));
+
+        if (mb_strlen($q) < 3) {
+            return $this->json(
+                ['error' => 'Le paramètre "q" doit contenir au moins 3 caractères.'],
+                Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+        }
+
+        $limit = (int) $request->query->get('limit', 8);
+        $limit = max(1, min($limit, 20));
+
+        return $this->json($this->geoApi->searchStreets($q, $limit));
+    }
+
+    // =========================================================================
+    // API Géo — Communes, Régions, Départements
+    // =========================================================================
+
+    /**
+     * Recherche de communes par nom (autocomplétion champ Ville).
      *
      * GET /api/geo/communes?q=Paris&limit=10
-     *
-     * Params :
-     *   - q     : string  (requis, min 2 caractères)
-     *   - limit : integer (optionnel, 1–20, défaut 10)
      */
     #[Route('/communes', name: 'communes', methods: ['GET'])]
     public function communes(Request $request): JsonResponse
@@ -49,15 +121,13 @@ final class GeoController extends AbstractController
         $limit = (int) $request->query->get('limit', 10);
         $limit = max(1, min($limit, 20));
 
-        $data = $this->geoApi->searchCommunes($q, $limit);
-
-        return $this->json($data);
+        return $this->json($this->geoApi->searchCommunes($q, $limit));
     }
 
     /**
      * Recherche de communes par code postal.
      *
-     * GET /api/geo/communes/postal?cp=75001&limit=10
+     * GET /api/geo/communes/postal?cp=75001
      */
     #[Route('/communes/postal', name: 'communes_postal', methods: ['GET'])]
     public function communesByPostalCode(Request $request): JsonResponse
@@ -74,9 +144,7 @@ final class GeoController extends AbstractController
         $limit = (int) $request->query->get('limit', 10);
         $limit = max(1, min($limit, 20));
 
-        $data = $this->geoApi->searchCommunesByPostalCode($cp, $limit);
-
-        return $this->json($data);
+        return $this->json($this->geoApi->searchCommunesByPostalCode($cp, $limit));
     }
 
     /**
@@ -100,9 +168,10 @@ final class GeoController extends AbstractController
     public function departements(Request $request): JsonResponse
     {
         $regionCode = $request->query->get('region');
-        $data = $this->geoApi->getDepartements($regionCode !== null ? (string) $regionCode : null);
 
-        return $this->json($data);
+        return $this->json(
+            $this->geoApi->getDepartements($regionCode !== null ? (string) $regionCode : null)
+        );
     }
 
     /**
@@ -113,7 +182,7 @@ final class GeoController extends AbstractController
     #[Route('/departements/{code}/communes', name: 'departement_communes', methods: ['GET'])]
     public function communesByDepartement(string $code, Request $request): JsonResponse
     {
-        if (!preg_match('/^[0-9]{2,3}[ABab]?$/', $code)) {
+        if (!preg_match('/^\d{2,3}[ABab]?$/', $code)) {
             return $this->json(
                 ['error' => 'Code département invalide.'],
                 Response::HTTP_UNPROCESSABLE_ENTITY
@@ -123,8 +192,6 @@ final class GeoController extends AbstractController
         $limit = (int) $request->query->get('limit', 100);
         $limit = max(1, min($limit, 500));
 
-        $data = $this->geoApi->getCommunesByDepartement($code, $limit);
-
-        return $this->json($data);
+        return $this->json($this->geoApi->getCommunesByDepartement($code, $limit));
     }
 }

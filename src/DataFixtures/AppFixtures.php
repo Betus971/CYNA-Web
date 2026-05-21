@@ -91,10 +91,10 @@ final class AppFixtures extends Fixture
     private function loadCarouselSlides(ObjectManager $manager): void
     {
         $slides = [
-            [1, 'Protegez votre SI 24/7', 'Notre SOC manage surveille vos systemes en permanence. Detection, triage et reponse aux incidents par des experts certifies.', '/images/carousel/soc-hero.jpg', '/catalogue', 'Decouvrir le SOC Manage'],
-            [2, 'EDR Nouvelle Generation', 'Stoppez les menaces avancees sur tous vos endpoints — postes, serveurs, mobiles — avec une reponse automatisee en temps reel.', '/images/carousel/edr-hero.jpg', '/catalogue', 'Voir les offres EDR'],
-            [3, 'Visibilite XDR sur votre Cloud', 'Correlation multi-sources, detection des mouvements lateraux et conformite cloud sur AWS, Azure et GCP.', '/images/carousel/xdr-hero.jpg', '/catalogue', 'Explorer XDR & Cloud'],
-            [4, 'Formez vos equipes au risque cyber', 'E-learning, simulation phishing et ateliers COMEX pour faire de chaque collaborateur le premier rempart de votre securite.', '/images/carousel/training-hero.jpg', '/catalogue', 'Voir les formations'],
+            [1, 'Protegez votre SI 24/7', 'Notre SOC manage surveille vos systemes en permanence. Detection, triage et reponse aux incidents par des experts certifies.', '/images/carousel/soc-hero.png', '/catalogue', 'Decouvrir le SOC Manage'],
+            [2, 'EDR Nouvelle Generation', 'Stoppez les menaces avancees sur tous vos endpoints — postes, serveurs, mobiles — avec une reponse automatisee en temps reel.', '/images/carousel/edr-hero.png', '/catalogue', 'Voir les offres EDR'],
+            [3, 'Visibilite XDR sur votre Cloud', 'Correlation multi-sources, detection des mouvements lateraux et conformite cloud sur AWS, Azure et GCP.', '/images/carousel/xdr-hero.png', '/catalogue', 'Explorer XDR & Cloud'],
+            [4, 'Formez vos equipes au risque cyber', 'E-learning, simulation phishing et ateliers COMEX pour faire de chaque collaborateur le premier rempart de votre securite.', '/images/carousel/training-hero.png', '/catalogue', 'Voir les formations'],
         ];
 
         foreach ($slides as [$order, $title, $sub, $image, $link, $cta]) {

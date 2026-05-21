@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use App\Entity\Invoice;
+use App\Entity\Order;
 use App\Entity\User;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -120,6 +122,30 @@ final class EmailVerifier
             ]);
 
         $this->mailer->send($email);
+    }
+
+    public function sendOrderConfirmation(User $user, Order $order, Invoice $invoice): void
+    {
+        $email = (new TemplatedEmail())
+            ->from($this->mailFrom)
+            ->to((string) $user->getEmail())
+            ->subject(sprintf('CYNA - Confirmation de votre commande %s', $order->getReference()))
+            ->htmlTemplate('emails/order_confirmation.html.twig')
+            ->context([
+                'user'         => $user,
+                'order'        => $order,
+                'invoice'      => $invoice,
+                'frontend_url' => rtrim($this->frontendUrl, '/'),
+            ]);
+
+        try {
+            $this->mailer->send($email);
+        } catch (\Throwable $e) {
+            $this->logger->error('Unable to send order confirmation email.', [
+                'exception' => $e,
+                'order_id'  => $order->getId(),
+            ]);
+        }
     }
 
     /**

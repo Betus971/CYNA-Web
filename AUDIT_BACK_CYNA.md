@@ -1,16 +1,16 @@
 # AUDIT BACKEND — CYNA-Web
 
-> **Date de l'audit :** 2026-05-18 — **Mis à jour :** 2026-05-20 (soir)  
+> **Date de l'audit :** 2026-05-18 — **Mis à jour :** 2026-05-21  
 > **Auditeur :** Claude (analyse automatisée)  
-> **Branche analysée :** `main` (synchro avec `origin/main`)
+> **Branche analysée :** `main` + `feat/backend-finalisation` (PR en attente)
 
 ---
 
 ## Résumé
 
-### Avancement backend estimé : **92 %** *(était 87 % en milieu de journée, 82 % au 2026-05-19)*
+### Avancement backend estimé : **96 %** *(était 92 % le 2026-05-20, 87 % le matin, 82 % au 2026-05-19)*
 
-Le socle est solide et bien structuré. **L'intégration Stripe est désormais opérationnelle** (PaymentIntent + webhook signé), **le 2FA email + les notifications de login sont en place**, et 5 templates email transactionnels sont câblés au Mailer (Brevo). Le backoffice EasyAdmin v5 reste 100 % opérationnel. Les parties encore manquantes concernent la **génération PDF des factures**, la **création automatique d'Invoice après paiement**, l'**email de confirmation de commande**, le rate limiting, le refresh token JWT, et l'**absence totale de tests**.
+Le backend est quasi finalisé pour la soutenance. Les trois actions haute priorité de l'audit du 20 mai ont été livrées dans la branche `feat/backend-finalisation` (PR en cours) : **création automatique d'Invoice après paiement**, **email de confirmation de commande**, **génération PDF + endpoint download**, et **rate limiting** sur les 4 endpoints sensibles. Les points restants sont le refresh token JWT, les tests PHPUnit, et les notifications admin email (contact/chatbot).
 
 ### Stack technique détectée
 
@@ -184,9 +184,9 @@ Paramètres supportés : `q`, `category`, `minPrice`, `maxPrice`, `availableOnly
 | Entité `Invoice` avec champ `pdfPath` | ✅ Fait | Structure en base prête |
 | `GET /api/invoices` | ✅ Fait | Liste des factures de l'utilisateur |
 | `GET /api/invoices/{id}` | ✅ Fait | Consultation facture |
-| **Génération PDF** | ❌ Manquant | Aucun service de génération PDF (type DomPDF/TCPDF) |
-| **Téléchargement PDF** | ❌ Manquant | Pas d'endpoint `GET /api/invoices/{id}/download` |
-| **Création automatique de la facture à la commande** | ❌ Manquant | Aucun listener/processor ne crée la Invoice après paiement |
+| **Génération PDF** | ✅ Fait | `InvoicePdfService` + DomPDF v3.1.5, template A4 `invoices/invoice_pdf.html.twig` — `feat/backend-finalisation` |
+| **Téléchargement PDF** | ✅ Fait | `GET /api/invoices/{id}/download` — `InvoiceDownloadController`, vérif propriétaire — `feat/backend-finalisation` |
+| **Création automatique de la facture à la commande** | ✅ Fait | `InvoiceService::createForOrder()` appelé dans le webhook `payment_intent.succeeded` — `feat/backend-finalisation` |
 
 ---
 
@@ -218,8 +218,8 @@ Paramètres supportés : `q`, `category`, `minPrice`, `maxPrice`, `availableOnly
 | Statuts commande (`PENDING`, `PAID`, `FAILED`) | ✅ Fait | Enum `OrderStatus` |
 | Statuts abonnement (`ACTIVE`, `CANCELLED`, `EXPIRED`, `PENDING_RENEWAL`) | ✅ Fait | Enum `SubscriptionStatus` |
 | **Variables d'env Stripe** | ⚠️ À renseigner | `STRIPE_SECRET_KEY` et `STRIPE_WEBHOOK_SECRET` à mettre dans `.env.local` |
-| **Création auto `Invoice` après PAID** | ❌ Manquant | Le webhook met à jour Order mais ne crée pas l'Invoice associée |
-| **Email confirmation de commande** | ❌ Manquant | `EmailVerifier` n'a pas encore de méthode `sendOrderConfirmation()` |
+| **Création auto `Invoice` après PAID** | ✅ Fait | `InvoiceService::createForOrder()` dans le webhook, idempotent — `feat/backend-finalisation` |
+| **Email confirmation de commande** | ✅ Fait | `EmailVerifier::sendOrderConfirmation()` + template `order_confirmation.html.twig` — `feat/backend-finalisation` |
 
 ---
 
@@ -300,7 +300,7 @@ Paramètres supportés : `q`, `category`, `minPrice`, `maxPrice`, `availableOnly
 | Documentation API (Swagger/OpenAPI) | ✅ Fait | Auto-générée par API Platform, accessible via `/api/docs` |
 | CORS configuré | ✅ Fait | NelmioCorsBundle avec variables d'environnement |
 | Chiffrement données sensibles paiement | ✅ Fait | Jamais de données carte stockées, tokens PSP uniquement |
-| **Rate limiting** | ❌ Manquant | Pas de limitation de débit sur les endpoints publics |
+| **Rate limiting** | ✅ Fait | `symfony/rate-limiter` + `RateLimiterListener` — 4 limiteurs sliding_window (login 10/5min, password 5/15min, contact 5/10min, chatbot 30/min) — `feat/backend-finalisation` |
 | **Certificat SSL** | ⚠️ Infrastructure | À configurer sur le serveur/reverse proxy, pas du code |
 | API consommable par app mobile | ✅ Fait | JSON pur + JWT = compatible toutes plateformes |
 | **Tests automatisés** | ❌ Manquant | PHPUnit configuré mais aucun test écrit |
@@ -513,17 +513,17 @@ Utiliser VichUploaderBundle ou une solution simple avec `$request->files`. Crée
 Authentification        ███████████████ 100%  (Google SSO ✅ + 2FA TOTP ✅ + 2FA email ✅ + notifs login ✅)
 Produits / Catalogue    ████████████░░  90%  (manque upload images, recherche specs)
 Panier                  ████████████░░  85%  (manque fusion anonyme → compte)
-Commandes               ██████████████░ 95%  (Stripe webhook met à jour Order)
-Paiement                ██████████████░ 90%  (Stripe complet — manque .env keys)
+Commandes               ████████████████98%  (✅ email confirmation commande ajouté)
+Paiement                ██████████████░ 93%  (✅ invoice auto — manque .env keys)
 Abonnements             █████████░░░░░  60%  (webhook active OrderItems — manque endpoints user)
-Factures PDF            ████░░░░░░░░░░  25%  (entité ok, génération PDF + création auto manquantes)
+Factures PDF            █████████████░  90%  (✅ DomPDF + endpoint download + création auto)
 Compte utilisateur      ████████████░░  85%  (manque validation email changement)
 Contact / Chatbot       ██████████████  95%  (manque juste notif email admin)
-Emails transactionnels  █████████████░  80%  (5 templates — manque order confirmation + notif admin)
+Emails transactionnels  ██████████████  90%  (✅ order confirmation — manque notif admin)
 Backoffice              ███████████████ 100%  (EasyAdmin v5 complet ✅)
-Non-fonctionnel         ██████████░░░░  70%  (manque rate limit, tests, refresh token)
+Non-fonctionnel         ████████████░░  82%  (✅ rate limiting — manque tests, refresh token)
 
-GLOBAL                  ██████████████  92%  (+5 % depuis 2026-05-20 matin — Stripe + 2FA email + mails)
+GLOBAL                  ███████████████ 96%  (+4 % depuis 2026-05-20 — invoice auto, PDF, rate limiter, email commande)
 ```
 
 ---
@@ -605,3 +605,23 @@ GLOBAL                  ██████████████  92%  (+5 % d
 | `templates/admin/login.html.twig` | ✅ Créé | Page de connexion dark theme CYNA (hors EasyAdmin), CSRF token |
 | `templates/admin/dashboard.html.twig` | ✅ Créé | Dashboard avec 4 cartes KPI et 7 liens rapides vers tous les CRUDs |
 | `config/packages/security.yaml` | ✅ Modifié | Ajout firewall `admin` (form_login session-based, remember_me, logout) + access_control `/admin → ROLE_ADMIN` |
+
+---
+
+### 2026-05-21 — Invoice auto, PDF factures, rate limiter, email commande
+
+**Backend (CYNA-Web) — branche `feat/backend-finalisation` (PR en attente)**
+
+| Fichier | Action | Détail |
+|---------|--------|--------|
+| `composer.json` | ✅ Modifié | Ajout `dompdf/dompdf ^3.1` et `symfony/rate-limiter ^7.4` |
+| `src/Service/InvoiceService.php` | ✅ Créé | Création automatique d'Invoice après PAID (idempotent, numérotation `INV-YYYY-XXXXXXXX`) |
+| `src/Service/InvoicePdfService.php` | ✅ Créé | Génération PDF via DomPDF dans `var/invoices/`, lazy + idempotent |
+| `src/Controller/InvoiceDownloadController.php` | ✅ Créé | `GET /api/invoices/{id}/download` — `BinaryFileResponse`, vérification propriétaire ou ROLE_ADMIN |
+| `src/Service/EmailVerifier.php` | ✅ Étendu | + `sendOrderConfirmation(User, Order, Invoice)` avec récap lignes, totaux HT/TVA, lien espace client |
+| `src/Controller/StripeWebhookController.php` | ✅ Modifié | `markPaid()` : appel `InvoiceService::createForOrder()` + `EmailVerifier::sendOrderConfirmation()` post-flush |
+| `src/EventListener/RateLimiterListener.php` | ✅ Créé | `AsEventListener kernel.request priority 16` — rate limite par IP, 429 + Retry-After |
+| `config/packages/rate_limiter.yaml` | ✅ Créé | 4 limiteurs sliding_window : `login` 10/5min, `password_forgot` 5/15min, `contact` 5/10min, `chatbot` 30/min |
+| `config/services.yaml` | ✅ Modifié | Param `app.invoice_dir` + binding `InvoicePdfService::$invoiceDir` |
+| `templates/emails/order_confirmation.html.twig` | ✅ Créé | Email confirmation commande : récap lignes, totaux HT + TVA, bouton "Voir mes commandes" |
+| `templates/invoices/invoice_pdf.html.twig` | ✅ Créé | Template PDF A4 : logo CYNA, émetteur/client, tableau services, totaux TTC |

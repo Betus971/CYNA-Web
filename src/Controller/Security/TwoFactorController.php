@@ -33,6 +33,10 @@ class TwoFactorController extends AbstractController
             return $this->json(['error' => '2FA already enabled'], 400);
         }
 
+        if ($user->isEmailTwoFactorEnabled()) {
+            return $this->json(['error' => 'Desactivez la 2FA e-mail avant de configurer Google Authenticator.'], 400);
+        }
+
         // Generate secret if not exists
         if (!$user->getTotpSecret()) {
             $user->setTotpSecret($this->googleAuthenticator->generateSecret());
@@ -52,6 +56,10 @@ class TwoFactorController extends AbstractController
         $user = $this->getUser();
         $data = json_decode($request->getContent(), true);
         $code = $data['code'] ?? '';
+
+        if ($user->isEmailTwoFactorEnabled()) {
+            return $this->json(['error' => 'Desactivez la 2FA e-mail avant d activer Google Authenticator.'], 400);
+        }
 
         if ($this->googleAuthenticator->checkCode($user, $code)) {
             $user->setTotpEnabled(true);
@@ -100,6 +108,10 @@ class TwoFactorController extends AbstractController
         $data = json_decode($request->getContent(), true);
         $enabled = (bool)($data['enabled'] ?? false);
 
+        if ($enabled && $user->isEmailTwoFactorEnabled()) {
+            return $this->json(['error' => 'Desactivez la 2FA e-mail avant d activer Google Authenticator.'], 400);
+        }
+
         $user->setTotpEnabled($enabled);
         $this->entityManager->flush();
 
@@ -111,6 +123,10 @@ class TwoFactorController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
+
+        if ($user->isTotpConfigured() || $user->isTotpEnabled()) {
+            return $this->json(['error' => 'Desactivez Google Authenticator avant de configurer la 2FA e-mail.'], 400);
+        }
 
         $this->securityEmailService->generateAndSendTwoFactorCode($user);
 
@@ -124,6 +140,10 @@ class TwoFactorController extends AbstractController
         $user = $this->getUser();
         $data = json_decode($request->getContent(), true) ?? [];
         $code = (string) ($data['code'] ?? '');
+
+        if ($user->isTotpConfigured() || $user->isTotpEnabled()) {
+            return $this->json(['error' => 'Desactivez Google Authenticator avant d activer la 2FA e-mail.'], 400);
+        }
 
         if (!$this->securityEmailService->verifyTwoFactorCode($user, $code)) {
             return $this->json(['error' => 'Code invalide'], 400);

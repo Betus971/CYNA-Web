@@ -37,8 +37,7 @@ class AuthenticationSuccessListener
         }
 
         // If 2FA is active and required at login for this user
-        if ($user->isTotpEnabled() && $user->getTotpSecret() !== null) {
-            // Override the default data (which would contain the JWT 'token')
+        if ($user->isGoogleAuthenticatorEnabled()) {
             $event->setData([
                 'requires2fa' => true,
                 'method' => 'totp',

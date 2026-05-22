@@ -21,7 +21,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: '`user`')]
+#[ORM\Table(name: '`user`', indexes: [
+    new ORM\Index(name: 'IDX_USER_EMAIL', fields: ['email']),
+    new ORM\Index(name: 'IDX_USER_GOOGLE_ID', fields: ['googleId']),
+])]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[UniqueEntity(fields: ['email'], message: 'Cet email est déjà utilisé.')]
 #[ApiResource(
@@ -102,6 +105,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $passwordResetExpiresAt = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $googleId = null;
 
     /**
      * Secret TOTP pour 2FA optionnelle (RGPD / sécurité admin).
@@ -324,6 +330,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     public function setPasswordResetExpiresAt(?\DateTimeImmutable $passwordResetExpiresAt): static
     {
         $this->passwordResetExpiresAt = $passwordResetExpiresAt;
+
+        return $this;
+    }
+
+    public function getGoogleId(): ?string
+    {
+        return $this->googleId;
+    }
+
+    public function setGoogleId(?string $googleId): static
+    {
+        $this->googleId = $googleId;
 
         return $this;
     }

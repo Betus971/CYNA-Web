@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Service\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,6 +32,7 @@ final class AccountController extends AbstractController
         private readonly UserPasswordHasherInterface $hasher,
         private readonly EmailVerifier $emailVerifier,
         private readonly ValidatorInterface $validator,
+        private readonly LoggerInterface $logger,
     ) {
     }
 
@@ -154,7 +156,17 @@ final class AccountController extends AbstractController
         try {
             $this->emailVerifier->sendTestEmail($user, $recipient);
         } catch (\Throwable $e) {
-            return $this->json(['error' => 'Impossible d\'envoyer l\'email de test.'], 502);
+            $this->logger->error('Unable to send test email.', [
+                'exception' => $e,
+                'recipient' => $recipient,
+                'user_id' => $user->getId(),
+            ]);
+
+            $message = str_contains($e->getMessage(), 'authorised_ips')
+                ? 'Brevo refuse l\'envoi : votre adresse IP actuelle n\'est pas autorisee dans les parametres de securite Brevo.'
+                : 'Impossible d\'envoyer l\'email de test.';
+
+            return $this->json(['error' => $message], 502);
         }
 
         return $this->json([

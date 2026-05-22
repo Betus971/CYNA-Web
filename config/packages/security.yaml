@@ -22,9 +22,7 @@ security:
         # Firewall dédié au SSO Google (routes web avec session)
         web:
             pattern: ^/login/google
-            provider: app_user_provider
-            custom_authenticators:
-                - App\Security\GoogleAuthenticator
+            security: false
 
         # Backoffice EasyAdmin (session-based, ROLE_ADMIN requis)
         admin:
@@ -72,6 +70,7 @@ security:
 
         # Auth & onboarding
         - { path: ^/api/login,                  roles: PUBLIC_ACCESS }
+        - { path: ^/api/auth/google/callback,   methods: [POST],   roles: PUBLIC_ACCESS }
         - { path: ^/api/docs,                   roles: PUBLIC_ACCESS }
         - { path: ^/api/users$,                 methods: [POST],   roles: PUBLIC_ACCESS }   # inscription
         - { path: ^/api/verify-email,           roles: PUBLIC_ACCESS }

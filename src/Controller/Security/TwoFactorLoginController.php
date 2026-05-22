@@ -2,10 +2,10 @@
 
 namespace App\Controller\Security;
 
-use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Service\SecurityEmailService;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Psr\Cache\CacheItemPoolInterface;
 use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Google\GoogleAuthenticatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,15 +22,27 @@ class TwoFactorLoginController extends AbstractController
         UserPasswordHasherInterface $passwordHasher,
         GoogleAuthenticatorInterface $googleAuthenticator,
         JWTTokenManagerInterface $jwtManager,
-        SecurityEmailService $securityEmailService
+        SecurityEmailService $securityEmailService,
+        CacheItemPoolInterface $cache
     ): JsonResponse {
         $data = json_decode($request->getContent(), true) ?? [];
         $email = (string) ($data['email'] ?? '');
         $password = (string) ($data['password'] ?? '');
         $code = (string) ($data['code'] ?? '');
+        $provider = (string) ($data['provider'] ?? '');
+        $challenge = (string) ($data['challenge'] ?? '');
 
-        if ('' === $email || '' === $password || '' === $code) {
-            return $this->json(['error' => 'Paramètres manquants.'], 400);
+        if ('' === $email || '' === $code || ('google' !== $provider && '' === $password) || ('google' === $provider && '' === $challenge)) {
+            return $this->json(['error' => 'Parametres manquants.'], 400);
+        }
+
+        if ('google' === $provider) {
+            $challengeKey = 'google_2fa_' . hash('sha256', $challenge);
+            $challengeItem = $cache->getItem($challengeKey);
+
+            if (!$challengeItem->isHit() || $challengeItem->get() !== $email) {
+                return $this->json(['error' => 'Challenge Google invalide ou expire.'], 401);
+            }
         }
 
         $user = $userRepository->findOneBy(['email' => $email]);
@@ -38,8 +50,7 @@ class TwoFactorLoginController extends AbstractController
             return $this->json(['error' => 'Identifiants invalides.'], 401);
         }
 
-        // Verify password first to prevent bruteforcing 2FA codes without knowing the password
-        if (!$passwordHasher->isPasswordValid($user, $password)) {
+        if ('google' !== $provider && !$passwordHasher->isPasswordValid($user, $password)) {
             return $this->json(['error' => 'Identifiants invalides.'], 401);
         }
 
@@ -47,16 +58,21 @@ class TwoFactorLoginController extends AbstractController
             if (!$securityEmailService->verifyTwoFactorCode($user, $code)) {
                 return $this->json(['error' => 'Code 2FA invalide.'], 400);
             }
-        } elseif (!$googleAuthenticator->checkCode($user, $code)) {
-            return $this->json(['error' => 'Code 2FA invalide.'], 400);
+        } elseif ($user->isTotpEnabled()) {
+            if (!$googleAuthenticator->checkCode($user, $code)) {
+                return $this->json(['error' => 'Code 2FA invalide.'], 400);
+            }
+        } else {
+            return $this->json(['error' => 'Aucune double authentification active.'], 400);
         }
 
-        // Generate the JWT token
         $token = $jwtManager->create($user);
         $securityEmailService->sendLoginNotification($user, $request);
 
-        return $this->json([
-            'token' => $token,
-        ]);
+        if ('google' === $provider) {
+            $cache->deleteItem('google_2fa_' . hash('sha256', $challenge));
+        }
+
+        return $this->json(['token' => $token]);
     }
 }

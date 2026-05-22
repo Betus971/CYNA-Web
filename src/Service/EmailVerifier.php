@@ -149,7 +149,7 @@ final class EmailVerifier
     }
 
     /**
-     * @param array{ip: string, user_agent: string, platform: string, browser: string, occurred_at: \DateTimeImmutable} $context
+     * @param array{ip: string, location: string, user_agent: string, platform: string, browser: string, device: string, occurred_at: \DateTimeImmutable} $context
      */
     public function sendLoginNotification(User $user, array $context): void
     {

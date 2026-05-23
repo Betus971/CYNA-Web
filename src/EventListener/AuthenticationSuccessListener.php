@@ -26,7 +26,16 @@ class AuthenticationSuccessListener
         }
 
         if ($user->isEmailTwoFactorEnabled()) {
-            $this->securityEmailService->generateAndSendTwoFactorCode($user);
+            try {
+                $this->securityEmailService->generateAndSendTwoFactorCode($user);
+            } catch (\Throwable) {
+                $event->setData([
+                    'error' => 'Impossible d envoyer le code A2F par e-mail. Verifiez que l IP actuelle est autorisee dans Brevo.',
+                ]);
+
+                return;
+            }
+
             $event->setData([
                 'requires2fa' => true,
                 'method' => 'email',

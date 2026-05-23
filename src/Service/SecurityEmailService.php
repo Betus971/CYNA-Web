@@ -27,7 +27,17 @@ final class SecurityEmailService
             ->setEmailTwoFactorCodeExpiresAt(new \DateTimeImmutable('+10 minutes'));
 
         $this->entityManager->flush();
-        $this->emailVerifier->sendEmailTwoFactorCode($user, $code);
+
+        try {
+            $this->emailVerifier->sendEmailTwoFactorCode($user, $code);
+        } catch (\Throwable $exception) {
+            $this->logger->error('Unable to send email 2FA code.', [
+                'exception' => $exception,
+                'user_id' => $user->getId(),
+            ]);
+
+            throw $exception;
+        }
     }
 
     public function verifyTwoFactorCode(User $user, string $code): bool

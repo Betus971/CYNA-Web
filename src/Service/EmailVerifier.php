@@ -9,6 +9,8 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Part\DataPart;
+use Symfony\Component\Mime\Part\File;
 
 /**
  * Handles account-related transactional emails.
@@ -18,6 +20,7 @@ final class EmailVerifier
     public function __construct(
         private readonly MailerInterface $mailer,
         private readonly LoggerInterface $logger,
+        private readonly InvoicePdfService $invoicePdfService,
         #[Autowire(param: 'app.frontend_url')]
         private readonly string $frontendUrl,
         #[Autowire(param: 'app.mail_from')]
@@ -137,6 +140,21 @@ final class EmailVerifier
                 'invoice'      => $invoice,
                 'frontend_url' => rtrim($this->frontendUrl, '/'),
             ]);
+
+        // Génération et attachement du PDF de facture
+        try {
+            $pdfPath = $this->invoicePdfService->generate($invoice);
+            $email->addPart(new DataPart(
+                new File($pdfPath),
+                sprintf('facture-%s.pdf', $invoice->getNumber()),
+                'application/pdf'
+            ));
+        } catch (\Throwable $e) {
+            $this->logger->warning('Unable to attach invoice PDF to order confirmation email.', [
+                'exception'  => $e,
+                'invoice_id' => $invoice->getId(),
+            ]);
+        }
 
         try {
             $this->mailer->send($email);

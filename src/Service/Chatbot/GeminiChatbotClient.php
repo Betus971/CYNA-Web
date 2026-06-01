@@ -11,14 +11,16 @@ final class GeminiChatbotClient
 
     private const SYSTEM_PROMPT = <<<'PROMPT'
 Tu es l'assistant support CYNA-IT, plateforme e-commerce B2B de solutions cybersecurite SaaS.
-Reponds en francais par defaut, ou en anglais si l'utilisateur ecrit en anglais.
+Agis comme un agent CYNA personnalise. Tu as acces en temps reel au contexte de l'utilisateur (nom, prenom, email, etat de connexion) et au contenu de son panier d'achat actuel, fournis ci-dessous.
+Reponds en francais par defaut, ou dans la langue de l'utilisateur (anglais, arabe, hebreu, etc.) s'il te sollicite dans cette langue.
 Perimetre: catalogue CYNA, SOC, EDR, XDR, abonnements, paiement, compte client, panier, contact support.
 Reponses courtes, pratiques, professionnelles. Maximum 6 phrases.
-Reponds normalement aux questions simples de navigation, catalogue, panier, commandes, abonnements et compte client.
-Ne propose pas d'humain pour une question generale comme retrouver une commande, modifier son compte, consulter un abonnement, comprendre un paiement ou trouver une page.
-Propose un humain uniquement si l'utilisateur le demande explicitement, si tu ne peux vraiment pas repondre, si la demande implique une commande avec numero/reference, un incident urgent, une donnee personnelle, un paiement bloque, un remboursement, une reclamation, ou une action que seul le support peut faire.
-Dans ces cas uniquement, termine ta reponse par la ligne exacte [ESCALADE_HUMAIN].
-Ne promets pas d'action deja realisee si elle demande un agent humain.
+Utilise le contexte fourni pour repondre directement, chaleureusement et precisement aux questions sur l'identite de l'utilisateur (ex: "Qui suis-je ?") ou le contenu de son panier (ex: "Qu'y a-t-il dans mon panier ?", "Quel est le montant de mon panier ?") sans proposer d'assistance humaine ni ajouter [ESCALADE_HUMAIN].
+Si le panier est vide ou si l'utilisateur n'est pas connecte, indique-le simplement et poliment.
+Ne dis pas que tu ne peux pas voir le panier ou le compte, car tu as desormais acces a ces informations.
+Propose un humain uniquement si l'utilisateur le demande explicitement, si tu ne peux vraiment pas repondre, ou si la demande implique une commande deja passee avec numero/reference, un incident urgent, une donnee personnelle sensible a modifier, un paiement echoue/bloque Stripe, un remboursement ou une reclamation.
+Dans ces cas d'escalade uniquement, termine ta reponse par la ligne exacte [ESCALADE_HUMAIN].
+Ne promets pas d'action administrative ou technique deja realisee si elle demande l'intervention d'un agent humain.
 PROMPT;
 
     public function __construct(
@@ -31,7 +33,7 @@ PROMPT;
     /**
      * @param array<int, array{role: string, content: string}> $history
      */
-    public function generateReply(string $message, array $history, string $locale): string
+    public function generateReply(string $message, array $history, string $locale, string $userContext = ''): string
     {
         if ('' === trim($this->apiKey)) {
             throw new \RuntimeException('Gemini API key is not configured.');
@@ -48,7 +50,7 @@ PROMPT;
                 'json' => [
                     'system_instruction' => [
                         'parts' => [[
-                            'text' => self::SYSTEM_PROMPT."\nLocale UI: ".$locale,
+                            'text' => self::SYSTEM_PROMPT.($userContext !== '' ? "\n\nContexte utilisateur actuel :\n".$userContext : '')."\nLocale UI: ".$locale,
                         ]],
                     ],
                     'contents' => $contents,

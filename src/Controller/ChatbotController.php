@@ -5,12 +5,19 @@ namespace App\Controller;
 use App\Entity\ChatbotConversation;
 use App\Entity\ContactMessage;
 use App\Service\Chatbot\GeminiChatbotClient;
+use App\Service\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[Route('/api/chatbot', name: 'chatbot_')]
 final class ChatbotController extends AbstractController
@@ -20,20 +27,46 @@ final class ChatbotController extends AbstractController
     public function __construct(
         private readonly GeminiChatbotClient $chatbotClient,
         private readonly EntityManagerInterface $em,
+        private readonly EmailVerifier $emailVerifier,
+        private readonly RateLimiterFactory $chatbotLimiter,
+        private readonly ValidatorInterface $validator,
+        private readonly LoggerInterface $logger,
+        #[Autowire(param: 'app.support_email')]
+        private readonly string $supportEmail,
     ) {
     }
 
     #[Route('/message', name: 'message', methods: ['POST'])]
     public function message(Request $request): JsonResponse
     {
+        $limiter = $this->chatbotLimiter->create($request->getClientIp());
+        $limit = $limiter->consume();
+        if (false === $limit->isAccepted()) {
+            $retryAfter = $limit->getRetryAfter();
+            $seconds = $retryAfter ? ($retryAfter->getTimestamp() - time()) : 60;
+            throw new TooManyRequestsHttpException(
+                $seconds,
+                'Trop de messages envoyés. Veuillez patienter avant de réessayer.'
+            );
+        }
+
         $payload = json_decode($request->getContent() ?: '{}', true);
         if (!is_array($payload)) {
             return $this->json(['error' => 'Payload invalide.'], Response::HTTP_BAD_REQUEST);
         }
 
         $message = trim((string) ($payload['message'] ?? ''));
-        if (mb_strlen($message) < 2 || mb_strlen($message) > 1000) {
-            return $this->json(['error' => 'Message invalide.'], Response::HTTP_BAD_REQUEST);
+        $violations = $this->validator->validate($message, [
+            new Assert\NotBlank(),
+            new Assert\Length(min: 2, max: 1000),
+            new Assert\Regex([
+                'pattern' => '/<[^>]*script/i',
+                'match' => false,
+                'message' => 'Les injections de scripts ne sont pas autorisées.'
+            ])
+        ]);
+        if (count($violations) > 0) {
+            return $this->json(['error' => $violations[0]->getMessage()], Response::HTTP_BAD_REQUEST);
         }
 
         $locale = $this->normalizeLocale((string) ($payload['locale'] ?? 'fr'));
@@ -51,15 +84,43 @@ final class ChatbotController extends AbstractController
             return $this->escalate($message, $history, $locale, $email, $subject, $fullName);
         }
 
+        $userContext = '';
+        if (is_array($payload['currentUser'] ?? null)) {
+            $cUser = $payload['currentUser'];
+            $userContext .= sprintf("Utilisateur connecte : %s %s (%s)\n", $cUser['firstname'] ?? '', $cUser['lastname'] ?? '', $cUser['email'] ?? '');
+        } else {
+            $userContext .= "Utilisateur : Visiteur invite non connecte\n";
+        }
+
+        if (is_array($payload['cartItems'] ?? null) && count($payload['cartItems']) > 0) {
+            $userContext .= "Contenu du panier actuel de l'utilisateur :\n";
+            foreach ($payload['cartItems'] as $item) {
+                $userContext .= sprintf(
+                    "- %s (Quantite : %d, Duree : %d mois, Prix unitaire : %s EUR)\n",
+                    $item['name'] ?? 'Produit',
+                    $item['quantity'] ?? 1,
+                    $item['durationMonths'] ?? 1,
+                    $item['price'] ?? '0'
+                );
+            }
+        } else {
+            $userContext .= "Panier actuel de l'utilisateur : Vide\n";
+        }
+
         try {
-            $answer = $this->chatbotClient->generateReply($message, $history, $locale);
+            $answer = $this->chatbotClient->generateReply($message, $history, $locale, $userContext);
             $shouldEscalate = str_contains($answer, self::ESCALATION_MARKER) || $this->isExplicitSupportRequest($message);
             $answer = trim(str_replace(self::ESCALATION_MARKER, '', $answer));
             $statusCode = Response::HTTP_OK;
-        } catch (\RuntimeException) {
-            $answer = 'Le chatbot est temporairement indisponible. Vous pouvez transmettre toute la conversation a notre support.';
-            $shouldEscalate = true;
-            $statusCode = Response::HTTP_SERVICE_UNAVAILABLE;
+        } catch (\Throwable $e) {
+            $this->logger->error('Gemini API error occurred.', [
+                'exception' => $e->getMessage(),
+                'message' => $message,
+            ]);
+
+            return $this->json([
+                'error' => 'Le service de chatbot est temporairement indisponible.'
+            ], Response::HTTP_SERVICE_UNAVAILABLE);
         }
 
         $conversation = $this->storeConversation(
@@ -116,8 +177,13 @@ final class ChatbotController extends AbstractController
             flush: false,
         );
 
+        $conversation->setContactMessage($contact);
+
         $this->em->persist($contact);
         $this->em->flush();
+
+        // Envoi de la notification par email au support configuré
+        $this->emailVerifier->sendChatbotEscalationEmail($conversation, $this->supportEmail);
 
         return $this->json([
             'answer' => $answer,

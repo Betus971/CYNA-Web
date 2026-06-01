@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Invoice;
 use App\Entity\Order;
 use App\Entity\User;
+use App\Entity\ChatbotConversation;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -182,5 +183,28 @@ final class EmailVerifier
             ]);
 
         $this->mailer->send($email);
+    }
+
+    public function sendChatbotEscalationEmail(ChatbotConversation $conversation, string $recipient): void
+    {
+        $email = (new TemplatedEmail())
+            ->from($this->mailFrom)
+            ->to($recipient)
+            ->subject(sprintf('CYNA - Escalade Support : %s', $conversation->getSubject() ?? 'Demande Chatbot'))
+            ->htmlTemplate('emails/chatbot_escalation.html.twig')
+            ->context([
+                'conversation' => $conversation,
+                'transcript'   => $conversation->getTranscript(),
+                'sent_at'      => new \DateTimeImmutable(),
+            ]);
+
+        try {
+            $this->mailer->send($email);
+        } catch (\Throwable $e) {
+            $this->logger->error('Unable to send chatbot escalation email.', [
+                'exception' => $e,
+                'conversation_id' => $conversation->getId(),
+            ]);
+        }
     }
 }

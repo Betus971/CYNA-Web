@@ -9,6 +9,7 @@
 parameters:
     app.frontend_url: '%env(string:FRONTEND_URL)%'
     app.mail_from:    '%env(string:MAIL_FROM)%'
+    app.support_email: '%env(default:app.mail_from:SUPPORT_EMAIL)%'
     app.gemini_default_model: 'gemini-3.1-flash-lite-preview'
     app.stripe_currency: 'eur'
     app.invoice_dir: '%kernel.project_dir%/var/invoices'

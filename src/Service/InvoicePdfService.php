@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Invoice;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Twig\Environment;
 
 /**
@@ -15,6 +16,8 @@ final class InvoicePdfService
     public function __construct(
         private readonly Environment $twig,
         private readonly string $invoiceDir,
+        #[Autowire('%kernel.project_dir%')]
+        private readonly string $projectDir,
     ) {
     }
 
@@ -29,8 +32,9 @@ final class InvoicePdfService
         // On régénère si le fichier n'existe pas encore
         if (!file_exists($path)) {
             $html = $this->twig->render('invoices/invoice_pdf.html.twig', [
-                'invoice' => $invoice,
-                'order'   => $invoice->getOrder(),
+                'invoice'     => $invoice,
+                'order'       => $invoice->getOrder(),
+                'logoDataUri' => $this->getLogoDataUri(),
             ]);
 
             $options = new Options();
@@ -55,5 +59,20 @@ final class InvoicePdfService
     public function getPublicPath(Invoice $invoice): string
     {
         return sprintf('/invoices/%s.pdf', $invoice->getNumber());
+    }
+
+    private function getLogoDataUri(): ?string
+    {
+        $path = $this->projectDir . '/public/cyna-logo-icon.png';
+        if (!is_file($path)) {
+            return null;
+        }
+
+        $content = file_get_contents($path);
+        if ($content === false) {
+            return null;
+        }
+
+        return 'data:image/png;base64,' . base64_encode($content);
     }
 }

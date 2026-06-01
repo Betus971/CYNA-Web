@@ -5,137 +5,144 @@
     <title>Facture {{ invoice.number }}</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #1e293b; background: #fff; }
-        .page { padding: 40px; max-width: 800px; margin: 0 auto; }
-
-        /* Header */
-        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; border-bottom: 3px solid #0f172a; padding-bottom: 20px; }
-        .logo { font-size: 28px; font-weight: 700; color: #0f172a; letter-spacing: -0.5px; }
-        .logo-sub { font-size: 12px; color: #64748b; margin-top: 4px; }
-        .invoice-meta { text-align: right; }
-        .invoice-title { font-size: 22px; font-weight: 700; color: #0f172a; }
-        .invoice-number { font-size: 16px; color: #2563eb; font-weight: 600; margin-top: 4px; }
-        .invoice-date { font-size: 12px; color: #64748b; margin-top: 4px; }
-
-        /* Parties */
-        .parties { display: flex; justify-content: space-between; margin-bottom: 36px; gap: 40px; }
-        .party { flex: 1; }
-        .party-label { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #64748b; font-weight: 600; margin-bottom: 8px; }
-        .party-name { font-weight: 700; font-size: 14px; color: #0f172a; margin-bottom: 4px; }
-        .party-info { font-size: 12px; color: #475569; line-height: 1.6; }
-
-        /* Tableau lignes */
-        table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
-        thead th { background: #0f172a; color: #fff; padding: 10px 12px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; text-align: left; }
-        thead th:last-child { text-align: right; }
-        tbody tr:nth-child(even) { background: #f8fafc; }
-        tbody td { padding: 10px 12px; font-size: 13px; color: #334155; border-bottom: 1px solid #e2e8f0; }
-        tbody td:last-child { text-align: right; font-weight: 600; }
-
-        /* Totaux */
-        .totals { margin-left: auto; width: 260px; }
-        .total-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; color: #475569; }
-        .total-row.main { font-size: 16px; font-weight: 700; color: #0f172a; border-top: 2px solid #0f172a; padding-top: 10px; margin-top: 4px; }
-
-        /* Ref commande */
-        .order-ref { background: #f1f5f9; border-radius: 6px; padding: 14px 16px; margin-bottom: 36px; font-size: 12px; color: #64748b; }
-        .order-ref strong { color: #0f172a; }
-
-        /* Footer */
-        .footer { margin-top: 60px; border-top: 1px solid #e2e8f0; padding-top: 16px; font-size: 11px; color: #94a3b8; text-align: center; }
+        body { font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #101828; background: #fff; }
+        .page { padding: 34px; max-width: 800px; margin: 0 auto; }
+        .hero { border-radius: 18px; background: #070b1f; color: #fff; padding: 24px 26px; margin-bottom: 28px; }
+        .brand-row { width: 100%; }
+        .brand-cell { width: 58%; vertical-align: top; }
+        .meta-cell { width: 42%; text-align: right; vertical-align: top; }
+        .brand { display: inline-block; vertical-align: middle; }
+        .brand-logo { width: 42px; height: 42px; display: inline-block; vertical-align: middle; margin-right: 10px; }
+        .brand-name { display: inline-block; vertical-align: middle; font-size: 27px; font-weight: 800; letter-spacing: .02em; }
+        .tagline { margin-top: 12px; color: #a9b4cc; line-height: 1.5; max-width: 360px; }
+        .kicker { color: #38c7f4; font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+        .invoice-title { margin-top: 6px; font-size: 28px; font-weight: 800; }
+        .invoice-number { margin-top: 8px; color: #38c7f4; font-size: 15px; font-weight: 700; }
+        .invoice-date { margin-top: 4px; color: #c8d2e6; font-size: 12px; }
+        .parties { width: 100%; margin-bottom: 24px; border-collapse: separate; border-spacing: 0 0; }
+        .party { width: 50%; vertical-align: top; padding: 18px; border: 1px solid #d9e2f1; background: #f8fbff; }
+        .party:first-child { border-right: 0; border-radius: 12px 0 0 12px; }
+        .party:last-child { border-radius: 0 12px 12px 0; }
+        .party-label { color: #31b9e7; font-size: 11px; text-transform: uppercase; letter-spacing: .1em; font-weight: 800; margin-bottom: 8px; }
+        .party-name { font-weight: 800; font-size: 14px; color: #070b1f; margin-bottom: 5px; }
+        .party-info { font-size: 12px; color: #475467; line-height: 1.6; }
+        .order-ref { border: 1px solid #bdefff; background: #ecfbff; border-radius: 12px; padding: 13px 16px; margin-bottom: 24px; font-size: 12px; color: #475467; }
+        .order-ref strong { color: #070b1f; }
+        table.lines { width: 100%; border-collapse: collapse; margin-bottom: 24px; overflow: hidden; }
+        .lines thead th { background: #070b1f; color: #fff; padding: 11px 10px; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; text-align: left; }
+        .lines thead th:first-child { border-radius: 10px 0 0 0; }
+        .lines thead th:last-child { border-radius: 0 10px 0 0; text-align: right; }
+        .lines tbody tr:nth-child(even) { background: #f8fbff; }
+        .lines tbody td { padding: 11px 10px; font-size: 12px; color: #344054; border-bottom: 1px solid #e6edf7; }
+        .lines tbody td:last-child { text-align: right; font-weight: 800; color: #070b1f; }
+        .total-table { width: 290px; margin-left: auto; border-collapse: collapse; }
+        .total-table td { padding: 7px 0; font-size: 13px; color: #475467; }
+        .total-table td:last-child { text-align: right; font-weight: 700; color: #070b1f; }
+        .total-table .main td { border-top: 2px solid #070b1f; padding-top: 12px; font-size: 17px; font-weight: 800; color: #070b1f; }
+        .footer { margin-top: 52px; border-top: 1px solid #d9e2f1; padding-top: 16px; font-size: 11px; color: #667085; line-height: 1.55; text-align: center; }
+        .footer strong { color: #070b1f; }
     </style>
 </head>
 <body>
 <div class="page">
-    <!-- En-tête -->
-    <div class="header">
-        <div>
-            <div class="logo">CYNA</div>
-            <div class="logo-sub">Cybersécurité SaaS pour entreprises</div>
-        </div>
-        <div class="invoice-meta">
-            <div class="invoice-title">FACTURE</div>
-            <div class="invoice-number">{{ invoice.number }}</div>
-            <div class="invoice-date">Émise le {{ invoice.issuedAt|date('d/m/Y') }}</div>
-        </div>
+    <div class="hero">
+        <table class="brand-row">
+            <tr>
+                <td class="brand-cell">
+                    <div class="brand">
+                        {% if logoDataUri %}
+                            <img class="brand-logo" src="{{ logoDataUri }}" alt="CYNA">
+                        {% endif %}
+                        <span class="brand-name">CYNA</span>
+                    </div>
+                    <div class="tagline">Solutions cyber lisibles, facture claire et suivi professionnel de vos services SaaS.</div>
+                </td>
+                <td class="meta-cell">
+                    <div class="kicker">Document comptable</div>
+                    <div class="invoice-title">Facture</div>
+                    <div class="invoice-number">{{ invoice.number }}</div>
+                    <div class="invoice-date">Emise le {{ invoice.issuedAt|date('d/m/Y') }}</div>
+                </td>
+            </tr>
+        </table>
     </div>
 
-    <!-- Émetteur / Client -->
-    <div class="parties">
-        <div class="party">
-            <div class="party-label">Émetteur</div>
-            <div class="party-name">CYNA SAS</div>
-            <div class="party-info">
-                123 Avenue de la Cybersécurité<br>
-                75001 Paris — France<br>
-                contact@cyna.fr<br>
-                TVA : FR00000000000
-            </div>
-        </div>
-        <div class="party">
-            <div class="party-label">Facturé à</div>
-            {% set user = order.user %}
-            <div class="party-name">{{ user.firstname }} {{ user.lastname }}</div>
-            <div class="party-info">
-                {{ user.email }}
-                {% if order.billingAddress %}
-                <br>{{ order.billingAddress.street }}
-                <br>{{ order.billingAddress.postalCode }} {{ order.billingAddress.city }}
-                {% if order.billingAddress.country %}<br>{{ order.billingAddress.country }}{% endif %}
-                {% endif %}
-            </div>
-        </div>
-    </div>
+    <table class="parties">
+        <tr>
+            <td class="party">
+                <div class="party-label">Emetteur</div>
+                <div class="party-name">CYNA SAS</div>
+                <div class="party-info">
+                    28 rue de Rivoli<br>
+                    75004 Paris - France<br>
+                    hello@cyna.fr<br>
+                    TVA : FR00 000000000
+                </div>
+            </td>
+            <td class="party">
+                <div class="party-label">Facture a</div>
+                {% set user = order.user %}
+                <div class="party-name">{{ user.firstname }} {{ user.lastname }}</div>
+                <div class="party-info">
+                    {{ user.email }}
+                    {% if order.billingAddress %}
+                        <br>{{ order.billingAddress.street }}
+                        <br>{{ order.billingAddress.postalCode }} {{ order.billingAddress.city }}
+                        {% if order.billingAddress.country %}<br>{{ order.billingAddress.country }}{% endif %}
+                    {% endif %}
+                </div>
+            </td>
+        </tr>
+    </table>
 
-    <!-- Référence commande -->
     <div class="order-ref">
-        Commande : <strong>{{ order.reference }}</strong> &nbsp;·&nbsp;
-        Payée le : <strong>{{ order.paidAt ? order.paidAt|date('d/m/Y') : '—' }}</strong>
+        Commande : <strong>{{ order.reference }}</strong> &nbsp;|&nbsp;
+        Paiement : <strong>{{ order.paidAt ? order.paidAt|date('d/m/Y') : 'en attente' }}</strong>
     </div>
 
-    <!-- Lignes de commande -->
-    <table>
+    <table class="lines">
         <thead>
             <tr>
-                <th style="width:50%">Description</th>
-                <th style="width:15%">Durée</th>
-                <th style="width:10%">Qté</th>
+                <th style="width:46%">Description</th>
+                <th style="width:14%">Duree</th>
+                <th style="width:10%">Qte</th>
                 <th style="width:15%">Prix unit. HT</th>
-                <th style="width:10%">Total HT</th>
+                <th style="width:15%">Total HT</th>
             </tr>
         </thead>
         <tbody>
             {% for item in order.items %}
-            <tr>
-                <td>{{ item.productNameSnapshot }}</td>
-                <td>{{ item.durationMonths ? item.durationMonths ~ ' mois' : '—' }}</td>
-                <td>{{ item.quantity }}</td>
-                <td>{{ item.unitPriceSnapshot }} €</td>
-                <td>{{ (item.unitPriceSnapshot * item.quantity)|number_format(2, ',', ' ') }} €</td>
-            </tr>
+                {% set duration = item.durationMonths ?: 1 %}
+                {% set lineTotal = item.unitPriceSnapshot * item.quantity * duration %}
+                <tr>
+                    <td>{{ item.productNameSnapshot }}</td>
+                    <td>{{ duration }} mois</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.unitPriceSnapshot|number_format(2, ',', ' ') }} &euro;</td>
+                    <td>{{ lineTotal|number_format(2, ',', ' ') }} &euro;</td>
+                </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    <!-- Totaux -->
-    <div class="totals">
-        <div class="total-row">
-            <span>Sous-total HT</span>
-            <span>{{ invoice.totalAmount }} €</span>
-        </div>
-        <div class="total-row">
-            <span>TVA (20 %)</span>
-            <span>{{ invoice.taxAmount }} €</span>
-        </div>
-        <div class="total-row main">
-            <span>Total TTC</span>
-            <span>{{ (invoice.totalAmount + invoice.taxAmount)|number_format(2, ',', ' ') }} €</span>
-        </div>
-    </div>
+    <table class="total-table">
+        <tr>
+            <td>Sous-total HT</td>
+            <td>{{ invoice.totalAmount|number_format(2, ',', ' ') }} &euro;</td>
+        </tr>
+        <tr>
+            <td>TVA (20 %)</td>
+            <td>{{ invoice.taxAmount|number_format(2, ',', ' ') }} &euro;</td>
+        </tr>
+        <tr class="main">
+            <td>Total TTC</td>
+            <td>{{ (invoice.totalAmount + invoice.taxAmount)|number_format(2, ',', ' ') }} &euro;</td>
+        </tr>
+    </table>
 
-    <!-- Footer -->
     <div class="footer">
-        CYNA SAS · Document généré automatiquement · Non soumis au droit de rétractation (services B2B)
+        <strong>CYNA SAS</strong> - Document genere automatiquement - Services numeriques B2B.<br>
+        Merci pour votre confiance. Cette facture est disponible depuis votre espace client.
     </div>
 </div>
 </body>

@@ -45,12 +45,12 @@ class SaasService
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['saas_service:read', 'category:read', 'order:read', 'order_item:read'])]
+    #[Groups(['saas_service:read', 'category:read', 'order:read', 'order_item:read', 'cart:read', 'cart_item:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    #[Groups(['saas_service:read', 'saas_service:write', 'category:read', 'order:read', 'order_item:read'])]
+    #[Groups(['saas_service:read', 'saas_service:write', 'category:read', 'order:read', 'order_item:read', 'cart:read', 'cart_item:read'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -65,15 +65,15 @@ class SaasService
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
     #[Assert\NotBlank]
     #[Assert\PositiveOrZero]
-    #[Groups(['saas_service:read', 'saas_service:write', 'category:read', 'order:read', 'order_item:read'])]
+    #[Groups(['saas_service:read', 'saas_service:write', 'category:read', 'order:read', 'order_item:read', 'cart:read', 'cart_item:read'])]
     private ?string $price = null;
 
     #[ORM\Column(options: ['default' => true])]
-    #[Groups(['saas_service:read', 'saas_service:write', 'category:read'])]
+    #[Groups(['saas_service:read', 'saas_service:write', 'category:read', 'cart:read', 'cart_item:read'])]
     private bool $isAvailable = true;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['saas_service:read', 'saas_service:write', 'category:read'])]
+    #[Groups(['saas_service:read', 'saas_service:write', 'category:read', 'cart:read', 'cart_item:read'])]
     private ?int $priority = null;
 
     #[ORM\Column(length: 255, nullable: true)]

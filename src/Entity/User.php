@@ -157,6 +157,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
         $this->createdAt = new \DateTimeImmutable();
     }
 
+    public function __toString(): string
+    {
+        $name = trim(sprintf('%s %s', $this->firstname ?? '', $this->lastname ?? ''));
+
+        return $name !== '' ? $name : ($this->email ?? 'User #' . $this->id);
+    }
+
     public function getId(): ?int
     {
         return $this->id;

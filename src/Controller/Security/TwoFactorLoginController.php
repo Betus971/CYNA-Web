@@ -3,9 +3,9 @@
 namespace App\Controller\Security;
 
 use App\Repository\UserRepository;
+use App\Service\GoogleTwoFactorChallengeService;
 use App\Service\SecurityEmailService;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
-use Psr\Cache\CacheItemPoolInterface;
 use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Google\GoogleAuthenticatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,7 +23,7 @@ class TwoFactorLoginController extends AbstractController
         GoogleAuthenticatorInterface $googleAuthenticator,
         JWTTokenManagerInterface $jwtManager,
         SecurityEmailService $securityEmailService,
-        CacheItemPoolInterface $cache
+        GoogleTwoFactorChallengeService $googleTwoFactorChallengeService
     ): JsonResponse {
         $data = json_decode($request->getContent(), true) ?? [];
         $email = (string) ($data['email'] ?? '');
@@ -37,10 +37,7 @@ class TwoFactorLoginController extends AbstractController
         }
 
         if ('google' === $provider) {
-            $challengeKey = 'google_2fa_' . hash('sha256', $challenge);
-            $challengeItem = $cache->getItem($challengeKey);
-
-            if (!$challengeItem->isHit() || $challengeItem->get() !== $email) {
+            if (!$googleTwoFactorChallengeService->isValid($challenge, $email)) {
                 return $this->json(['error' => 'Challenge Google invalide ou expire.'], 401);
             }
         }
@@ -69,10 +66,6 @@ class TwoFactorLoginController extends AbstractController
         $token = $jwtManager->create($user);
         $securityEmailService->sendLoginNotification($user, $request);
 
-        if ('google' === $provider) {
-            $cache->deleteItem('google_2fa_' . hash('sha256', $challenge));
-        }
-
         return $this->json(['token' => $token]);
     }
 
@@ -82,7 +75,7 @@ class TwoFactorLoginController extends AbstractController
         UserRepository $userRepository,
         UserPasswordHasherInterface $passwordHasher,
         SecurityEmailService $securityEmailService,
-        CacheItemPoolInterface $cache
+        GoogleTwoFactorChallengeService $googleTwoFactorChallengeService
     ): JsonResponse {
         $data = json_decode($request->getContent(), true) ?? [];
         $email = (string) ($data['email'] ?? '');
@@ -95,9 +88,7 @@ class TwoFactorLoginController extends AbstractController
         }
 
         if ('google' === $provider) {
-            $challengeItem = $cache->getItem('google_2fa_' . hash('sha256', $challenge));
-
-            if (!$challengeItem->isHit() || $challengeItem->get() !== $email) {
+            if (!$googleTwoFactorChallengeService->isValid($challenge, $email)) {
                 return $this->json(['error' => 'Challenge Google invalide ou expire.'], 401);
             }
         }

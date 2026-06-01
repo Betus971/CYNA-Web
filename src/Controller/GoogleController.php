@@ -3,10 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Service\GoogleTwoFactorChallengeService;
 use App\Service\SecurityEmailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
-use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -29,7 +29,7 @@ class GoogleController extends AbstractController
         private readonly EntityManagerInterface $entityManager,
         private readonly JWTTokenManagerInterface $jwtManager,
         private readonly SecurityEmailService $securityEmailService,
-        private readonly CacheItemPoolInterface $cache,
+        private readonly GoogleTwoFactorChallengeService $googleTwoFactorChallengeService,
         private readonly LoggerInterface $logger,
         private readonly RouterInterface $router,
         #[Autowire('%env(string:GOOGLE_CLIENT_ID)%')]
@@ -313,18 +313,12 @@ class GoogleController extends AbstractController
      */
     private function buildTwoFactorPayload(User $user, string $method): array
     {
-        $challenge = bin2hex(random_bytes(32));
-        $item = $this->cache->getItem('google_2fa_' . hash('sha256', $challenge));
-        $item->set($user->getEmail());
-        $item->expiresAfter(600);
-        $this->cache->save($item);
-
         return [
             'requires2fa' => true,
             'method' => $method,
             'provider' => 'google',
             'email' => (string) $user->getEmail(),
-            'challenge' => $challenge,
+            'challenge' => $this->googleTwoFactorChallengeService->create($user),
         ];
     }
 

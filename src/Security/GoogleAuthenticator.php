@@ -3,13 +3,13 @@
 namespace App\Security;
 
 use App\Entity\User;
+use App\Service\GoogleTwoFactorChallengeService;
 use App\Service\SecurityEmailService;
 use Doctrine\ORM\EntityManagerInterface;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\OAuth2Authenticator;
 use League\OAuth2\Client\Provider\GoogleUser;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
-use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,7 +26,7 @@ class GoogleAuthenticator extends OAuth2Authenticator
         private readonly EntityManagerInterface $em,
         private readonly JWTTokenManagerInterface $jwtManager,
         private readonly SecurityEmailService $securityEmailService,
-        private readonly CacheItemPoolInterface $cache,
+        private readonly GoogleTwoFactorChallengeService $googleTwoFactorChallengeService,
         private readonly string $frontendCallbackUrl,
     ) {
     }
@@ -95,18 +95,12 @@ class GoogleAuthenticator extends OAuth2Authenticator
 
     private function redirectToTwoFactorChallenge(User $user, string $method): RedirectResponse
     {
-        $challenge = bin2hex(random_bytes(32));
-        $item = $this->cache->getItem('google_2fa_' . hash('sha256', $challenge));
-        $item->set($user->getEmail());
-        $item->expiresAfter(600);
-        $this->cache->save($item);
-
         return new RedirectResponse($this->frontendCallbackUrl . '?' . http_build_query([
             'requires2fa' => '1',
             'method' => $method,
             'provider' => 'google',
             'email' => $user->getEmail(),
-            'challenge' => $challenge,
+            'challenge' => $this->googleTwoFactorChallengeService->create($user),
         ]));
     }
 }

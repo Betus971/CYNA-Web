@@ -70,6 +70,11 @@ class ChatbotConversation
     #[Groups(['chatbot_conversation:read', 'chatbot_conversation:write'])]
     private bool $handled = false;
 
+    #[ORM\ManyToOne(targetEntity: ContactMessage::class)]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
+    #[Groups(['chatbot_conversation:read'])]
+    private ?ContactMessage $contactMessage = null;
+
     #[ORM\Column]
     #[Groups(['chatbot_conversation:read'])]
     private ?\DateTimeImmutable $createdAt = null;
@@ -77,6 +82,18 @@ class ChatbotConversation
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+    }
+
+    public function getContactMessage(): ?ContactMessage
+    {
+        return $this->contactMessage;
+    }
+
+    public function setContactMessage(?ContactMessage $contactMessage): static
+    {
+        $this->contactMessage = $contactMessage;
+
+        return $this;
     }
 
     public function getId(): ?int

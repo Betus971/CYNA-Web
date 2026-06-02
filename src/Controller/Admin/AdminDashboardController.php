@@ -2,6 +2,8 @@
 
 namespace App\Controller\Admin;
 
+use App\Repository\OrderRepository;
+use App\Repository\UserRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -12,9 +14,24 @@ use Symfony\Component\HttpFoundation\Response;
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]
 class AdminDashboardController extends AbstractDashboardController
 {
+    public function __construct(
+        private readonly OrderRepository $orderRepository,
+        private readonly UserRepository $userRepository,
+    ) {}
+
     public function index(): Response
     {
-        return $this->render('admin/dashboard.html.twig');
+        $now  = new \DateTimeImmutable();
+        $from = new \DateTimeImmutable('first day of this month 00:00:00');
+        $to   = new \DateTimeImmutable('last day of this month 23:59:59');
+
+        return $this->render('admin/dashboard.html.twig', [
+            'revenue_total'   => $this->orderRepository->totalRevenueAllTime(),
+            'revenue_month'   => $this->orderRepository->revenueThisMonth(),
+            'orders_paid'     => $this->orderRepository->countPaidOrders(),
+            'recent_orders'   => $this->orderRepository->findRecentPaid(5),
+            'current_month'   => $now->format('F Y'),
+        ]);
     }
 
     public function configureDashboard(): Dashboard

@@ -116,4 +116,62 @@ class OrderRepository extends ServiceEntityRepository
 
         return (string) ($result ?? '0.00');
     }
+
+    /** Chiffre d'affaires total toutes périodes confondues. */
+    public function totalRevenueAllTime(): string
+    {
+        $result = $this->createQueryBuilder('o')
+            ->select('SUM(o.totalPrice)')
+            ->andWhere('o.status IN (:paid)')
+            ->setParameter('paid', [OrderStatus::PAID, OrderStatus::ACTIVE, OrderStatus::RENEWED])
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return number_format((float) ($result ?? 0), 2, '.', ' ');
+    }
+
+    /** Nombre de commandes payées au total. */
+    public function countPaidOrders(): int
+    {
+        return (int) $this->createQueryBuilder('o')
+            ->select('COUNT(o.id)')
+            ->andWhere('o.status IN (:paid)')
+            ->setParameter('paid', [OrderStatus::PAID, OrderStatus::ACTIVE, OrderStatus::RENEWED])
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /** Chiffre d'affaires du mois en cours. */
+    public function revenueThisMonth(): string
+    {
+        $from = new \DateTimeImmutable('first day of this month 00:00:00');
+        $to   = new \DateTimeImmutable('last day of this month 23:59:59');
+
+        $result = $this->createQueryBuilder('o')
+            ->select('SUM(o.totalPrice)')
+            ->andWhere('o.createdAt BETWEEN :from AND :to')
+            ->andWhere('o.status IN (:paid)')
+            ->setParameter('from', $from)
+            ->setParameter('to', $to)
+            ->setParameter('paid', [OrderStatus::PAID, OrderStatus::ACTIVE, OrderStatus::RENEWED])
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return number_format((float) ($result ?? 0), 2, '.', ' ');
+    }
+
+    /**
+     * 5 dernières commandes payées.
+     * @return Order[]
+     */
+    public function findRecentPaid(int $limit = 5): array
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.status IN (:paid)')
+            ->setParameter('paid', [OrderStatus::PAID, OrderStatus::ACTIVE, OrderStatus::RENEWED])
+            ->orderBy('o.paidAt', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
 }

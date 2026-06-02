@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\ChatbotConversation;
 use App\Entity\ContactMessage;
-use App\Service\Chatbot\GeminiChatbotClient;
+use App\Service\Chatbot\MistralChatbotClient;
 use App\Service\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -25,7 +25,7 @@ final class ChatbotController extends AbstractController
     private const ESCALATION_MARKER = '[ESCALADE_HUMAIN]';
 
     public function __construct(
-        private readonly GeminiChatbotClient $chatbotClient,
+        private readonly MistralChatbotClient $chatbotClient,
         private readonly EntityManagerInterface $em,
         private readonly EmailVerifier $emailVerifier,
         private readonly RateLimiterFactory $chatbotLimiter,

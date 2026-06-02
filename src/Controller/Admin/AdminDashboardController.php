@@ -3,7 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Repository\OrderRepository;
-use App\Repository\UserRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -16,7 +15,6 @@ class AdminDashboardController extends AbstractDashboardController
 {
     public function __construct(
         private readonly OrderRepository $orderRepository,
-        private readonly UserRepository $userRepository,
     ) {}
 
     public function index(): Response

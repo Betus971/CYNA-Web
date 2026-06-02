@@ -59,11 +59,11 @@ final class ChatbotController extends AbstractController
         $violations = $this->validator->validate($message, [
             new Assert\NotBlank(),
             new Assert\Length(min: 2, max: 1000),
-            new Assert\Regex([
-                'pattern' => '/<[^>]*script/i',
-                'match' => false,
-                'message' => 'Les injections de scripts ne sont pas autorisées.'
-            ])
+            new Assert\Regex(
+                pattern: '/<[^>]*script/i',
+                match: false,
+                message: 'Les injections de scripts ne sont pas autorisées.',
+            ),
         ]);
         if (count($violations) > 0) {
             return $this->json(['error' => $violations[0]->getMessage()], Response::HTTP_BAD_REQUEST);

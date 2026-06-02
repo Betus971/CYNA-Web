@@ -41,4 +41,10 @@
 
     <extensions>
     </extensions>
+
+    <coverage includeUncoveredFiles="true">
+        <report>
+            <html outputDirectory="var/coverage/html" lowUpperBound="50" highLowerBound="80"/>
+        </report>
+    </coverage>
 </phpunit>

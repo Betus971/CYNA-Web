@@ -91,6 +91,8 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
             "importmap:install": "symfony-cmd"
         },
+        "test": "php bin/phpunit --testsuite \"Project Test Suite\"",
+        "test:coverage": "php bin/phpunit --testsuite \"Project Test Suite\" --coverage-html var/coverage/html",
         "post-install-cmd": [
             "@auto-scripts"
         ],

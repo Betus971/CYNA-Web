@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\ChatbotConversation;
 use App\Entity\ContactMessage;
+use App\Entity\User;
+use App\Repository\OrderRepository;
 use App\Service\Chatbot\MistralChatbotClient;
 use App\Service\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
@@ -27,6 +29,7 @@ final class ChatbotController extends AbstractController
     public function __construct(
         private readonly MistralChatbotClient $chatbotClient,
         private readonly EntityManagerInterface $em,
+        private readonly OrderRepository $orderRepository,
         private readonly EmailVerifier $emailVerifier,
         private readonly RateLimiterFactory $chatbotLimiter,
         private readonly ValidatorInterface $validator,
@@ -85,15 +88,60 @@ final class ChatbotController extends AbstractController
         }
 
         $userContext = '';
-        if (is_array($payload['currentUser'] ?? null)) {
+
+        // Contexte utilisateur connecté
+        /** @var User|null $authUser */
+        $authUser = $this->getUser();
+        if ($authUser instanceof User) {
+            $userContext .= sprintf(
+                "Utilisateur connecte : %s %s (email : %s)\n",
+                $authUser->getFirstname() ?? '',
+                $authUser->getLastname() ?? '',
+                $authUser->getEmail() ?? ''
+            );
+
+            // Commandes et factures récentes (5 dernières de cet utilisateur)
+            $recentOrders = $this->orderRepository->findRecentPaid(5, $authUser);
+            if (!empty($recentOrders)) {
+                $userContext .= "\nDernieres commandes payees :\n";
+                foreach ($recentOrders as $order) {
+                    $userContext .= sprintf(
+                        "- Ref: %s | Montant: %s EUR | Date: %s | Statut: %s",
+                        $order->getReference(),
+                        $order->getTotalPrice(),
+                        $order->getPaidAt()?->format('d/m/Y') ?? 'N/A',
+                        $order->getStatus()->value
+                    );
+                    $invoice = $this->em->getRepository(\App\Entity\Invoice::class)->findOneBy(['order' => $order]);
+                    if ($invoice) {
+                        $userContext .= sprintf(" | Facture: %s", $invoice->getNumber());
+                    }
+                    $userContext .= "\n";
+
+                    // Services achetés dans cette commande
+                    foreach ($order->getItems() as $item) {
+                        $userContext .= sprintf(
+                            "  * %s x%d (%d mois) - %s EUR\n",
+                            $item->getProductNameSnapshot(),
+                            $item->getQuantity(),
+                            $item->getDurationMonths() ?? 1,
+                            $item->getUnitPriceSnapshot()
+                        );
+                    }
+                }
+            } else {
+                $userContext .= "Commandes : aucune commande payee pour cet utilisateur.\n";
+            }
+        } elseif (is_array($payload['currentUser'] ?? null)) {
             $cUser = $payload['currentUser'];
-            $userContext .= sprintf("Utilisateur connecte : %s %s (%s)\n", $cUser['firstname'] ?? '', $cUser['lastname'] ?? '', $cUser['email'] ?? '');
+            $userContext .= sprintf("Utilisateur connecte (contexte front) : %s %s (%s)\n", $cUser['firstname'] ?? '', $cUser['lastname'] ?? '', $cUser['email'] ?? '');
         } else {
-            $userContext .= "Utilisateur : Visiteur invite non connecte\n";
+            $userContext .= "Utilisateur : Visiteur invite non connecte.\n";
         }
 
+        // Panier
         if (is_array($payload['cartItems'] ?? null) && count($payload['cartItems']) > 0) {
-            $userContext .= "Contenu du panier actuel de l'utilisateur :\n";
+            $userContext .= "\nContenu du panier actuel :\n";
             foreach ($payload['cartItems'] as $item) {
                 $userContext .= sprintf(
                     "- %s (Quantite : %d, Duree : %d mois, Prix unitaire : %s EUR)\n",
@@ -104,7 +152,7 @@ final class ChatbotController extends AbstractController
                 );
             }
         } else {
-            $userContext .= "Panier actuel de l'utilisateur : Vide\n";
+            $userContext .= "Panier actuel : Vide.\n";
         }
 
         try {

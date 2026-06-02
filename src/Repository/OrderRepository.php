@@ -161,17 +161,21 @@ class OrderRepository extends ServiceEntityRepository
     }
 
     /**
-     * 5 dernières commandes payées.
+     * Dernières commandes payées — globales ou filtrées par utilisateur.
      * @return Order[]
      */
-    public function findRecentPaid(int $limit = 5): array
+    public function findRecentPaid(int $limit = 5, ?object $user = null): array
     {
-        return $this->createQueryBuilder('o')
+        $qb = $this->createQueryBuilder('o')
             ->andWhere('o.status IN (:paid)')
             ->setParameter('paid', [OrderStatus::PAID, OrderStatus::ACTIVE, OrderStatus::RENEWED])
             ->orderBy('o.paidAt', 'DESC')
-            ->setMaxResults($limit)
-            ->getQuery()
-            ->getResult();
+            ->setMaxResults($limit);
+
+        if ($user !== null) {
+            $qb->andWhere('o.user = :user')->setParameter('user', $user);
+        }
+
+        return $qb->getQuery()->getResult();
     }
 }

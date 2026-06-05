@@ -47,9 +47,10 @@ final class AppFixtures extends Fixture
         $this->loadPromoCodes($manager);
 
         // ── Utilisateurs + données transactionnelles ─────────────────────────────
-        [$admin, $sophie, $thomas] = $this->loadUsers($manager);
+        [$admin, $sophie, $thomas, $juliann] = $this->loadUsers($manager);
         $this->loadSophieData($manager, $sophie, $services);
         $this->loadThomasData($manager, $thomas, $services);
+        $this->loadJuliannData($manager, $juliann, $services);
 
         $manager->flush();
     }
@@ -200,13 +201,14 @@ final class AppFixtures extends Fixture
     // Utilisateurs
     // ─────────────────────────────────────────────────────────────────────────────
 
-    /** @return array{0: User, 1: User, 2: User} */
+    /** @return array{0: User, 1: User, 2: User, 3: User} */
     private function loadUsers(ObjectManager $manager): array
     {
         $definitions = [
-            ['admin@cyna.local',  'AdminCYNA12!@',  'Admin',  'CYNA',   ['ROLE_ADMIN']],
-            ['client@cyna.local', 'ClientCYNA12!@', 'Sophie', 'Martin', ['ROLE_USER']],
-            ['demo@cyna.local',   'DemoCYNA12!@',   'Thomas', 'Durand', ['ROLE_USER']],
+            ['admin@cyna.local',         'AdminCYNA12!@',   'Admin',   'CYNA',   ['ROLE_ADMIN']],
+            ['client@cyna.local',        'ClientCYNA12!@',  'Sophie',  'Martin', ['ROLE_USER']],
+            ['demo@cyna.local',          'DemoCYNA12!@',    'Thomas',  'Durand', ['ROLE_USER']],
+            ['juliann.ploquin@gmail.com','JuliannCYNA12!@', 'Juliann', 'Ploquin',['ROLE_USER']],
         ];
 
         $users = [];
@@ -222,7 +224,7 @@ final class AppFixtures extends Fixture
             $users[] = $user;
         }
 
-        return [$users[0], $users[1], $users[2]];
+        return [$users[0], $users[1], $users[2], $users[3]];
     }
 
     // ─────────────────────────────────────────────────────────────────────────────
@@ -380,6 +382,71 @@ final class AppFixtures extends Fixture
         $o2026b->addItem($i2026c)->addItem($i2026d);
         $manager->persist($o2026b); $manager->persist($i2026c); $manager->persist($i2026d);
         $manager->persist($this->makeInvoice($o2026b, 'INV-2026-00001600', '2581.67', '516.33', new \DateTimeImmutable('-1 week')));
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────────
+    // Données Juliann Ploquin
+    // ─────────────────────────────────────────────────────────────────────────────
+
+    /** @param array<string, SaasService> $services */
+    private function loadJuliannData(ObjectManager $manager, User $juliann, array $services): void
+    {
+        $addr = $this->makeAddress($juliann, 'Juliann', 'Ploquin',
+            '27 Rue du Faubourg Saint-Antoine', null, 'Paris', 'Île-de-France', '75011', 'France', '+33612345678');
+        $manager->persist($addr);
+
+        // ── 2022 : SOC 24/7 5 ans ─────────────────────────────────────────────────
+        $o2022 = $this->makeOrder($juliann, $addr, 'CYNA-2022-002100', '89940.00',
+            OrderStatus::PAID, new \DateTimeImmutable('2022-05-10'), 'pi_juliann_2022', 'succeeded');
+        $i2022 = $this->makeOrderItem($o2022, $services['SOC 24/7 Essentiel'], 1, 60, '1499.00',
+            new \DateTimeImmutable('2022-05-10'), new \DateTimeImmutable('2027-05-10'), SubscriptionStatus::ACTIVE);
+        $o2022->addItem($i2022);
+        $manager->persist($o2022); $manager->persist($i2022);
+        $manager->persist($this->makeInvoice($o2022, 'INV-2022-00002100', '74950.00', '14990.00', new \DateTimeImmutable('2022-05-10')));
+
+        // ── 2023 : EDR Pro + Patch 2 ans ──────────────────────────────────────────
+        $o2023 = $this->makeOrder($juliann, $addr, 'CYNA-2023-002200', '15552.00',
+            OrderStatus::PAID, new \DateTimeImmutable('2023-03-20'), 'pi_juliann_2023', 'succeeded');
+        $i2023a = $this->makeOrderItem($o2023, $services['EDR Endpoint Pro'], 1, 24, '399.00',
+            new \DateTimeImmutable('2023-03-20'), new \DateTimeImmutable('2025-03-20'), SubscriptionStatus::EXPIRED);
+        $i2023b = $this->makeOrderItem($o2023, $services['Patch & Posture Monitoring'], 1, 24, '249.00',
+            new \DateTimeImmutable('2023-03-20'), new \DateTimeImmutable('2025-03-20'), SubscriptionStatus::EXPIRED);
+        $o2023->addItem($i2023a)->addItem($i2023b);
+        $manager->persist($o2023); $manager->persist($i2023a); $manager->persist($i2023b);
+        $manager->persist($this->makeInvoice($o2023, 'INV-2023-00002200', '12960.00', '2592.00', new \DateTimeImmutable('2023-03-20')));
+
+        // ── 2024 : Formation complète ─────────────────────────────────────────────
+        $o2024 = $this->makeOrder($juliann, $addr, 'CYNA-2024-002300', '1397.00',
+            OrderStatus::PAID, new \DateTimeImmutable('2024-09-05'), 'pi_juliann_2024', 'succeeded');
+        $i2024a = $this->makeOrderItem($o2024, $services['Sensibilisation Collaborateurs'], 1, 1, '299.00',
+            new \DateTimeImmutable('2024-09-05'), new \DateTimeImmutable('2024-10-05'), SubscriptionStatus::EXPIRED);
+        $i2024b = $this->makeOrderItem($o2024, $services['Simulation Phishing'], 1, 1, '199.00',
+            new \DateTimeImmutable('2024-09-05'), new \DateTimeImmutable('2024-10-05'), SubscriptionStatus::EXPIRED);
+        $i2024c = $this->makeOrderItem($o2024, $services['Crise Cyber COMEX'], 1, 1, '899.00',
+            new \DateTimeImmutable('2024-09-05'), new \DateTimeImmutable('2024-10-05'), SubscriptionStatus::EXPIRED);
+        $o2024->addItem($i2024a)->addItem($i2024b)->addItem($i2024c);
+        $manager->persist($o2024); $manager->persist($i2024a); $manager->persist($i2024b); $manager->persist($i2024c);
+        $manager->persist($this->makeInvoice($o2024, 'INV-2024-00002300', '1164.17', '232.83', new \DateTimeImmutable('2024-09-05')));
+
+        // ── 2025 : XDR Cloud Pack 2 ans ───────────────────────────────────────────
+        $o2025 = $this->makeOrder($juliann, $addr, 'CYNA-2025-002400', '45576.00',
+            OrderStatus::PAID, new \DateTimeImmutable('2025-01-15'), 'pi_juliann_2025', 'succeeded');
+        $i2025 = $this->makeOrderItem($o2025, $services['XDR Cloud Pack'], 1, 24, '1899.00',
+            new \DateTimeImmutable('2025-01-15'), new \DateTimeImmutable('2027-01-15'), SubscriptionStatus::ACTIVE);
+        $o2025->addItem($i2025);
+        $manager->persist($o2025); $manager->persist($i2025);
+        $manager->persist($this->makeInvoice($o2025, 'INV-2025-00002400', '37980.00', '7596.00', new \DateTimeImmutable('2025-01-15')));
+
+        // ── 2026 : Zero Trust + Pentest ce mois ───────────────────────────────────
+        $o2026 = $this->makeOrder($juliann, $addr, 'CYNA-2026-002500', '3798.00',
+            OrderStatus::PAID, new \DateTimeImmutable('-10 days'), 'pi_juliann_2026', 'succeeded');
+        $i2026a = $this->makeOrderItem($o2026, $services['Zero Trust Starter'], 1, 1, '1299.00',
+            new \DateTimeImmutable('-10 days'), new \DateTimeImmutable('+20 days'), SubscriptionStatus::ACTIVE);
+        $i2026b = $this->makeOrderItem($o2026, $services['Audit Reseau & Pentest'], 1, 1, '2499.00',
+            new \DateTimeImmutable('-10 days'), new \DateTimeImmutable('+20 days'), SubscriptionStatus::ACTIVE);
+        $o2026->addItem($i2026a)->addItem($i2026b);
+        $manager->persist($o2026); $manager->persist($i2026a); $manager->persist($i2026b);
+        $manager->persist($this->makeInvoice($o2026, 'INV-2026-00002500', '3165.00', '633.00', new \DateTimeImmutable('-10 days')));
     }
 
     // ─────────────────────────────────────────────────────────────────────────────

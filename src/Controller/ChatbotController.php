@@ -69,6 +69,14 @@ final class ChatbotController extends AbstractController
             ),
         ]);
         if (count($violations) > 0) {
+            // Logger la tentative de manipulation
+            $this->logger->warning('Tentative de message invalide détectée sur le chatbot.', [
+                'ip' => $request->getClientIp(),
+                'user_agent' => $request->headers->get('User-Agent', 'unknown'),
+                'message_length' => strlen($message),
+                'violation' => $violations[0]->getMessage(),
+                'route' => $request->attributes->get('_route', 'unknown'),
+            ]);
             return $this->json(['error' => $violations[0]->getMessage()], Response::HTTP_BAD_REQUEST);
         }
 
@@ -93,39 +101,38 @@ final class ChatbotController extends AbstractController
         /** @var User|null $authUser */
         $authUser = $this->getUser();
         if ($authUser instanceof User) {
+            // Anonymisation de l'email : on utilise un hash pour éviter la fuite de données personnelles
+            $emailHash = hash('sha256', strtolower($authUser->getEmail() ?? ''));
             $userContext .= sprintf(
-                "Utilisateur connecte : %s %s (email : %s)\n",
+                "Utilisateur connecte : %s %s (ID: %s)\n",
                 $authUser->getFirstname() ?? '',
                 $authUser->getLastname() ?? '',
-                $authUser->getEmail() ?? ''
+                substr($emailHash, 0, 16) // On garde seulement les 16 premiers caractères du hash
             );
 
             // Commandes et factures récentes (5 dernières de cet utilisateur)
             $recentOrders = $this->orderRepository->findRecentPaid(5, $authUser);
             if (!empty($recentOrders)) {
-                $userContext .= "\nDernieres commandes payees :\n";
+                $userContext .= "\nDernieres commandes :\n";
                 foreach ($recentOrders as $order) {
+                    // Masquage des montants exacts pour éviter la fuite de données financières
                     $userContext .= sprintf(
-                        "- Ref: %s | Montant: %s EUR | Date: %s | Statut: %s",
+                        "- Ref: %s | Date: %s | Statut: %s",
                         $order->getReference(),
-                        $order->getTotalPrice(),
                         $order->getPaidAt()?->format('d/m/Y') ?? 'N/A',
                         $order->getStatus()->value
                     );
-                    $invoice = $this->em->getRepository(\App\Entity\Invoice::class)->findOneBy(['order' => $order]);
-                    if ($invoice) {
-                        $userContext .= sprintf(" | Facture: %s", $invoice->getNumber());
-                    }
+                    // On ne montre pas le numéro de facture pour éviter la fuite de données
                     $userContext .= "\n";
 
-                    // Services achetés dans cette commande
+                    // Services achetés dans cette commande (sans les prix exacts)
                     foreach ($order->getItems() as $item) {
                         $userContext .= sprintf(
-                            "  * %s x%d (%d mois) - %s EUR\n",
+                            "  * %s x%d (%d mois)\n",
                             $item->getProductNameSnapshot(),
                             $item->getQuantity(),
-                            $item->getDurationMonths() ?? 1,
-                            $item->getUnitPriceSnapshot()
+                            $item->getDurationMonths() ?? 1
+                            // On ne montre pas les prix pour éviter la fuite de données financières
                         );
                     }
                 }

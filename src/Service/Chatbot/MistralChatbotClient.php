@@ -24,11 +24,26 @@ Dans ces cas d'escalade uniquement, termine ta reponse par la ligne exacte [ESCA
 Ne promets pas d'action administrative ou technique deja realisee si elle demande l'intervention d'un agent humain.
 PROMPT;
 
+    private const ALLOWED_MODELS = [
+        'mistral-small-latest',
+        'mistral-medium-latest',
+        'mistral-large-latest',
+        'mistral-tiny',
+    ];
+
     public function __construct(
         private readonly HttpClientInterface $httpClient,
         private readonly string $apiKey,
         private readonly string $model,
     ) {
+        // Validation du modèle pour éviter l'utilisation de modèles non autorisés
+        if (!in_array($model, self::ALLOWED_MODELS, true)) {
+            throw new \InvalidArgumentException(sprintf(
+                'Modèle non autorisé : %s. Modèles autorisés : %s',
+                $model,
+                implode(', ', self::ALLOWED_MODELS)
+            ));
+        }
     }
 
     /**
@@ -37,7 +52,7 @@ PROMPT;
     public function generateReply(string $message, array $history, string $locale, string $userContext = ''): string
     {
         if ('' === trim($this->apiKey)) {
-            throw new \RuntimeException('Mistral API key is not configured.');
+            throw new \RuntimeException('Configuration du service de chatbot manquante.');
         }
 
         $messages = $this->buildMessages($history, $message, $locale, $userContext);
@@ -72,7 +87,8 @@ PROMPT;
             throw new \RuntimeException('Mistral response is empty.');
         }
 
-        return $answer;
+        // Nettoyage de la réponse pour éviter les injections
+        return $this->sanitizeAnswer($answer);
     }
 
     /**
@@ -81,13 +97,15 @@ PROMPT;
      */
     private function buildMessages(array $history, string $message, string $locale, string $userContext): array
     {
-        $systemContent = self::SYSTEM_PROMPT
-            .($userContext !== '' ? "\n\nContexte utilisateur actuel :\n".$userContext : '')
-            ."\nLocale UI: ".$locale;
-
+        // Le SYSTEM_PROMPT reste seul dans le message système
         $messages = [
-            ['role' => 'system', 'content' => $systemContent],
+            ['role' => 'system', 'content' => self::SYSTEM_PROMPT],
         ];
+
+        // Ajouter le contexte utilisateur comme un message utilisateur séparé
+        if ($userContext !== '') {
+            $messages[] = ['role' => 'user', 'content' => "Contexte utilisateur actuel :\n" . $this->sanitizeUserContext($userContext) . "\nLocale UI: " . $locale];
+        }
 
         foreach (array_slice($history, -8) as $item) {
             $role    = in_array($item['role'], ['assistant', 'model'], true) ? 'assistant' : 'user';
@@ -101,5 +119,50 @@ PROMPT;
         $messages[] = ['role' => 'user', 'content' => $message];
 
         return $messages;
+    }
+
+    /**
+     * Nettoie le contexte utilisateur pour éviter les injections de prompt
+     */
+    private function sanitizeUserContext(string $context): string
+    {
+        // Mots-clés dangereux à bloquer
+        $forbiddenPatterns = [
+            '/ignore.*previous/i',
+            '/forget.*instructions?/i',
+            '/disregard.*above/i',
+            '/system.*prompt/i',
+            '/prompt.*injection/i',
+            '/you.*are.*now/i',
+            '/act.*as/i',
+            '/pretend.*you/i',
+        ];
+
+        foreach ($forbiddenPatterns as $pattern) {
+            $context = preg_replace($pattern, '[CONTENU_BLOQUÉ]', $context);
+        }
+
+        return $context;
+    }
+
+    /**
+     * Nettoie la réponse pour éviter les injections de code
+     */
+    private function sanitizeAnswer(string $answer): string
+    {
+        // Supprimer toutes les balises HTML
+        $answer = strip_tags($answer);
+
+        // Échapper les caractères spéciaux
+        $answer = htmlspecialchars($answer, ENT_QUOTES, 'UTF-8');
+
+        // Supprimer les URLs
+        $answer = preg_replace('/https?:\/\/[^\s]+/', '[LIEN_BLOQUÉ]', $answer);
+
+        // Supprimer les caractères de formatage Markdown
+        $answer = preg_replace('/[#*_~`]/', '', $answer);
+
+        // Limiter la longueur de la réponse
+        return mb_substr($answer, 0, 2000);
     }
 }

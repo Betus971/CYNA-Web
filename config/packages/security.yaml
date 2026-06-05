@@ -78,7 +78,7 @@ security:
         - { path: ^/api/password/reset,         roles: PUBLIC_ACCESS }
         - { path: ^/api/contact,                methods: [POST],   roles: PUBLIC_ACCESS }
         - { path: ^/api/contact_messages,       methods: [POST],   roles: PUBLIC_ACCESS }
-        - { path: ^/api/chatbot,                methods: [POST],   roles: PUBLIC_ACCESS }
+        - { path: ^/api/chatbot,                methods: [POST],   roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/stripe/webhook,         methods: [POST],   roles: PUBLIC_ACCESS }
 
         # API Géo DINUM — données publiques (autocomplétion adresse, pas d'auth requise)

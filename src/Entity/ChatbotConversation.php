@@ -46,15 +46,15 @@ class ChatbotConversation
     #[Groups(['chatbot_conversation:read'])]
     private ?string $subject = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, length: 5000)]
     #[Groups(['chatbot_conversation:read'])]
     private ?string $question = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, length: 5000)]
     #[Groups(['chatbot_conversation:read'])]
     private ?string $answer = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, length: 10000, nullable: true)]
     #[Groups(['chatbot_conversation:read'])]
     private ?string $transcript = null;
 

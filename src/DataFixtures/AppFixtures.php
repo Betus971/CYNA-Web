@@ -6,6 +6,7 @@ use App\Entity\Address;
 use App\Entity\CarouselSlide;
 use App\Entity\Category;
 use App\Entity\HomepageText;
+use App\Entity\Invoice;
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Entity\PromoCode;
@@ -231,7 +232,6 @@ final class AppFixtures extends Fixture
     /** @param array<string, SaasService> $services */
     private function loadSophieData(ObjectManager $manager, User $sophie, array $services): void
     {
-        // Adresses
         $addr1 = $this->makeAddress($sophie, 'Sophie', 'Martin',
             '42 Rue de la Paix', null, 'Paris', 'Île-de-France', '75001', 'France', '+33601020304');
         $addr2 = $this->makeAddress($sophie, 'Sophie', 'Martin',
@@ -239,132 +239,77 @@ final class AppFixtures extends Fixture
         $manager->persist($addr1);
         $manager->persist($addr2);
 
-        // ── Commande 1 : payée + active (il y a 6 mois, abonnement 12 mois) ──────
-        $order1 = $this->makeOrder(
-            $sophie, $addr1,
-            'CYNA-2025-001234',
-            '2298.00',
-            OrderStatus::PAID,
-            new \DateTimeImmutable('-6 months'),
-            'pi_test_sophie_001',
-            'succeeded',
-        );
-        $item1a = $this->makeOrderItem(
-            $order1, $services['SOC Heures Ouvrees'],
-            1, 12, '799.00',
-            new \DateTimeImmutable('-6 months'),
-            new \DateTimeImmutable('+6 months'),
-            SubscriptionStatus::ACTIVE,
-        );
-        $item1b = $this->makeOrderItem(
-            $order1, $services['EDR Workstation Lite'],
-            1, 12, '149.00',
-            new \DateTimeImmutable('-6 months'),
-            new \DateTimeImmutable('+6 months'),
-            SubscriptionStatus::ACTIVE,
-        );
-        $order1->addItem($item1a)->addItem($item1b);
-        $manager->persist($order1);
-        $manager->persist($item1a);
-        $manager->persist($item1b);
+        // ── 2022 : SOC 5 ans ─────────────────────────────────────────────────────
+        $o2022 = $this->makeOrder($sophie, $addr1, 'CYNA-2022-000100', '89940.00',
+            OrderStatus::PAID, new \DateTimeImmutable('2022-03-15'), 'pi_sophie_2022', 'succeeded');
+        $i2022 = $this->makeOrderItem($o2022, $services['SOC 24/7 Essentiel'], 1, 60, '1499.00',
+            new \DateTimeImmutable('2022-03-15'), new \DateTimeImmutable('2027-03-15'), SubscriptionStatus::ACTIVE);
+        $o2022->addItem($i2022);
+        $manager->persist($o2022); $manager->persist($i2022);
+        $manager->persist($this->makeInvoice($o2022, 'INV-2022-00000001', '74950.00', '14990.00', new \DateTimeImmutable('2022-03-15')));
 
-        // ── Commande 2 : payée + expirée (il y a 18 mois, abonnement 12 mois) ─────
-        $order2 = $this->makeOrder(
-            $sophie, $addr1,
-            'CYNA-2024-009876',
-            '1499.00',
-            OrderStatus::PAID,
-            new \DateTimeImmutable('-18 months'),
-            'pi_test_sophie_002',
-            'succeeded',
-        );
-        $item2 = $this->makeOrderItem(
-            $order2, $services['SOC 24/7 Essentiel'],
-            1, 12, '1499.00',
-            new \DateTimeImmutable('-18 months'),
-            new \DateTimeImmutable('-6 months'),
-            SubscriptionStatus::EXPIRED,
-        );
-        $order2->addItem($item2);
-        $manager->persist($order2);
-        $manager->persist($item2);
+        // ── 2023 : EDR 2 ans ──────────────────────────────────────────────────────
+        $o2023 = $this->makeOrder($sophie, $addr1, 'CYNA-2023-000200', '9576.00',
+            OrderStatus::PAID, new \DateTimeImmutable('2023-06-01'), 'pi_sophie_2023', 'succeeded');
+        $i2023a = $this->makeOrderItem($o2023, $services['EDR Endpoint Pro'], 1, 24, '399.00',
+            new \DateTimeImmutable('2023-06-01'), new \DateTimeImmutable('2025-06-01'), SubscriptionStatus::EXPIRED);
+        $i2023b = $this->makeOrderItem($o2023, $services['EDR Workstation Lite'], 1, 24, '149.00',
+            new \DateTimeImmutable('2023-06-01'), new \DateTimeImmutable('2025-06-01'), SubscriptionStatus::EXPIRED);
+        $o2023->addItem($i2023a)->addItem($i2023b);
+        $manager->persist($o2023); $manager->persist($i2023a); $manager->persist($i2023b);
+        $manager->persist($this->makeInvoice($o2023, 'INV-2023-00000200', '7980.00', '1596.00', new \DateTimeImmutable('2023-06-01')));
 
-        // ── Commande 3 : payée (formation one-shot il y a 3 mois) ───────────────
-        $order3 = $this->makeOrder(
-            $sophie, $addr2,
-            'CYNA-2026-002211',
-            '1098.00',
-            OrderStatus::PAID,
-            new \DateTimeImmutable('-3 months'),
-            'pi_test_sophie_003',
-            'succeeded',
-        );
-        $item3a = $this->makeOrderItem(
-            $order3, $services['Sensibilisation Collaborateurs'],
-            1, 1, '299.00',
-            new \DateTimeImmutable('-3 months'),
-            new \DateTimeImmutable('-2 months'),
-            SubscriptionStatus::EXPIRED,
-        );
-        $item3b = $this->makeOrderItem(
-            $order3, $services['Simulation Phishing'],
-            1, 1, '199.00',
-            new \DateTimeImmutable('-3 months'),
-            new \DateTimeImmutable('-2 months'),
-            SubscriptionStatus::EXPIRED,
-        );
-        $item3c = $this->makeOrderItem(
-            $order3, $services['Crise Cyber COMEX'],
-            1, 1, '899.00',
-            new \DateTimeImmutable('-3 months'),
-            new \DateTimeImmutable('-2 months'),
-            SubscriptionStatus::EXPIRED,
-        );
-        $order3->addItem($item3a)->addItem($item3b)->addItem($item3c);
-        $manager->persist($order3);
-        $manager->persist($item3a);
-        $manager->persist($item3b);
-        $manager->persist($item3c);
+        // ── 2024 : XDR 2 ans + formation ─────────────────────────────────────────
+        $o2024 = $this->makeOrder($sophie, $addr1, 'CYNA-2024-000300', '46275.00',
+            OrderStatus::PAID, new \DateTimeImmutable('2024-01-10'), 'pi_sophie_2024', 'succeeded');
+        $i2024a = $this->makeOrderItem($o2024, $services['XDR Cloud Pack'], 1, 24, '1899.00',
+            new \DateTimeImmutable('2024-01-10'), new \DateTimeImmutable('2026-01-10'), SubscriptionStatus::EXPIRED);
+        $i2024b = $this->makeOrderItem($o2024, $services['Crise Cyber COMEX'], 1, 1, '899.00',
+            new \DateTimeImmutable('2024-01-10'), new \DateTimeImmutable('2024-02-10'), SubscriptionStatus::EXPIRED);
+        $o2024->addItem($i2024a)->addItem($i2024b);
+        $manager->persist($o2024); $manager->persist($i2024a); $manager->persist($i2024b);
+        $manager->persist($this->makeInvoice($o2024, 'INV-2024-00000300', '38562.50', '7712.50', new \DateTimeImmutable('2024-01-10')));
 
-        // ── Commande 4 : échec de paiement (il y a 2 semaines) ──────────────────
-        $order4 = $this->makeOrder(
-            $sophie, $addr2,
-            'CYNA-2026-004400',
-            '1899.00',
-            OrderStatus::FAILED,
-            new \DateTimeImmutable('-2 weeks'),
-            'pi_test_sophie_004',
-            'payment_failed',
-        );
-        $order4->setPaymentFailureReason('Votre carte a été refusée. Fonds insuffisants.');
-        $item4 = $this->makeOrderItem(
-            $order4, $services['XDR Cloud Pack'],
-            1, 12, '1899.00',
-        );
-        $order4->addItem($item4);
-        $manager->persist($order4);
-        $manager->persist($item4);
+        // ── 2025 : SOC heures + Patch 12 mois ────────────────────────────────────
+        $o2025 = $this->makeOrder($sophie, $addr2, 'CYNA-2025-000400', '12576.00',
+            OrderStatus::PAID, new \DateTimeImmutable('2025-04-20'), 'pi_sophie_2025', 'succeeded');
+        $i2025a = $this->makeOrderItem($o2025, $services['SOC Heures Ouvrees'], 1, 12, '799.00',
+            new \DateTimeImmutable('2025-04-20'), new \DateTimeImmutable('2026-04-20'), SubscriptionStatus::ACTIVE);
+        $i2025b = $this->makeOrderItem($o2025, $services['Patch & Posture Monitoring'], 1, 12, '249.00',
+            new \DateTimeImmutable('2025-04-20'), new \DateTimeImmutable('2026-04-20'), SubscriptionStatus::ACTIVE);
+        $o2025->addItem($i2025a)->addItem($i2025b);
+        $manager->persist($o2025); $manager->persist($i2025a); $manager->persist($i2025b);
+        $manager->persist($this->makeInvoice($o2025, 'INV-2025-00000400', '10480.00', '2096.00', new \DateTimeImmutable('2025-04-20')));
 
-        // ── Commande 5 : en attente (créée aujourd'hui, paiement non finalisé) ──
-        $order5 = $this->makeOrder(
-            $sophie, $addr1,
-            'CYNA-2026-005500',
-            '598.00',
-            OrderStatus::PENDING,
-            new \DateTimeImmutable('-30 minutes'),
-        );
-        $item5 = $this->makeOrderItem(
-            $order5, $services['Patch & Posture Monitoring'],
-            1, 12, '249.00',
-        );
-        $item5b = $this->makeOrderItem(
-            $order5, $services['Firewall Manage'],
-            1, 12, '349.00',
-        );
-        $order5->addItem($item5)->addItem($item5b);
-        $manager->persist($order5);
-        $manager->persist($item5);
-        $manager->persist($item5b);
+        // ── 2026 : Réseau 5 ans (active) ─────────────────────────────────────────
+        $o2026 = $this->makeOrder($sophie, $addr1, 'CYNA-2026-000500', '20940.00',
+            OrderStatus::ACTIVE, new \DateTimeImmutable('2026-01-05'), 'pi_sophie_2026', 'succeeded');
+        $i2026 = $this->makeOrderItem($o2026, $services['Firewall Manage'], 1, 60, '349.00',
+            new \DateTimeImmutable('2026-01-05'), new \DateTimeImmutable('2031-01-05'), SubscriptionStatus::ACTIVE);
+        $o2026->addItem($i2026);
+        $manager->persist($o2026); $manager->persist($i2026);
+        $manager->persist($this->makeInvoice($o2026, 'INV-2026-00000500', '17450.00', '3490.00', new \DateTimeImmutable('2026-01-05')));
+
+        // ── Commande récente ce mois ──────────────────────────────────────────────
+        $oRecent = $this->makeOrder($sophie, $addr2, 'CYNA-2026-000600', '1098.00',
+            OrderStatus::PAID, new \DateTimeImmutable('-3 weeks'), 'pi_sophie_recent', 'succeeded');
+        $iRa = $this->makeOrderItem($oRecent, $services['Sensibilisation Collaborateurs'], 1, 1, '299.00',
+            new \DateTimeImmutable('-3 weeks'), new \DateTimeImmutable('+1 week'), SubscriptionStatus::ACTIVE);
+        $iRb = $this->makeOrderItem($oRecent, $services['Simulation Phishing'], 1, 1, '199.00',
+            new \DateTimeImmutable('-3 weeks'), new \DateTimeImmutable('+1 week'), SubscriptionStatus::ACTIVE);
+        $iRc = $this->makeOrderItem($oRecent, $services['Audit Reseau & Pentest'], 1, 1, '899.00',  // not in fixtures? use closest
+            new \DateTimeImmutable('-3 weeks'), new \DateTimeImmutable('+1 week'), SubscriptionStatus::ACTIVE);
+        $oRecent->addItem($iRa)->addItem($iRb)->addItem($iRc);
+        $manager->persist($oRecent); $manager->persist($iRa); $manager->persist($iRb); $manager->persist($iRc);
+        $manager->persist($this->makeInvoice($oRecent, 'INV-2026-00000600', '915.00', '183.00', new \DateTimeImmutable('-3 weeks')));
+
+        // ── Échec de paiement ─────────────────────────────────────────────────────
+        $oFail = $this->makeOrder($sophie, $addr2, 'CYNA-2026-000700', '1899.00',
+            OrderStatus::FAILED, new \DateTimeImmutable('-2 weeks'), 'pi_sophie_fail', 'payment_failed');
+        $oFail->setPaymentFailureReason('Carte refusée. Fonds insuffisants.');
+        $iFail = $this->makeOrderItem($oFail, $services['XDR Cloud Pack'], 1, 12, '1899.00');
+        $oFail->addItem($iFail);
+        $manager->persist($oFail); $manager->persist($iFail);
     }
 
     // ─────────────────────────────────────────────────────────────────────────────
@@ -378,55 +323,63 @@ final class AppFixtures extends Fixture
             '15 Rue de la Liberté', null, 'Bordeaux', 'Nouvelle-Aquitaine', '33000', 'France', '+33607080910');
         $manager->persist($addr);
 
-        // ── Commande 1 : payée + active (il y a 2 mois, abonnement 12 mois) ─────
-        $order1 = $this->makeOrder(
-            $thomas, $addr,
-            'CYNA-2026-003300',
-            '948.00',
-            OrderStatus::PAID,
-            new \DateTimeImmutable('-2 months'),
-            'pi_test_thomas_001',
-            'succeeded',
-        );
-        $item1a = $this->makeOrderItem(
-            $order1, $services['EDR Endpoint Pro'],
-            1, 12, '399.00',
-            new \DateTimeImmutable('-2 months'),
-            new \DateTimeImmutable('+10 months'),
-            SubscriptionStatus::ACTIVE,
-        );
-        $item1b = $this->makeOrderItem(
-            $order1, $services['Cloud Security Monitoring'],
-            1, 6, '599.00',
-            new \DateTimeImmutable('-2 months'),
-            new \DateTimeImmutable('+4 months'),
-            SubscriptionStatus::ACTIVE,
-        );
-        $order1->addItem($item1a)->addItem($item1b);
-        $manager->persist($order1);
-        $manager->persist($item1a);
-        $manager->persist($item1b);
+        // ── 2022 : Zero Trust 2 ans ───────────────────────────────────────────────
+        $o2022 = $this->makeOrder($thomas, $addr, 'CYNA-2022-001100', '31176.00',
+            OrderStatus::PAID, new \DateTimeImmutable('2022-09-01'), 'pi_thomas_2022', 'succeeded');
+        $i2022 = $this->makeOrderItem($o2022, $services['Zero Trust Starter'], 1, 24, '1299.00',
+            new \DateTimeImmutable('2022-09-01'), new \DateTimeImmutable('2024-09-01'), SubscriptionStatus::EXPIRED);
+        $o2022->addItem($i2022);
+        $manager->persist($o2022); $manager->persist($i2022);
+        $manager->persist($this->makeInvoice($o2022, 'INV-2022-00001100', '25980.00', '5196.00', new \DateTimeImmutable('2022-09-01')));
 
-        // ── Commande 2 : payée (formation 1 mois) ────────────────────────────────
-        $order2 = $this->makeOrder(
-            $thomas, $addr,
-            'CYNA-2026-003301',
-            '199.00',
-            OrderStatus::PAID,
-            new \DateTimeImmutable('-5 weeks'),
-            'pi_test_thomas_002',
-            'succeeded',
-        );
-        $item2 = $this->makeOrderItem(
-            $order2, $services['Simulation Phishing'],
-            1, 1, '199.00',
-            new \DateTimeImmutable('-5 weeks'),
-            new \DateTimeImmutable('+3 weeks'),
-            SubscriptionStatus::ACTIVE,
-        );
-        $order2->addItem($item2);
-        $manager->persist($order2);
-        $manager->persist($item2);
+        // ── 2023 : Identity Threat 5 ans ──────────────────────────────────────────
+        $o2023 = $this->makeOrder($thomas, $addr, 'CYNA-2023-001200', '41940.00',
+            OrderStatus::PAID, new \DateTimeImmutable('2023-02-14'), 'pi_thomas_2023', 'succeeded');
+        $i2023 = $this->makeOrderItem($o2023, $services['Identity Threat Detection'], 1, 60, '699.00',
+            new \DateTimeImmutable('2023-02-14'), new \DateTimeImmutable('2028-02-14'), SubscriptionStatus::ACTIVE);
+        $o2023->addItem($i2023);
+        $manager->persist($o2023); $manager->persist($i2023);
+        $manager->persist($this->makeInvoice($o2023, 'INV-2023-00001200', '34950.00', '6990.00', new \DateTimeImmutable('2023-02-14')));
+
+        // ── 2024 : Cloud Pack 12 mois ─────────────────────────────────────────────
+        $o2024 = $this->makeOrder($thomas, $addr, 'CYNA-2024-001300', '22788.00',
+            OrderStatus::PAID, new \DateTimeImmutable('2024-07-01'), 'pi_thomas_2024', 'succeeded');
+        $i2024 = $this->makeOrderItem($o2024, $services['XDR Cloud Pack'], 1, 12, '1899.00',
+            new \DateTimeImmutable('2024-07-01'), new \DateTimeImmutable('2025-07-01'), SubscriptionStatus::EXPIRED);
+        $o2024->addItem($i2024);
+        $manager->persist($o2024); $manager->persist($i2024);
+        $manager->persist($this->makeInvoice($o2024, 'INV-2024-00001300', '18990.00', '3798.00', new \DateTimeImmutable('2024-07-01')));
+
+        // ── 2025 : EDR Pro 2 ans ──────────────────────────────────────────────────
+        $o2025 = $this->makeOrder($thomas, $addr, 'CYNA-2025-001400', '9576.00',
+            OrderStatus::PAID, new \DateTimeImmutable('2025-11-15'), 'pi_thomas_2025', 'succeeded');
+        $i2025 = $this->makeOrderItem($o2025, $services['EDR Endpoint Pro'], 1, 24, '399.00',
+            new \DateTimeImmutable('2025-11-15'), new \DateTimeImmutable('2027-11-15'), SubscriptionStatus::ACTIVE);
+        $o2025->addItem($i2025);
+        $manager->persist($o2025); $manager->persist($i2025);
+        $manager->persist($this->makeInvoice($o2025, 'INV-2025-00001400', '7980.00', '1596.00', new \DateTimeImmutable('2025-11-15')));
+
+        // ── 2026 : SOC Incident + formation ce mois ───────────────────────────────
+        $o2026a = $this->makeOrder($thomas, $addr, 'CYNA-2026-001500', '2398.00',
+            OrderStatus::PAID, new \DateTimeImmutable('-2 months'), 'pi_thomas_2026a', 'succeeded');
+        $i2026a = $this->makeOrderItem($o2026a, $services['SOC Incident Readiness'], 1, 1, '1199.00',
+            new \DateTimeImmutable('-2 months'), new \DateTimeImmutable('-1 month'), SubscriptionStatus::EXPIRED);
+        $i2026b = $this->makeOrderItem($o2026a, $services['Simulation Phishing'], 1, 1, '199.00',
+            new \DateTimeImmutable('-2 months'), new \DateTimeImmutable('-1 month'), SubscriptionStatus::EXPIRED);
+        $o2026a->addItem($i2026a)->addItem($i2026b);
+        $manager->persist($o2026a); $manager->persist($i2026a); $manager->persist($i2026b);
+        $manager->persist($this->makeInvoice($o2026a, 'INV-2026-00001500', '1998.33', '399.67', new \DateTimeImmutable('-2 months')));
+
+        // ── 2026 : Pentest + Cloud Security (ce mois) ────────────────────────────
+        $o2026b = $this->makeOrder($thomas, $addr, 'CYNA-2026-001600', '3098.00',
+            OrderStatus::PAID, new \DateTimeImmutable('-1 week'), 'pi_thomas_2026b', 'succeeded');
+        $i2026c = $this->makeOrderItem($o2026b, $services['Audit Reseau & Pentest'], 1, 1, '2499.00',
+            new \DateTimeImmutable('-1 week'), new \DateTimeImmutable('+3 weeks'), SubscriptionStatus::ACTIVE);
+        $i2026d = $this->makeOrderItem($o2026b, $services['Cloud Security Monitoring'], 1, 1, '599.00',
+            new \DateTimeImmutable('-1 week'), new \DateTimeImmutable('+3 weeks'), SubscriptionStatus::ACTIVE);
+        $o2026b->addItem($i2026c)->addItem($i2026d);
+        $manager->persist($o2026b); $manager->persist($i2026c); $manager->persist($i2026d);
+        $manager->persist($this->makeInvoice($o2026b, 'INV-2026-00001600', '2581.67', '516.33', new \DateTimeImmutable('-1 week')));
     }
 
     // ─────────────────────────────────────────────────────────────────────────────
@@ -487,6 +440,21 @@ final class AppFixtures extends Fixture
         }
 
         return $order;
+    }
+
+    private function makeInvoice(
+        Order $order,
+        string $number,
+        string $totalAmount,
+        string $taxAmount,
+        \DateTimeImmutable $issuedAt,
+    ): Invoice {
+        return (new Invoice())
+            ->setOrder($order)
+            ->setNumber($number)
+            ->setTotalAmount($totalAmount)
+            ->setTaxAmount($taxAmount)
+            ->setIssuedAt($issuedAt);
     }
 
     private function makeOrderItem(

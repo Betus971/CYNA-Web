@@ -37,7 +37,7 @@ Le frontend React consommant cette API est disponible sur [CYNA-frontend-react](
 | Paiement | Stripe PHP SDK v20 (PaymentIntent + Webhooks) |
 | Emails | Symfony Mailer + Brevo (SMTP transactionnel) |
 | PDF | DomPDF v3.1 (génération factures A4) |
-| Chatbot IA | Google Gemini API |
+| Chatbot IA | Mistral IA API |
 | Géolocalisation | API Adresse BAN + API Géo (DINUM, sans token) |
 | Rate Limiting | symfony/rate-limiter (sliding window) |
 | CORS | NelmioCorsBundle |
